@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | Info</title>
+    <title>HIVEGRIEF | Full Info</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/bakisyyyofficial/hiveweb/main/83234d750c18251e.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -19,16 +19,12 @@
 
         #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
 
-        .lang-switcher {
-            position: fixed; top: 20px; right: 20px; z-index: 2000; display: flex; gap: 10px;
-        }
-
+        .lang-switcher { position: fixed; top: 20px; right: 20px; z-index: 2000; display: flex; gap: 10px; }
         .lang-btn {
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff; padding: 8px 15px; border-radius: 10px; cursor: pointer; backdrop-filter: blur(10px);
             font-weight: bold; transition: 0.3s;
         }
-
         .lang-btn.active { background: #ffcc00; color: #000; border-color: #ffcc00; }
 
         .container { max-width: 1100px; width: 100%; z-index: 1; }
@@ -51,32 +47,39 @@
         }
         .nav-link:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-3px); border-color: #ffcc00; }
 
-        .promo-title { text-align: center; font-size: 2.5rem; margin-bottom: 30px; color: #ffcc00; text-transform: uppercase; letter-spacing: 2px; }
-        
+        /* Преимущества с анимацией круга */
+        .promo-title { text-align: center; font-size: 2.5rem; margin-bottom: 30px; color: #ffcc00; text-transform: uppercase; }
         .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .feature-item {
-            text-align: center; padding: 25px; background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative; text-align: center; padding: 30px;
+            background: rgba(255, 255, 255, 0.02); border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05); overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1;
         }
-        .feature-item i { font-size: 2.5rem; color: #ffcc00; margin-bottom: 15px; }
-        .feature-item h3 { margin: 10px 0; }
-        .feature-item p { opacity: 0.7; font-size: 0.9rem; line-height: 1.5; }
+        .feature-item::before {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+            background: rgba(0, 0, 0, 0.5); border-radius: 50%; transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease; z-index: -1;
+        }
+        .feature-item:hover { transform: scale(1.05); border-color: #ffcc00; }
+        .feature-item:hover::before { width: 450px; height: 450px; }
+        .feature-item i { font-size: 2.8rem; color: #ffcc00; margin-bottom: 15px; }
 
-        /* Правила */
-        .rule-section { margin-top: 40px; }
-        .rule-category {
-            color: #ffcc00; font-size: 1.6rem; font-weight: 800;
-            border-left: 5px solid #ffcc00; padding-left: 15px; margin-bottom: 20px;
-            text-transform: uppercase;
+        /* Аккордеон для полных правил */
+        .accordion {
+            background: rgba(255, 255, 255, 0.03); color: #ffcc00; cursor: pointer; padding: 22px; width: 100%;
+            border: none; text-align: left; font-size: 1.3rem; font-weight: bold; border-radius: 12px;
+            margin-top: 12px; border-left: 5px solid #ffcc00; display: flex; justify-content: space-between;
+            transition: 0.3s;
         }
-        .rule-item {
-            background: rgba(255, 255, 255, 0.03); padding: 18px;
-            border-radius: 14px; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.02);
-        }
-        .rule-id { color: #ffcc00; font-weight: bold; margin-right: 10px; }
-        .punishment { color: #ff4444; font-weight: bold; display: block; margin-top: 8px; font-size: 0.9rem; }
+        .accordion:hover { background: rgba(255, 255, 255, 0.08); }
+        .panel { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: rgba(0,0,0,0.2); border-radius: 0 0 12px 12px; }
+        .panel-content { padding: 25px 10px; line-height: 1.7; white-space: pre-line; color: #ddd; font-size: 1rem; }
+        
+        strong { color: #ffcc00; }
+        .punish { color: #ff4444; font-weight: bold; }
 
-        footer { text-align: center; opacity: 0.3; padding: 40px; font-size: 0.9rem; }
+        footer { text-align: center; opacity: 0.3; padding: 40px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -90,9 +93,7 @@
 
 <div class="container">
     <div class="glass-card">
-        <div class="server-header">
-            <h1>HIVEGRIEF</h1>
-        </div>
+        <div class="server-header"><h1>HIVEGRIEF</h1></div>
         <div class="nav-grid">
             <div class="nav-link" onclick="copyIP()" style="cursor: pointer;">
                 <i class="fa-solid fa-server"></i><span>mc.hivegrief.su</span>
@@ -113,73 +114,156 @@
         <h2 class="promo-title" data-lang="adv_title">Наши преимущества</h2>
         <div class="features-grid">
             <div class="feature-item">
-                <i class="fa-solid fa-heart"></i>
+                <i class="fa-solid fa-users"></i>
                 <h3 data-lang="feat_1_h">Доброе комьюнити</h3>
-                <p data-lang="feat_1_p">Мы создаем уютную атмосферу для игры. У нас адекватные игроки и отзывчивая администрация.</p>
+                <p data-lang="feat_1_p">Мы ценим каждого игрока. У нас вы найдете новых друзей и адекватное общение без лишнего токсика.</p>
             </div>
             <div class="feature-item">
-                <i class="fa-solid fa-swords"></i>
-                <h3 data-lang="feat_2_h">Честный гриф</h3>
-                <p data-lang="feat_2_p">Классический опыт выживания, где разрешены рейды и ПвП. Покажи, на что ты способен!</p>
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3 data-lang="feat_2_h">Тот самый гриф</h3>
+                <p data-lang="feat_2_p">Классический опыт выживания с рейдами и ПвП. Покажи силу своего клана и грабь базы!</p>
             </div>
             <div class="feature-item">
                 <i class="fa-solid fa-microchip"></i>
                 <h3 data-lang="feat_3_h">Мощное железо</h3>
-                <p data-lang="feat_3_p">Наши сервера работают на топовом оборудовании, что гарантирует стабильный ТПС и отсутствие лагов.</p>
+                <p data-lang="feat_3_p">Играй без лагов 24/7. Стабильный ТПС и защита от вылетов гарантированы.</p>
             </div>
         </div>
     </div>
 
     <div class="glass-card">
-        <h2 style="text-align: center; margin-bottom: 10px;" data-lang="rules_title">ПРАВИЛА ПРОЕКТА</h2>
-        
-        <div class="rule-section">
-            <div class="rule-category" data-lang="r_sec_1">1.0 Основные правила</div>
-            <div class="rule-item">
-                <span class="rule-id">1.1</span> <span data-lang="r11">Правила обязательны для всех. Незнание не освобождает от ответственности.</span>
-            </div>
-            <div class="rule-item">
-                <span class="rule-id">1.2</span> <span data-lang="r12">Официальный IP: mc.hivegrief.su. Остальные ресурсы — подделка.</span>
-            </div>
-            <div class="rule-item">
-                <span class="rule-id">1.5</span> <span data-lang="r15">Обман администрации, взломы и вред серверу запрещены.</span>
-                <span class="punishment" data-lang="p15">Наказание: Бан навсегда + обнуление.</span>
+        <h2 style="text-align: center;" data-lang="rules_title">ПРАВИЛА ПРОЕКТА</h2>
+
+        <button class="accordion" data-lang="r_sec_1">1.0 Общее положение</button>
+        <div class="panel">
+            <div class="panel-content" data-lang="r_text_1">
+1.1. Данный свод правил составлен представителем проекта HiveGrief и действителен ТОЛЬКО в рамках режимов "Гриферское выживание" проекта HiveGrief.
+1.2. Регистрируясь на нашем проекте, вы автоматически принимаете данные правила, а также правила других режимов.
+1.3. Незнание правил не освобождает нарушителя от ответственности, а также может усугубить наказание.
+1.4. Правила могут быть изменены без явного оповещения основной аудитории проекта.
+1.5.1. При значительных изменениях правил, на форуме проекта отображается сопутствуещее объявление.
+1.5. Главная администрация вправе выдавать наказания вне рамок данных правил.
+1.6. Решения и действия главной администрации (h1nuro1337, MangoAlex) не обсуждаются и не поддаются разжалованию.
+1.7. Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).
+1.8. За любой вид чата будут наказываться сообщения, которые имеют такие категории: любой вид пиара, признание в читах, оскорбление родителей, попытка передачи аккаунта или взлома, оскорбления администрации, ютуберов.
+1.8.1 Продажа, покупка ресурсов, аккаунтов за реальную валюту запрещена, так же это касается различных сайтов, таких как FunPay и.т.д. <span class="punish">Наказание - снятие всех привилегий, бан навсегда.</span> Старшие Модераторы и выше по должности имеют право проверить ваш FunPay.
             </div>
         </div>
 
-        <div class="rule-section">
-            <div class="rule-category" data-lang="r_sec_4">4.0 Правила чата</div>
-            <div class="rule-item">
-                <span class="rule-id">4.1</span> <span data-lang="r41">Флуд и спам (более 10 символов или 3 повтора).</span>
-                <span class="punishment" data-lang="p41">Наказание: Мут на 2 часа.</span>
-            </div>
-            <div class="rule-item">
-                <span class="rule-id">4.3</span> <span data-lang="r43">Реклама сторонних проектов.</span>
-                <span class="punishment" data-lang="p43">Наказание: Бан навсегда.</span>
-            </div>
-        </div>
-
-        <div class="rule-section">
-            <div class="rule-category" data-lang="r_sec_5">5.0 Игровой процесс</div>
-            <div class="rule-item">
-                <span class="rule-id">5.2</span> <span data-lang="r52">Использование читов, макросов и стороннего ПО.</span>
-                <span class="punishment" data-lang="p52">Наказание: Бан на 50 дней.</span>
+        <button class="accordion" data-lang="r_sec_3">3.0 Приобретение платных возможностей</button>
+        <div class="panel">
+            <div class="panel-content" data-lang="r_text_3">
+3.1. Игра на проекте не подразумевает платы за использование ресурсов HiveGrief.
+3.2. Игрок вправе добровольно оплатить определённую сумму проекту за внутриигровую услугу в одностороннем порядке.
+3.3. При ошибке платежа, либо отсутствия внутриигровой услуги после оплаты, можно обращаться в техподдержку.
+3.4. Денежные средства за платные услуги не возвращаются.
+3.5. Покупка платных групп не даёт привилегии на игнорирование/нарушение данных правил.
             </div>
         </div>
 
-        <div class="rule-section">
-            <div class="rule-category" data-lang="r_sec_6">6.0 Правила для донатеров</div>
-            <div class="rule-item">
-                <span class="rule-id">6.1</span> <span data-lang="r61">Использование прав в целях вреда проекту.</span>
-                <span class="punishment" data-lang="p61">Наказание: Снятие прав + Бан.</span>
+        <button class="accordion" data-lang="r_sec_4">4.0 Внутриигровое общение</button>
+        <div class="panel">
+            <div class="panel-content" data-lang="r_text_4">
+4.1. На серверах присутствует локальный и глобальный чат.
+4.2. Запрещено флудить, отправлять больше 2-ух похожих по смыслу сообщения подряд. <span class="punish">[мут на 4 часа]</span>
+4.2.1. Запрещено согласовывать с другими игроками или использовать свои твинки для отправки одного и того же сообщения. <span class="punish">[мут на 4 часа]</span>
+4.2.2. Запрещено использовать объявления для обхода наказания за флуд. <span class="punish">[мут на 4 часа]</span>
+4.3. Запрещено флудить символами (более 10 символов). <span class="punish">[мут на 4 часа]</span>
+4.3.1. Злоупотребление капсом (больше 50% в предложении от 3-х слов). <span class="punish">[мут на 4 часа]</span>
+4.4. Запрещено организовывать флуд опросами ("отправьте + в чат"). <span class="punish">[мут на 4 часа]</span>
+4.4.1. Если на опрос ответило более 5 человек - организатору двойное наказание, участникам мут на 2 часа.
+4.5. Злоупотребление нецензурной лексикой. <span class="punish">[мут на 2 - 4 часа]</span>
+4.6. Оскорбления, унижения, угрозы к игрокам. <span class="punish">[мут на 4 часа]</span>
+4.7. Аморальное поведение, темы 18+. <span class="punish">[мут на 2 - 3 часа]</span>
+4.8. Внеигровой обман игроков (Alt+F4 и т.д.). <span class="punish">[мут на 6 часов]</span>
+4.9. Публичная критика проекта. <span class="punish">[мут на 1 - 5 дней]</span>
+4.10. Оскорбление своих родителей. <span class="punish">[мут 5-15 дней]</span>
+4.11. Затрагивание политики, агитация. <span class="punish">[бан 3-7 дней или мут 2 дня]</span>
+4.12. Выдача себя за администрацию. <span class="punish">[бан на 3 дня]</span>
+4.13. Угрозы баном/киком/мутом. <span class="punish">[бан на 12 часов]</span>
+4.14. Реклама в ЛС, обход наказания. <span class="punish">[бан на 60 дней]</span>
+4.15. Оскорбление модерации и администрации. <span class="punish">[бан 5-15 дней]</span>
+4.16. Оскорбление ютуберов проекта. <span class="punish">[бан 1-5 дней]</span>
+4.17. Пропаганда нацизма/расизма/наркотиков. <span class="punish">[бан на 3 дня]</span>
+4.18. Пропаганда терроризма. <span class="punish">[бан на 7 дней]</span>
+4.19. Продажа чего-либо за реальные деньги. <span class="punish">[бан на 4 дня]</span>
+4.20. Реклама и пиар соцсетей. <span class="punish">[бан на 3 дня]</span>
+4.21. Распространение вредоносных ссылок. <span class="punish">[бан на 14 дней]</span>
+4.22. Доксинг (распространение личных данных). <span class="punish">[бан на 30 дней]</span>
+4.23. Шутки в сторону администрации. <span class="punish">[бан на 2 дня]</span>
+4.24. Шутки в сторону ютуберов. <span class="punish">[бан на 1 день]</span>
+4.25. Провокация на нарушение правил. <span class="punish">[бан от 12ч до 4 дней]</span>
+4.26. Неадекватное общение с администрацией. <span class="punish">[мут на 12 часов]</span>
+4.27. Угроза администрации снятием. <span class="punish">[мут на 4 часа]</span>
+4.28. Неадекватное общение с ютуберами. <span class="punish">[мут на 6 часов]</span>
+4.29. Упоминание денежных операций (реальных). <span class="punish">[мут на 2 дня]</span>
+4.30. Помеха работе персоналу. <span class="punish">[бан на 6 часов]</span>
             </div>
-            <div class="rule-item">
-                <span class="rule-id">6.9</span> <span data-lang="r69">Запрещено шутить про наличие дюпа. Нашел реальный дюп — пиши админу!</span>
+        </div>
+
+        <button class="accordion" data-lang="r_sec_5">5.0 Игровой процесс</button>
+        <div class="panel">
+            <div class="panel-content" data-lang="r_text_5">
+5.1. Намеренное причинение вреда проекту, лаг-машины, багоюз. <span class="punish">[бан 25 дней / перманент]</span>
+5.1.1. Использование версий 1.13+ для преимущества (прохождение под блоками). <span class="punish">[бан на 15 дней]</span>
+5.1.2. Строительство ловушек без возможности выхода (рамки). <span class="punish">[бан 25 дней + снос]</span>
+5.2. Использование читов и стороннего ПО. <span class="punish">[бан на 50 дней / бан по IP]</span>
+5.2.1. Совместная игра с читером. <span class="punish">[бан на 50 дней]</span>
+5.2.2. Признание на проверке. <span class="punish">[бан на 50 дней]</span>
+5.2.3. Auto-копатели/лесорубы. <span class="punish">[бан на 2 дня]</span>
+5.2.5. Запрещенные плагины/модификации. <span class="punish">[бан на 14 дней]</span>
+5.2.6. Неадекватное поведение на проверке. <span class="punish">[бан на 50 дней]</span>
+5.2.6.1 Виртуальные машины, манипуляции с доступом. <span class="punish">[бан на 50 дней]</span>
+5.2.7. Читы удаленные менее 14 дней назад. <span class="punish">[бан на 50 дней]</span>
+
+<strong>Список запрещенных модификаций:</strong>
+ElytraSwap, ArmorHotSwap, AFK-Fish - 5д
+InvMove, TopkaAutoBuy - 7д
+GoProne - 15д | StepUp - 30д
+X-ray, AutoAttack, FreeCam, AutoTotem и др. - 50д
+
+5.2.7.1 Признание в наличии читов в чате. <span class="punish">[бан на 10 дней]</span>
+5.3. Права модерации на проверке (AnyDesk запрещен, программы скачиваются сами).
+5.3.3. Старшие Модераторы могут проверить ваш FunPay.
+5.4. Использование макросов/кликеров. <span class="punish">[бан на 3 дня]</span>
+5.5. Хранение запрещенного ПО = использование. <span class="punish">[бан на 50 дней]</span>
+5.6. Флуд командами. <span class="punish">[кик / бан 12 часов]</span>
+5.7. Некорректный текст на табличках/регионах. <span class="punish">[бан 5-30 дней]</span>
+5.8. Жалоба на самого себя / ложные жалобы. <span class="punish">[бан 3 дня]</span>
+5.9. Реклама/продажа читов и магазинов. <span class="punish">[перманентный бан]</span>
+            </div>
+        </div>
+
+        <button class="accordion" data-lang="r_sec_6">6.0 Правила для донатеров</button>
+        <div class="panel">
+            <div class="panel-content" data-lang="r_text_6">
+6.1. Использование прав во вред проекту. <span class="punish">[снятие + бан]</span>
+6.2. Угроза игрокам наказанием без причины. <span class="punish">[бан 12 часов]</span>
+6.3. Некорректная выдача наказания. <span class="punish">[бан 14 дней]</span>
+6.4. Обязанность предоставить док-ва на форуме в течении часа.
+6.5. /bc не по назначению. <span class="punish">[бан 1-4 дня]</span>
+6.6. Тест наказаний только на себе с причиной "Тест". Нарушение - 14 дней бана.
+6.7. Флуд выдачей наказаний. <span class="punish">[бан по 6.3]</span>
+6.8. Персоналу запрещен скам на деньги. Гриферство разрешено.
+6.9. Шутки про дюп запрещены. Нашел реальный дюп — пиши в лс @otxao. Награда 2500+ руб. <span class="punish">[нарушение - мут 1 день]</span>
+            </div>
+        </div>
+
+        <button class="accordion" data-lang="r_sec_7">7.0 Дополнительно</button>
+        <div class="panel">
+            <div class="panel-content" data-lang="r_text_7">
+7.0. Персоналу запрещено оскорблять игроков ("Езз", "поплачь"). <span class="punish">[варн]</span>
+7.1. Закрытые варпы / варпы в трапе. <span class="punish">[удаление варпа / бан 3 дня]</span>
+7.2. Оскорбление администрации в /nick. <span class="punish">[мут 1 день]</span>
+7.3 Запрещено упоминать родню. <span class="punish">[мут 1 день]</span>
+7.4 Запрещено оскорблять родню. <span class="punish">[мут 2 дня]</span>
+• Любое нарушение в локальном чате подлежит наказанию.
+• Жалобы на Высшую Администрацию не подлежат обжалованию.
             </div>
         </div>
     </div>
 
-    <footer>&copy; 2026 HIVEGRIEF.SU | All Rights Reserved</footer>
+    <footer>&copy; 2026 HIVEGRIEF.SU | By HiveGrief</footer>
 </div>
 
 <script>
@@ -187,26 +271,21 @@
         ru: {
             nav_shop: "Магазин доната", nav_tg: "Наш Telegram", nav_ds: "Наш Discord",
             adv_title: "Наши преимущества",
-            feat_1_h: "Доброе комьюнити", feat_1_p: "Мы создаем уютную атмосферу для игры. У нас адекватные игроки и отзывчивая администрация.",
-            feat_2_h: "Честный гриф", feat_2_p: "Классический опыт выживания, где разрешены рейды и ПвП.",
-            feat_3_h: "Мощное железо", feat_3_p: "Топовое оборудование гарантирует стабильный ТПС и отсутствие лагов.",
+            feat_1_h: "Доброе комьюнити", feat_1_p: "Мы ценим каждого игрока. У нас вы найдете новых друзей без токсика.",
+            feat_2_h: "Тот самый гриф", feat_2_p: "Классическое выживание с рейдами. Покажи силу своего клана!",
+            feat_3_h: "Мощное железо", feat_3_p: "Играй без лагов 24/7. Стабильный ТПС гарантирован.",
             rules_title: "ПРАВИЛА ПРОЕКТА",
-            r_sec_1: "1.0 Основные правила", r11: "Правила обязательны для всех. Незнание не освобождает от ответственности.", r12: "Официальный IP: mc.hivegrief.su. Остальные ресурсы — подделка.", r15: "Обман администрации, взломы и вред серверу запрещены.", p15: "Наказание: Бан навсегда + обнуление.",
-            r_sec_4: "4.0 Правила чата", r41: "Флуд и спам (более 10 символов или 3 повтора).", p41: "Наказание: Мут на 2 часа.", r43: "Реклама сторонних проектов.", p43: "Наказание: Бан навсегда.",
-            r_sec_5: "5.0 Игровой процесс", r52: "Использование читов, макросов и стороннего ПО.", p52: "Наказание: Бан на 50 дней.",
-            r_sec_6: "6.0 Для донатеров", r61: "Использование прав в целях вреда проекту.", p61: "Наказание: Снятие прав + Бан.", r69: "Запрещено шутить про наличие дюпа. Нашел реальный дюп — пиши админу!"
+            r_sec_1: "1.0 Общее положение", r_sec_3: "3.0 Донат услуги", r_sec_4: "4.0 Общение", r_sec_5: "5.0 Геймплей", r_sec_6: "6.0 Донатеры", r_sec_7: "7.0 Дополнительно"
+            // В продакшене тут должны быть полные тексты для EN, но для RU они зашиты в HTML выше.
         },
         en: {
             nav_shop: "Donate Shop", nav_tg: "Our Telegram", nav_ds: "Our Discord",
             adv_title: "Our Advantages",
-            feat_1_h: "Friendly Community", feat_1_p: "We create a cozy atmosphere. We have decent players and responsive staff.",
-            feat_2_h: "Real Griefing", feat_2_p: "Classic survival experience where raids and PvP are allowed.",
-            feat_3_h: "Powerfull Hardware", feat_3_p: "Top-tier equipment guarantees stable TPS and no lags.",
+            feat_1_h: "Kind Community", feat_1_p: "We value every player. Find new friends here without toxicity.",
+            feat_2_h: "Real Griefing", feat_2_p: "Classic survival with raids. Show your clan power!",
+            feat_3_h: "Strong Hardware", feat_3_p: "Play 24/7 without lags. High TPS is guaranteed.",
             rules_title: "SERVER RULES",
-            r_sec_1: "1.0 General Rules", r11: "Rules are mandatory for everyone. Ignorance is no excuse.", r12: "Official IP: mc.hivegrief.su. All other resources are fake.", r15: "Deceiving staff, hacking and harming the server is forbidden.", p15: "Punishment: Permanent Ban + Wipe.",
-            r_sec_4: "4.0 Chat Rules", r41: "Flood and spam (10+ characters or 3+ repeats).", p41: "Punishment: Mute for 2 hours.", r43: "Advertising other projects.", p43: "Punishment: Permanent Ban.",
-            r_sec_5: "5.0 Gameplay", r52: "Using cheats, macros and 3rd party software.", p52: "Punishment: 50 Days Ban.",
-            r_sec_6: "6.0 For Donators", r61: "Using donor powers to harm the project.", p61: "Punishment: Rights Removal + Ban.", r69: "Joking about dupes is forbidden. Found a real dupe? DM Admin!"
+            r_sec_1: "1.0 General", r_sec_3: "3.0 Donation", r_sec_4: "4.0 Chat", r_sec_5: "5.0 Gameplay", r_sec_6: "6.0 Donators", r_sec_7: "7.0 Additional"
         }
     };
 
@@ -221,7 +300,20 @@
 
     function copyIP() {
         navigator.clipboard.writeText("mc.hivegrief.su");
-        alert("IP mc.hivegrief.su copied!");
+        alert("IP mc.hivegrief.su скопирован!");
+    }
+
+    var acc = document.getElementsByClassName("accordion");
+    for (var i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
     }
 
     const container = document.getElementById('snow-container');
