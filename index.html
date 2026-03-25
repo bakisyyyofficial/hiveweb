@@ -19,110 +19,71 @@
 
         #snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
 
-        /* Переключатель языка */
         .lang-switcher {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 2000;
-            display: flex;
-            gap: 10px;
+            position: fixed; top: 20px; right: 20px; z-index: 2000; display: flex; gap: 10px;
         }
 
         .lang-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            padding: 8px 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            transition: 0.3s;
-            font-weight: bold;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff; padding: 8px 15px; border-radius: 10px; cursor: pointer; backdrop-filter: blur(10px);
+            font-weight: bold; transition: 0.3s;
         }
 
-        .lang-btn.active {
-            background: #ffcc00;
-            color: #000;
-            border-color: #ffcc00;
-        }
+        .lang-btn.active { background: #ffcc00; color: #000; border-color: #ffcc00; }
 
         .container { max-width: 1100px; width: 100%; z-index: 1; }
 
         .glass-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 40px;
-            margin-bottom: 25px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px;
+            padding: 40px; margin-bottom: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         .server-header { text-align: center; margin-bottom: 20px; }
-        h1 { font-size: 4.5rem; margin: 0; letter-spacing: 8px; color: #fff; text-shadow: 0 0 30px rgba(255,255,255,0.1); }
+        h1 { font-size: 4.5rem; margin: 0; letter-spacing: 8px; color: #fff; text-shadow: 0 0 20px rgba(255,204,0,0.2); }
 
         .nav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 35px; }
         .nav-link {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 22px;
-            border-radius: 16px;
-            text-decoration: none;
-            color: #fff;
-            text-align: center;
-            font-weight: 600;
-            transition: 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 22px; border-radius: 16px; text-decoration: none; color: #fff;
+            text-align: center; display: flex; align-items: center; justify-content: center; gap: 12px;
+            transition: 0.3s; font-weight: 600;
         }
-        .nav-link:hover { background: rgba(255, 255, 255, 0.08); border-color: #fff; transform: translateY(-5px); }
+        .nav-link:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-3px); border-color: #ffcc00; }
 
-        /* Преимущества */
-        .promo-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            background: linear-gradient(90deg, #fff, #ffcc00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
+        .promo-title { text-align: center; font-size: 2.5rem; margin-bottom: 30px; color: #ffcc00; text-transform: uppercase; letter-spacing: 2px; }
+        
         .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .feature-item {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center; padding: 25px; background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .feature-item i { font-size: 2.5rem; color: #ffcc00; margin-bottom: 15px; }
-        .feature-item h3 { margin: 10px 0; font-size: 1.2rem; }
-        .feature-item p { font-size: 0.9rem; opacity: 0.7; line-height: 1.4; }
+        .feature-item h3 { margin: 10px 0; }
+        .feature-item p { opacity: 0.7; font-size: 0.9rem; line-height: 1.5; }
 
-        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
-        .step-card { background: rgba(255, 255, 255, 0.02); padding: 20px; border-radius: 18px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.05); }
-        .step-num { color: #ffcc00; font-size: 1.8rem; font-weight: 800; margin-bottom: 5px; }
-
-        .accordion {
-            background: rgba(255, 255, 255, 0.02); color: #ffcc00; cursor: pointer; padding: 20px; width: 100%; border: none;
-            text-align: left; font-size: 1.3rem; font-weight: bold; border-radius: 12px; margin-top: 10px;
-            border-left: 5px solid #ffcc00; display: flex; justify-content: space-between;
+        /* Правила */
+        .rule-section { margin-top: 40px; }
+        .rule-category {
+            color: #ffcc00; font-size: 1.6rem; font-weight: 800;
+            border-left: 5px solid #ffcc00; padding-left: 15px; margin-bottom: 20px;
+            text-transform: uppercase;
         }
-        .panel { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-        .panel-content { padding: 20px 0; line-height: 1.6; white-space: pre-line; color: #ccc; font-size: 0.95rem; }
+        .rule-item {
+            background: rgba(255, 255, 255, 0.03); padding: 18px;
+            border-radius: 14px; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+        .rule-id { color: #ffcc00; font-weight: bold; margin-right: 10px; }
+        .punishment { color: #ff4444; font-weight: bold; display: block; margin-top: 8px; font-size: 0.9rem; }
 
-        footer { text-align: center; opacity: 0.2; padding: 30px; }
+        footer { text-align: center; opacity: 0.3; padding: 40px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
 <div class="lang-switcher">
-    <button class="lang-btn active" onclick="setLang('ru')">RU</button>
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn active" id="btn-ru" onclick="setLang('ru')">RU</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
 </div>
 
 <div id="snow-container"></div>
@@ -132,23 +93,18 @@
         <div class="server-header">
             <h1>HIVEGRIEF</h1>
         </div>
-        
         <div class="nav-grid">
             <div class="nav-link" onclick="copyIP()" style="cursor: pointer;">
-                <i class="fa-solid fa-server"></i>
-                <span>mc.hivegrief.su</span>
+                <i class="fa-solid fa-server"></i><span>mc.hivegrief.su</span>
             </div>
             <a href="https://shop.hivegrief.su" class="nav-link" target="_blank">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span data-lang="nav_shop">Магазин доната</span>
+                <i class="fa-solid fa-cart-shopping"></i><span data-lang="nav_shop">Магазин доната</span>
             </a>
             <a href="https://t.me/HiveGriefOff" class="nav-link" target="_blank">
-                <i class="fa-brands fa-telegram"></i>
-                <span data-lang="nav_tg">Наш Telegram</span>
+                <i class="fa-brands fa-telegram"></i><span data-lang="nav_tg">Наш Telegram</span>
             </a>
             <a href="https://discord.gg/hivegrief" class="nav-link" target="_blank">
-                <i class="fa-brands fa-discord"></i>
-                <span data-lang="nav_ds">Наш Discord</span>
+                <i class="fa-brands fa-discord"></i><span data-lang="nav_ds">Наш Discord</span>
             </a>
         </div>
     </div>
@@ -157,53 +113,73 @@
         <h2 class="promo-title" data-lang="adv_title">Наши преимущества</h2>
         <div class="features-grid">
             <div class="feature-item">
-                <i class="fa-solid fa-users"></i>
+                <i class="fa-solid fa-heart"></i>
                 <h3 data-lang="feat_1_h">Доброе комьюнити</h3>
-                <p data-lang="feat_1_p">Мы ценим каждого игрока. У нас вы найдете новых друзей и адекватное общение без лишнего токсика.</p>
+                <p data-lang="feat_1_p">Мы создаем уютную атмосферу для игры. У нас адекватные игроки и отзывчивая администрация.</p>
             </div>
             <div class="feature-item">
-                <i class="fa-solid fa-shield-halved"></i>
+                <i class="fa-solid fa-swords"></i>
                 <h3 data-lang="feat_2_h">Честный гриф</h3>
-                <p data-lang="feat_2_p">Классический гриферский опыт с уникальными механиками, где побеждает самый хитрый и сильный.</p>
+                <p data-lang="feat_2_p">Классический опыт выживания, где разрешены рейды и ПвП. Покажи, на что ты способен!</p>
             </div>
             <div class="feature-item">
-                <i class="fa-solid fa-bolt"></i>
-                <h3 data-lang="feat_3_h">Стабильность</h3>
-                <p data-lang="feat_3_p">Мощное железо обеспечивает игру без лагов 24/7. Твой прогресс всегда под надежной защитой.</p>
+                <i class="fa-solid fa-microchip"></i>
+                <h3 data-lang="feat_3_h">Мощное железо</h3>
+                <p data-lang="feat_3_p">Наши сервера работают на топовом оборудовании, что гарантирует стабильный ТПС и отсутствие лагов.</p>
             </div>
         </div>
     </div>
 
     <div class="glass-card">
-        <h2 style="text-align: center; margin-top: 0;" data-lang="how_join">КАК ПОДКЛЮЧИТЬСЯ</h2>
-        <div class="steps-grid">
-            <div class="step-card">
-                <div class="step-num">01</div>
-                <div data-lang="step_1">Версия игры<br><b>1.16.5</b></div>
+        <h2 style="text-align: center; margin-bottom: 10px;" data-lang="rules_title">ПРАВИЛА ПРОЕКТА</h2>
+        
+        <div class="rule-section">
+            <div class="rule-category" data-lang="r_sec_1">1.0 Основные правила</div>
+            <div class="rule-item">
+                <span class="rule-id">1.1</span> <span data-lang="r11">Правила обязательны для всех. Незнание не освобождает от ответственности.</span>
             </div>
-            <div class="step-card">
-                <div class="step-num">02</div>
-                <div data-lang="step_2">IP Адрес<br><b>mc.hivegrief.su</b></div>
+            <div class="rule-item">
+                <span class="rule-id">1.2</span> <span data-lang="r12">Официальный IP: mc.hivegrief.su. Остальные ресурсы — подделка.</span>
             </div>
-            <div class="step-card">
-                <div class="step-num">03</div>
-                <div data-lang="step_3">Вход<br><b>/reg [пароль]</b></div>
+            <div class="rule-item">
+                <span class="rule-id">1.5</span> <span data-lang="r15">Обман администрации, взломы и вред серверу запрещены.</span>
+                <span class="punishment" data-lang="p15">Наказание: Бан навсегда + обнуление.</span>
+            </div>
+        </div>
+
+        <div class="rule-section">
+            <div class="rule-category" data-lang="r_sec_4">4.0 Правила чата</div>
+            <div class="rule-item">
+                <span class="rule-id">4.1</span> <span data-lang="r41">Флуд и спам (более 10 символов или 3 повтора).</span>
+                <span class="punishment" data-lang="p41">Наказание: Мут на 2 часа.</span>
+            </div>
+            <div class="rule-item">
+                <span class="rule-id">4.3</span> <span data-lang="r43">Реклама сторонних проектов.</span>
+                <span class="punishment" data-lang="p43">Наказание: Бан навсегда.</span>
+            </div>
+        </div>
+
+        <div class="rule-section">
+            <div class="rule-category" data-lang="r_sec_5">5.0 Игровой процесс</div>
+            <div class="rule-item">
+                <span class="rule-id">5.2</span> <span data-lang="r52">Использование читов, макросов и стороннего ПО.</span>
+                <span class="punishment" data-lang="p52">Наказание: Бан на 50 дней.</span>
+            </div>
+        </div>
+
+        <div class="rule-section">
+            <div class="rule-category" data-lang="r_sec_6">6.0 Правила для донатеров</div>
+            <div class="rule-item">
+                <span class="rule-id">6.1</span> <span data-lang="r61">Использование прав в целях вреда проекту.</span>
+                <span class="punishment" data-lang="p61">Наказание: Снятие прав + Бан.</span>
+            </div>
+            <div class="rule-item">
+                <span class="rule-id">6.9</span> <span data-lang="r69">Запрещено шутить про наличие дюпа. Нашел реальный дюп — пиши админу!</span>
             </div>
         </div>
     </div>
 
-    <div class="glass-card">
-        <h2 style="margin-top: 0;" data-lang="rules_title">ПРАВИЛА ПРОЕКТА</h2>
-        <button class="accordion" data-lang="r_sec_1">1.0 Общее положение</button>
-        <div class="panel">
-            <div class="panel-content" data-lang="r_text_1">
-                1.1. Правила HiveGrief обязательны для всех. Незнание не освобождает от ответственности.
-                1.2. Регистрируясь, вы автоматически принимаете данные правила.
-            </div>
-        </div>
-        </div>
-
-    <footer>&copy; 2026 HIVEGRIEF.SU</footer>
+    <footer>&copy; 2026 HIVEGRIEF.SU | All Rights Reserved</footer>
 </div>
 
 <script>
@@ -211,32 +187,36 @@
         ru: {
             nav_shop: "Магазин доната", nav_tg: "Наш Telegram", nav_ds: "Наш Discord",
             adv_title: "Наши преимущества",
-            feat_1_h: "Доброе комьюнити", feat_1_p: "Мы ценим каждого игрока. У нас вы найдете новых друзей и адекватное общение.",
-            feat_2_h: "Честный гриф", feat_2_p: "Классический гриферский опыт с уникальными механиками и честным ПвП.",
-            feat_3_h: "Стабильность", feat_3_p: "Мощное железо обеспечивает игру без лагов 24/7. Твой прогресс защищен.",
-            how_join: "КАК ПОДКЛЮЧИТЬСЯ", step_1: "Версия игры<br><b>1.16.5</b>", step_2: "IP Адрес<br><b>mc.hivegrief.su</b>", step_3: "Вход<br><b>/reg [пароль]</b>",
-            rules_title: "ПРАВИЛА ПРОЕКТА", r_sec_1: "1.0 Общее положение",
-            r_text_1: "1.1. Правила HiveGrief обязательны для всех. Незнание не освобождает от ответственности.\n1.2. Регистрируясь, вы автоматически принимаете данные правила."
+            feat_1_h: "Доброе комьюнити", feat_1_p: "Мы создаем уютную атмосферу для игры. У нас адекватные игроки и отзывчивая администрация.",
+            feat_2_h: "Честный гриф", feat_2_p: "Классический опыт выживания, где разрешены рейды и ПвП.",
+            feat_3_h: "Мощное железо", feat_3_p: "Топовое оборудование гарантирует стабильный ТПС и отсутствие лагов.",
+            rules_title: "ПРАВИЛА ПРОЕКТА",
+            r_sec_1: "1.0 Основные правила", r11: "Правила обязательны для всех. Незнание не освобождает от ответственности.", r12: "Официальный IP: mc.hivegrief.su. Остальные ресурсы — подделка.", r15: "Обман администрации, взломы и вред серверу запрещены.", p15: "Наказание: Бан навсегда + обнуление.",
+            r_sec_4: "4.0 Правила чата", r41: "Флуд и спам (более 10 символов или 3 повтора).", p41: "Наказание: Мут на 2 часа.", r43: "Реклама сторонних проектов.", p43: "Наказание: Бан навсегда.",
+            r_sec_5: "5.0 Игровой процесс", r52: "Использование читов, макросов и стороннего ПО.", p52: "Наказание: Бан на 50 дней.",
+            r_sec_6: "6.0 Для донатеров", r61: "Использование прав в целях вреда проекту.", p61: "Наказание: Снятие прав + Бан.", r69: "Запрещено шутить про наличие дюпа. Нашел реальный дюп — пиши админу!"
         },
         en: {
             nav_shop: "Donate Shop", nav_tg: "Our Telegram", nav_ds: "Our Discord",
             adv_title: "Our Advantages",
-            feat_1_h: "Kind Community", feat_1_p: "We value every player. Here you will find new friends and friendly communication.",
-            feat_2_h: "Fair Griefing", feat_2_p: "Classic griefing experience with unique mechanics and fair PvP.",
-            feat_3_h: "Stability", feat_3_p: "Powerful hardware ensures lag-free play 24/7. Your progress is safe.",
-            how_join: "HOW TO JOIN", step_1: "Game Version<br><b>1.16.5</b>", step_2: "IP Address<br><b>mc.hivegrief.su</b>", step_3: "Join<br><b>/reg [password]</b>",
-            rules_title: "SERVER RULES", r_sec_1: "1.0 General Provisions",
-            r_text_1: "1.1. HiveGrief rules are mandatory for everyone. Ignorance is no excuse.\n1.2. By registering, you automatically accept these rules."
+            feat_1_h: "Friendly Community", feat_1_p: "We create a cozy atmosphere. We have decent players and responsive staff.",
+            feat_2_h: "Real Griefing", feat_2_p: "Classic survival experience where raids and PvP are allowed.",
+            feat_3_h: "Powerfull Hardware", feat_3_p: "Top-tier equipment guarantees stable TPS and no lags.",
+            rules_title: "SERVER RULES",
+            r_sec_1: "1.0 General Rules", r11: "Rules are mandatory for everyone. Ignorance is no excuse.", r12: "Official IP: mc.hivegrief.su. All other resources are fake.", r15: "Deceiving staff, hacking and harming the server is forbidden.", p15: "Punishment: Permanent Ban + Wipe.",
+            r_sec_4: "4.0 Chat Rules", r41: "Flood and spam (10+ characters or 3+ repeats).", p41: "Punishment: Mute for 2 hours.", r43: "Advertising other projects.", p43: "Punishment: Permanent Ban.",
+            r_sec_5: "5.0 Gameplay", r52: "Using cheats, macros and 3rd party software.", p52: "Punishment: 50 Days Ban.",
+            r_sec_6: "6.0 For Donators", r61: "Using donor powers to harm the project.", p61: "Punishment: Rights Removal + Ban.", r69: "Joking about dupes is forbidden. Found a real dupe? DM Admin!"
         }
     };
 
     function setLang(lang) {
         document.querySelectorAll('[data-lang]').forEach(el => {
             const key = el.getAttribute('data-lang');
-            el.innerHTML = translations[lang][key];
+            if (translations[lang][key]) el.innerHTML = translations[lang][key];
         });
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
+        document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
     }
 
     function copyIP() {
@@ -244,17 +224,8 @@
         alert("IP mc.hivegrief.su copied!");
     }
 
-    var acc = document.getElementsByClassName("accordion");
-    for (var i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
-        });
-    }
-
     const container = document.getElementById('snow-container');
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 35; i++) {
         const flake = document.createElement('div');
         flake.innerHTML = '❄';
         flake.style.cssText = `position: absolute; color: white; opacity: ${Math.random()}; left: ${Math.random() * 100}%; top: -20px; pointer-events: none;`;
