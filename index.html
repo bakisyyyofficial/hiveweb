@@ -3,506 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | THE ULTIMATE GRIEF EXPERIENCE</title>
+    <title>HIVEGRIEF | ОФИЦИАЛЬНЫЙ САЙТ</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/bakisyyyofficial/hiveweb/main/83234d750c18251e.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     
     <style>
-        /* ============================================================
-           CSS VARIABLES & ROOT ENGINE
-           ============================================================ */
         :root {
             --primary: #ffcc00;
-            --primary-rgb: 255, 204, 0;
+            --primary-glow: rgba(255, 204, 0, 0.4);
             --secondary: #ff8800;
-            --secondary-rgb: 255, 136, 0;
             --accent: #4CAF50;
-            --bg-deep: #030303;
-            --glass-bg: rgba(10, 10, 10, 0.92);
-            --glass-border: rgba(255, 255, 255, 0.07);
-            --text-pure: #ffffff;
-            --text-gray: #999999;
-            --neon-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
-            --trans-fast: 0.2s ease;
-            --trans-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg: #080808;
+            --panel: rgba(15, 15, 15, 0.85);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #ffffff;
+            --text-dim: #a0a0a0;
         }
 
-        /* ============================================================
-           RESET & BASE STYLES
-           ============================================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-            -webkit-user-drag: none;
-        }
-
-        html { scroll-behavior: smooth; }
-
+        /* --- СИСТЕМНЫЙ СЛОЙ --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
         body {
-            background-color: var(--bg-deep);
-            color: var(--text-pure);
+            background-color: var(--bg);
+            color: var(--text);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            line-height: 1.6;
+            background-image: radial-gradient(circle at 50% 50%, #151515 0%, #080808 100%);
         }
 
-        /* ============================================================
-           CANVAS & BACKGROUND LAYERS
-           ============================================================ */
-        #trail-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 999999; /* ПОВЕРХ ВСЕГО */
-            pointer-events: none;
+        #cursor-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 9999; pointer-events: none;
         }
 
-        #bg-canvas-hive {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -2;
-            background: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
+        .neon-top-line {
+            position: fixed; top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--primary), transparent);
+            z-index: 1000; box-shadow: 0 0 15px var(--primary);
         }
 
-        .cyber-grid-v2 {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(255,204,0,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,204,0,0.03) 1px, transparent 1px);
-            background-size: 80px 80px;
-            z-index: -1;
-            perspective: 1000px;
-            transform: rotateX(45deg);
-            transform-origin: top;
-            animation: grid-infinite 60s linear infinite;
-        }
-
-        @keyframes grid-infinite {
-            from { background-position: 0 0; }
-            to { background-position: 0 1000px; }
-        }
-
-        /* ============================================================
-           NEON OVERDRIVE (TOP BARS)
-           ============================================================ */
-        .neon-mega-bar {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 5px;
-            background: linear-gradient(90deg, #ffcc00, #ff8800, #ffcc00);
-            background-size: 200% auto;
-            z-index: 100000;
-            box-shadow: 0 0 30px var(--primary), 0 0 60px var(--secondary);
-            animation: neon-slide 4s infinite linear;
-        }
-
-        .neon-mega-bar::after {
-            content: '';
-            position: absolute; top: 5px; left: 0; width: 100%; height: 2px;
-            background: rgba(255, 136, 0, 0.3);
-            filter: blur(5px);
-        }
-
-        @keyframes neon-slide {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-
-        /* ============================================================
-           UI COMPONENTS (GLASSMORPHISM)
-           ============================================================ */
-        .ultra-container {
-            max-width: 1400px;
+        /* --- КОНТЕНТ (УМЕНЬШЕННЫЙ МАСШТАБ) --- */
+        .wrapper {
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 200px 25px 100px;
+            padding: 100px 20px;
             position: relative;
-            z-index: 100;
+            z-index: 10;
         }
 
-        .hero-title-group {
-            text-align: center;
-            margin-bottom: 150px;
-        }
-
-        .glitch-text {
-            font-size: clamp(4rem, 15vw, 10rem);
+        header { text-align: center; margin-bottom: 60px; }
+        
+        .logo-small {
+            font-size: 4.5rem;
             font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            color: #fff;
-            position: relative;
-            display: inline-block;
-            filter: drop-shadow(0 0 50px var(--primary-glow));
-        }
-
-        .online-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            background: rgba(255,255,255,0.05);
-            padding: 15px 40px;
-            border-radius: 100px;
-            border: 1px solid var(--glass-border);
-            margin-top: 30px;
-            backdrop-filter: blur(20px);
-            font-weight: 900;
-            color: var(--accent);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-        }
-
-        /* ============================================================
-           CARDS ENGINE
-           ============================================================ */
-        .mega-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 60px;
-            padding: 80px;
-            margin-bottom: 50px;
-            transition: var(--trans-slow);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mega-card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,204,0,0.03) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .mega-card:hover {
-            transform: translateY(-15px);
-            border-color: var(--primary);
-            box-shadow: 0 60px 120px rgba(255,204,0,0.1);
-        }
-
-        /* ============================================================
-           OWNER BLOCK
-           ============================================================ */
-        .owner-identity {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .owner-rank {
-            font-family: 'JetBrains Mono';
-            color: var(--primary);
-            font-weight: 700;
             letter-spacing: 15px;
             text-transform: uppercase;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-        }
-
-        .owner-name {
-            font-size: 6rem;
-            font-weight: 900;
-            margin: 0 0 40px;
-            background: linear-gradient(to bottom, #fff, #888);
+            background: linear-gradient(to bottom, #fff 40%, var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px var(--primary-glow));
         }
 
-        .social-button {
-            padding: 25px 80px;
-            background: linear-gradient(45deg, #ff0000, #cc0000);
-            border-radius: 30px;
-            color: #fff;
+        /* --- СТИЛЬНЫЕ ССЫЛКИ --- */
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .btn-link {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
             text-decoration: none;
-            font-weight: 900;
-            font-size: 1.5rem;
+            color: #fff;
             display: flex;
             align-items: center;
             gap: 20px;
-            box-shadow: 0 20px 40px rgba(255,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-link::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-link:hover::before { left: 100%; }
+
+        .btn-link i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            transition: transform 0.4s;
+        }
+
+        .btn-link div b { display: block; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-link div span { font-size: 0.85rem; color: var(--text-dim); }
+
+        .btn-link:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 10px var(--primary-glow);
+        }
+        .btn-link:hover i { transform: scale(1.2) rotate(5deg); }
+
+        /* --- ПОЧЕМУ МЫ (КАРТОЧКИ) --- */
+        .why-us {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .why-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
             transition: 0.3s;
         }
+        .why-card:hover { background: rgba(255,204,0,0.05); }
+        .why-card i { font-size: 2rem; color: var(--accent); margin-bottom: 15px; }
+        .why-card h4 { font-size: 1rem; margin-bottom: 8px; text-transform: uppercase; }
+        .why-card p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; }
 
-        .social-button:hover {
-            transform: scale(1.05) rotate(-1deg);
-            box-shadow: 0 30px 60px rgba(255,0,0,0.5);
-        }
-
-        /* ============================================================
-           SIDEBARS & GRIDS (WHY US)
-           ============================================================ */
-        .split-view {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 40px;
+        /* --- БЛОК ВЛАДЕЛЬЦА --- */
+        .owner-card {
+            background: linear-gradient(135deg, rgba(20,20,20,0.9), rgba(10,10,10,0.9));
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
             margin-bottom: 40px;
         }
-
-        .nav-grid-v2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-        }
-
-        .nav-item-v2 {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--glass-border);
-            border-radius: 45px;
-            padding: 50px;
-            text-decoration: none;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .nav-item-v2 i { font-size: 4rem; color: var(--primary); transition: 0.5s; }
-        .nav-item-v2 span { font-size: 1.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; }
+        .owner-card h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 10px; }
+        .owner-card .tag { color: var(--primary); font-family: 'JetBrains Mono'; letter-spacing: 5px; font-size: 0.9rem; margin-bottom: 20px; display: block; }
         
-        .nav-item-v2:hover { background: rgba(255,204,0,0.07); border-color: var(--primary); }
-        .nav-item-v2:hover i { transform: scale(1.2) rotate(10deg); color: #fff; filter: drop-shadow(0 0 20px var(--primary)); }
+        .btn-yt-small {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: #ff0000; color: #fff; text-decoration: none;
+            padding: 12px 30px; border-radius: 12px; font-weight: 800; font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .btn-yt-small:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255,0,0,0.4); }
 
-        .side-why-box {
-            background: linear-gradient(210deg, rgba(255,204,0,0.1) 0%, rgba(0,0,0,0) 100%);
-            border: 2px solid var(--primary);
-            border-radius: 50px;
-            padding: 50px;
+        /* --- ПРАВИЛА (ПОЛНЫЙ ТЕКСТ) --- */
+        .rules-container {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 40px;
         }
 
-        .side-why-box h2 {
-            font-size: 2rem;
-            text-transform: uppercase;
-            margin-bottom: 40px;
+        .rules-container h3 {
+            font-size: 2rem; text-align: center; margin-bottom: 40px; letter-spacing: 10px; text-transform: uppercase;
+        }
+
+        .acc-item { margin-bottom: 15px; }
+        .acc-btn {
+            width: 100%; padding: 25px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
             border-left: 10px solid var(--primary);
-            padding-left: 20px;
+            border-radius: 15px;
+            color: #fff; font-size: 1.1rem; font-weight: 800;
+            text-align: left; display: flex; justify-content: space-between; align-items: center;
+            transition: 0.3s;
+        }
+        .acc-btn:hover { background: rgba(255,255,255,0.05); padding-left: 30px; }
+
+        .acc-panel {
+            max-height: 0; overflow: hidden; transition: 0.5s cubic-bezier(0, 1, 0, 1);
+            background: rgba(0,0,0,0.2); margin-top: -5px; border-radius: 0 0 15px 15px;
+        }
+        .acc-panel.active { max-height: 2000px; padding: 30px; border: 1px solid var(--border); border-top: none; transition: 0.5s ease-in-out; }
+
+        .rules-text { font-size: 0.95rem; line-height: 1.8; color: #ccc; white-space: pre-line; }
+        .punish { color: #ff5555; font-weight: 900; background: rgba(255,0,0,0.1); padding: 2px 8px; border-radius: 5px; }
+
+        /* --- ФУТЕР --- */
+        footer { padding: 60px 0; text-align: center; opacity: 0.4; font-size: 0.8rem; }
+
+        /* --- ГРИД ФОН --- */
+        .grid-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px; z-index: -1;
+            mask-image: radial-gradient(circle, black, transparent 80%);
         }
 
-        .why-point {
-            margin-bottom: 40px;
-            display: flex;
-            gap: 25px;
-        }
-
-        .why-point i { color: var(--accent); font-size: 2rem; flex-shrink: 0; }
-        .why-point h4 { font-size: 1.4rem; margin-bottom: 10px; color: #fff; }
-        .why-point p { color: var(--text-gray); font-size: 1.05rem; line-height: 1.5; }
-
-        /* ============================================================
-           RULES ENGINE (DUAL LANGUAGE)
-           ============================================================ */
-        .rules-super-block { padding: 100px 50px; }
-        .rules-main-title { font-size: 5rem; text-align: center; margin-bottom: 80px; letter-spacing: 20px; }
-
-        .lang-switch {
-            display: flex; justify-content: center; gap: 20px; margin-bottom: 50px;
-        }
-
-        .lang-btn {
-            background: transparent; border: 2px solid var(--primary); color: #fff;
-            padding: 15px 40px; border-radius: 15px; font-weight: 900; cursor: pointer; transition: 0.3s;
-        }
-
-        .lang-btn.active { background: var(--primary); color: #000; }
-
-        .accordion-v5 { margin-bottom: 30px; }
-        .acc-head-v5 {
-            width: 100%; padding: 45px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--glass-border);
-            border-left: 25px solid var(--primary);
-            border-radius: 35px;
-            color: #fff; font-size: 2rem; font-weight: 900;
-            text-align: left; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: var(--trans-fast);
-        }
-
-        .acc-head-v5:hover { transform: scale(1.02); background: rgba(255,204,0,0.05); }
-
-        .acc-body-v5 {
-            max-height: 0; overflow: hidden; transition: 0.6s ease;
-            background: rgba(0,0,0,0.5); border-radius: 0 0 35px 35px;
-        }
-        
-        .acc-body-v5.open { max-height: 8000px; padding: 60px; border: 1px solid var(--glass-border); border-top: none; }
-
-        .rule-text { font-size: 1.25rem; line-height: 2.2; color: #eee; white-space: pre-line; font-family: 'Inter'; }
-        .punish-box { 
-            color: #ff4444; background: rgba(255,0,0,0.1); padding: 5px 15px; 
-            border-radius: 10px; font-weight: 900; border: 1px solid rgba(255,0,0,0.3);
-            display: inline-block; margin-top: 10px;
-        }
-
-        /* ============================================================
-           DYNAMIC LISTS (TOP PLAYERS / PURCHASES)
-           ============================================================ */
-        .live-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
-        .stat-card { background: rgba(0,0,0,0.4); border-radius: 40px; padding: 40px; border: 1px solid var(--glass-border); }
-        .stat-card h3 { color: var(--primary); text-transform: uppercase; margin-bottom: 30px; text-align: center; }
-        .stat-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--glass-border); }
-
-        /* ============================================================
-           FOOTER (THE END)
-           ============================================================ */
-        .ultimate-footer {
-            padding: 150px 0; border-top: 2px solid var(--glass-border); text-align: center;
-            background: linear-gradient(to top, #000, transparent);
-        }
-        .footer-logo { font-size: 5rem; font-weight: 900; color: var(--primary); opacity: 0.2; letter-spacing: 50px; }
-
-        /* ============================================================
-           SCROLLBAR
-           ============================================================ */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; border: 2px solid #000; }
-
-        /* ============================================================
-           RESPONSIVE OVERRIDE
-           ============================================================ */
-        @media (max-width: 1100px) {
-            .split-view { grid-template-columns: 1fr; }
-            .nav-grid-v2 { grid-template-columns: 1fr; }
-            .mega-card { padding: 40px; }
-            .owner-name { font-size: 3rem; }
-            .glitch-text { font-size: 4rem; letter-spacing: 10px; }
-            .rules-main-title { font-size: 2.5rem; }
-            .acc-head-v5 { font-size: 1.2rem; padding: 30px; }
-            .live-stats { grid-template-columns: 1fr; }
+        @media (max-width: 800px) {
+            .social-links, .why-us { grid-template-columns: 1fr; }
+            .logo-small { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="neon-mega-bar"></div>
+    <div class="neon-top-line"></div>
+    <canvas id="cursor-canvas"></canvas>
+    <div class="grid-bg"></div>
 
-    <canvas id="trail-canvas"></canvas>
-
-    <div id="bg-canvas-hive"></div>
-    <div class="cyber-grid-v2"></div>
-
-    <div class="ultra-container">
+    <div class="wrapper">
         
-        <header class="hero-title-group">
-            <h1 class="glitch-text">HIVEGRIEF</h1>
-            <br>
-            <div class="online-status">
-                <i class="fa-solid fa-bolt-lightning" style="color: var(--primary);"></i>
-                ONLINE: <span id="online-count">642</span> / 1000
-            </div>
+        <header>
+            <h1 class="logo-small">HIVEGRIEF</h1>
+            <p style="color: var(--text-dim); margin-top: 10px; font-weight: 600; letter-spacing: 2px;">ЛУЧШИЙ ГРИФЕРСКИЙ ПРОЕКТ</p>
         </header>
 
-        <section class="mega-card">
-            <div class="owner-identity">
-                <div class="owner-rank">FOUNDER & DEVELOPER</div>
-                <h2 class="owner-name">BL0Xa</h2>
-                <p style="color: var(--text-gray); font-size: 1.4rem; max-width: 800px; margin-bottom: 50px;">
-                    "Мы создаем проект, который изменит твое представление о гриферстве в Minecraft Bedrock. 
-                    Стабильность, честность и хардкор — наши главные принципы."
-                </p>
-                <a href="https://www.youtube.com/@BL0Xa_off" target="_blank" class="social-button">
-                    <i class="fa-brands fa-youtube"></i> SUBSCRIBE ON YOUTUBE
-                </a>
+        <section class="social-links">
+            <div class="btn-link" onclick="copyIP()" style="cursor: pointer;">
+                <i class="fa-solid fa-server"></i>
+                <div>
+                    <b>MC.HIVEGRIEF.SU</b>
+                    <span>Нажми, чтобы скопировать айпи</span>
+                </div>
+            </div>
+            <a href="https://shop.hivegrief.su" class="btn-link" target="_blank">
+                <i class="fa-solid fa-gem"></i>
+                <div>
+                    <b>МАГАЗИН ДОНАТА</b>
+                    <span>Поддержи проект и получи бонусы</span>
+                </div>
+            </a>
+            <a href="https://t.me/HiveGriefOff" class="btn-link" target="_blank">
+                <i class="fa-brands fa-telegram"></i>
+                <div>
+                    <b>НАШ ТЕЛЕГРАМ</b>
+                    <span>Новости, конкурсы и промокоды</span>
+                </div>
+            </a>
+            <a href="https://discord.gg/hivegrief" class="btn-link" target="_blank">
+                <i class="fa-brands fa-discord"></i>
+                <div>
+                    <b>ДИСКОРД СЕРВЕР</b>
+                    <span>Общение и поддержка игроков</span>
+                </div>
+            </a>
+        </section>
+
+        <section class="why-us">
+            <div class="why-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h4>Мощный Хост</h4>
+                <p>Играй без лагов на топовом железе 24/7.</p>
+            </div>
+            <div class="why-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h4>Защита</h4>
+                <p>Умный античит и опытная модерация.</p>
+            </div>
+            <div class="why-card">
+                <i class="fa-solid fa-star"></i>
+                <h4>Уникальность</h4>
+                <p>Самописные плагины и честная экономика.</p>
             </div>
         </section>
 
-        <div class="split-view">
-            <div class="nav-grid-v2">
-                <div class="nav-item-v2" onclick="copyIP()" style="cursor: pointer;">
-                    <i class="fa-solid fa-wifi"></i>
-                    <span>IP: MC.HIVEGRIEF.SU</span>
-                    <p style="opacity: 0.5;">Click to Copy</p>
-                </div>
-                <a href="https://shop.hivegrief.su" class="nav-item-v2" target="_blank">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span>DONATE STORE</span>
-                    <p style="opacity: 0.5;">Shop Now</p>
-                </a>
-                <a href="https://t.me/HiveGriefOff" class="nav-item-v2" target="_blank">
-                    <i class="fa-brands fa-telegram"></i>
-                    <span>TELEGRAM</span>
-                    <p style="opacity: 0.5;">Join Community</p>
-                </a>
-                <a href="https://discord.gg/hivegrief" class="nav-item-v2" target="_blank">
-                    <i class="fa-brands fa-discord"></i>
-                    <span>DISCORD</span>
-                    <p style="opacity: 0.5;">Voice Chat</p>
-                </a>
-            </div>
+        <section class="owner-card">
+            <span class="tag">ОСНОВАТЕЛЬ ПРОЕКТА</span>
+            <h2>BL0Xa</h2>
+            <p style="color: var(--text-dim); margin-bottom: 25px; font-style: italic;">"Мы строим идеальное место для тех, кто любит настоящий гриф."</p>
+            <a href="https://www.youtube.com/@BL0Xa_off" class="btn-yt-small" target="_blank">
+                <i class="fa-brands fa-youtube"></i> ПОДПИСАТЬСЯ
+            </a>
+        </section>
 
-            <aside class="side-why-box">
-                <h2>Why HiveGrief?</h2>
-                <div class="why-point">
-                    <i class="fa-solid fa-microchip"></i>
-                    <div>
-                        <h4>Ultra Hosting</h4>
-                        <p>Powered by Ryzen 9 7950X. Zero lag, 20 TPS stable.</p>
-                    </div>
-                </div>
-                <div class="why-point">
-                    <i class="fa-solid fa-user-shield"></i>
-                    <div>
-                        <h4>Elite Staff</h4>
-                        <p>Our moderators are friendly and professional. Support 24/7.</p>
-                    </div>
-                </div>
-                <div class="why-point">
-                    <i class="fa-solid fa-fire-glow"></i>
-                    <div>
-                        <h4>Unique Plugins</h4>
-                        <p>Custom grief mechanics you won't find anywhere else.</p>
-                    </div>
-                </div>
-                <div class="why-point">
-                    <i class="fa-solid fa-coins"></i>
-                    <div>
-                        <h4>Fair Play</h4>
-                        <p>No pay-to-win items. Your skill is your power.</p>
-                    </div>
-                </div>
-            </aside>
-        </div>
-
-        <div class="mega-card live-stats">
-            <div class="stat-card">
-                <h3>TOP WEALTHY (ТОП БОГАЧЕЙ)</h3>
-                <div class="stat-row"><span>1. DarkLord</span> <span>$5,200,400</span></div>
-                <div class="stat-row"><span>2. HiveMaster</span> <span>$4,100,000</span></div>
-                <div class="stat-row"><span>3. PVP_God</span> <span>$3,850,000</span></div>
-                <div class="stat-row"><span>4. MineKing</span> <span>$2,900,100</span></div>
-                <div class="stat-row"><span>5. BL0Xa_Fan</span> <span>$2,500,000</span></div>
-            </div>
-            <div class="stat-card">
-                <h3>LATEST DONATES (ПОКУПКИ)</h3>
-                <div class="stat-row"><span>Player_X bought [TITAN]</span> <span>5m ago</span></div>
-                <div class="stat-row"><span>Griefer33 bought [ELITE]</span> <span>12m ago</span></div>
-                <div class="stat-row"><span>NoobKiller bought [CASE]</span> <span>21m ago</span></div>
-                <div class="stat-row"><span>Admin_Helper bought [UNBAN]</span> <span>1h ago</span></div>
-                <div class="stat-row"><span>Legend_Hero bought [ULTRA]</span> <span>2h ago</span></div>
-            </div>
-        </div>
-
-        <section class="mega-card rules-super-block" id="rules">
-            <h2 class="rules-main-title">REGULATIONS</h2>
-
-            <div class="lang-switch">
-                <button class="lang-btn active" id="btn-ru">РУССКИЙ</button>
-                <button class="lang-btn" id="btn-en">ENGLISH</button>
-            </div>
-
-            <div id="rules-content-wrapper">
-                <div class="rules-lang-block" id="lang-ru">
-                    <div class="accordion-v5">
-                        <button class="acc-head-v5">1.0 - 3.0 ОБЩЕЕ ПОЛОЖЕНИЕ & ДОНАТ <i class="fa-solid fa-chevron-down"></i></button>
-                        <div class="acc-body-v5">
-                            <div class="rule-text">
+        <section class="rules-container">
+            <h3>РЕГЛАМЕНТ</h3>
+            
+            <div class="acc-item">
+                <button class="acc-btn" onclick="toggleAcc(this)">1.0 - 3.0 ОБЩЕЕ & ДОНАТ <i class="fa-solid fa-plus"></i></button>
+                <div class="acc-panel">
+                    <div class="rules-text">
 1.0 Общее положение.
 1.1. Данный свод правил составлен представителем проекта <strong>HiveGrief</strong> и действителен ТОЛЬКО в рамках режимов "Гриферское выживание" проекта HiveGrief .
 1.2. Регистрируясь на нашем проекте, вы автоматически принимаете данные правила.
@@ -512,223 +292,133 @@
 1.6. Решения и действия главной администрации не обсуждаются и не поддаются разжалованию.
 1.7. Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).
 1.8. За любой вид чата будут наказываться сообщения: любой вид пиара, признание в читах, оскорбление родителей, попытка взлома, оскорбления администрации.
-1.8.1 Продажа/покупка ресурсов за реальную валюту запрещена. <span class="punish-box">Наказание - снятие всех привилегий, БАН НАВСЕГДА.</span>
+1.8.1 Продажа/покупка ресурсов за реальную валюту запрещена. <span class="punish">Наказание - снятие всех привилегий, БАН НАВСЕГДА.</span>
 
 3.0 Приобретение платных возможностей.
 3.1. Игра на проекте не подразумевает платы за использование ресурсов.
 3.2. Игрок вправе добровольно оплатить сумму за внутриигровую услугу.
 3.4. Денежные средства за платные услуги не возвращаются.
 3.5. Покупка платных групп не даёт привилегии на нарушение данных правил.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-v5">
-                        <button class="acc-head-v5">4.0 ПРАВИЛА ОБЩЕНИЯ <i class="fa-solid fa-chevron-down"></i></button>
-                        <div class="acc-body-v5">
-                            <div class="rule-text">
-4.1. На серверах присутствует локальный и глобальный чат.
-4.2. Запрещено флудить (2+ похожих сообщения). <span class="punish-box">[мут на 4 часа]</span>
-4.3. Запрещено флудить символами или капсом. <span class="punish-box">[мут на 4 часа]</span>
-4.5. Злоупотребление нецензурной лексикой. <span class="punish-box">[мут на 2 - 4 часа]</span>
-4.6. Оскорбления, унижения, угрозы к игрокам. <span class="punish-box">[мут на 4 часа]</span>
-4.9. Публичная критика проекта. <span class="punish-box">[мут на 1 - 5 дней]</span>
-4.10. Оскорбление своих родителей. <span class="punish-box">[мут 5-15 дней]</span>
-4.11. Затрагивание политики. <span class="punish-box">[бан 3-7 дней]</span>
-4.15. Оскорбление модерации и администрации. <span class="punish-box">[бан 5 - 15 дней]</span>
-4.22. Доксинг (разглашение личных данных). <span class="punish-box">[бан на 30 дней]</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-v5">
-                        <button class="acc-head-v5">5.0 ИГРОВОЙ ПРОЦЕСС & ЧИТЫ <i class="fa-solid fa-chevron-down"></i></button>
-                        <div class="acc-body-v5">
-                            <div class="rule-text">
-5.1. Намеренное причинение вреда проекту, лаг-машины, багоюз. <span class="punish-box">[бан 25 дней / перманент]</span>
-5.2. Использование читов. <span class="punish-box">[бан на 50 дней / бан айпи]</span>
-5.2.1. Совместная игра с читером. <span class="punish-box">[бан на 50 дней]</span>
-5.4. Использование макросов, кликеров. <span class="punish-box">[бан на 3 дня]</span>
-5.9. Реклама/продажа читов. <span class="punish-box">[перманентный бан]</span>
-
-<div style="background: rgba(255,204,0,0.1); border: 2px dashed var(--primary); padding: 30px; border-radius: 20px; margin-top: 20px;">
-<strong>СПИСОК ЗАПРЕЩЕННЫХ МОДОВ:</strong><br>
-X-Ray, AutoAttack, FreeCam, AutoTotem, ElytraSwap, ArmorHotSwap, AFK-Fish, InvMove, TopkaAutoBuy, GoProne, StepUp, Spawner Location.
-</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="rules-lang-block" id="lang-en" style="display: none;">
-                    <div class="accordion-v5">
-                        <button class="acc-head-v5">1.0 - 3.0 GENERAL & DONATE <i class="fa-solid fa-chevron-down"></i></button>
-                        <div class="acc-body-v5">
-                            <div class="rule-text">
-1.0 General Provisions.
-1.1. These rules are compiled by <strong>HiveGrief</strong> and apply only to "Grief Survival" modes.
-1.2. By registering, you automatically accept these rules.
-1.3. Ignorance of the rules does not excuse the violator.
-1.5. Administration may issue punishments outside these rules.
-1.8. Real-money trading (RMT) is strictly prohibited. <span class="punish-box">Penalty - PERMANENT BAN.</span>
-
-3.0 Donations & Purchases.
-3.1. Playing on the project is free.
-3.2. Donations are voluntary.
-3.4. No refunds for virtual services.
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="accordion-v5">
-                        <button class="acc-head-v5">4.0 COMMUNICATION RULES <i class="fa-solid fa-chevron-down"></i></button>
-                        <div class="acc-body-v5">
-                            <div class="rule-text">
-4.2. Spamming is prohibited (2+ similar messages). <span class="punish-box">[Mute for 4 hours]</span>
-4.3. Excessive CAPS or symbols. <span class="punish-box">[Mute for 4 hours]</span>
-4.6. Insults or threats to players. <span class="punish-box">[Mute for 4 hours]</span>
-4.10. Insulting parents/family. <span class="punish-box">[Mute 5-15 days]</span>
-4.15. Insulting staff or administration. <span class="punish-box">[Ban 5-15 days]</span>
-4.22. Doxing (leaking personal info). <span class="punish-box">[Ban for 30 days]</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="acc-item">
+                <button class="acc-btn" onclick="toggleAcc(this)">4.0 ПРАВИЛА ЧАТА <i class="fa-solid fa-plus"></i></button>
+                <div class="acc-panel">
+                    <div class="rules-text">
+4.1. На серверах присутствует локальный и глобальный чат.
+4.2. Запрещено флудить (2+ похожих сообщения). <span class="punish">[мут на 4 часа]</span>
+4.3. Запрещено флудить символами или капсом. <span class="punish">[мут на 4 часа]</span>
+4.5. Злоупотребление нецензурной лексикой. <span class="punish">[мут на 2 - 4 часа]</span>
+4.6. Оскорбления, унижения, угрозы к игрокам. <span class="punish">[мут на 4 часа]</span>
+4.9. Публичная критика проекта. <span class="punish">[мут на 1 - 5 дней]</span>
+4.10. Оскорбление своих родителей. <span class="punish">[мут 5-15 дней]</span>
+4.11. Затрагивание политики. <span class="punish">[бан 3-7 дней]</span>
+4.15. Оскорбление модерации и администрации. <span class="punish">[бан 5 - 15 дней]</span>
+4.22. Доксинг (разглашение личных данных). <span class="punish">[бан на 30 дней]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="acc-item">
+                <button class="acc-btn" onclick="toggleAcc(this)">5.0 ИГРОВОЙ ПРОЦЕСС <i class="fa-solid fa-plus"></i></button>
+                <div class="acc-panel">
+                    <div class="rules-text">
+5.1. Намеренное причинение вреда проекту, лаг-машины, багоюз. <span class="punish">[бан 25 дней / перманент]</span>
+5.2. Использование читов. <span class="punish">[бан на 50 дней / бан айпи]</span>
+5.2.1. Совместная игра с читером. <span class="punish">[бан на 50 дней]</span>
+5.4. Использование макросов, кликеров. <span class="punish">[бан на 3 дня]</span>
+5.9. Реклама/продажа читов. <span class="punish">[перманентный бан]</span>
+
+<strong>ЗАПРЕЩЕННЫЕ МОДЫ:</strong>
+X-Ray, AutoAttack, FreeCam, AutoTotem, ElytraSwap, ArmorHotSwap, AFK-Fish, InvMove, TopkaAutoBuy, GoProne, StepUp, Spawner Location.
+                    </div>
+                </div>
+            </div>
+
         </section>
 
-        <footer class="ultimate-footer">
-            <div class="footer-logo">HIVEGRIEF</div>
-            <p style="letter-spacing: 5px; font-weight: 700;">© 2026. THE FINAL DESTINATION FOR GRIEFERS.</p>
-            <p style="opacity: 0.3; margin-top: 30px;">
-                CODE ARCHITECTURE: TITAN-V5 | BUILD STABLE | OWNER: BL0Xa
-            </p>
+        <footer>
+            <p>© 2026 HIVEGRIEF PROJECT. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
+            <p>DESIGNED FOR BL0Xa | SYSTEM VERSION: 6.0</p>
         </footer>
 
     </div>
 
     <script>
-        /* 1. ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА */
-        const btnRu = document.getElementById('btn-ru');
-        const btnEn = document.getElementById('btn-en');
-        const ruBlock = document.getElementById('lang-ru');
-        const enBlock = document.getElementById('lang-en');
-
-        btnRu.onclick = () => {
-            btnRu.classList.add('active');
-            btnEn.classList.remove('active');
-            ruBlock.style.display = 'block';
-            enBlock.style.display = 'none';
-        };
-
-        btnEn.onclick = () => {
-            btnEn.classList.add('active');
-            btnRu.classList.remove('active');
-            enBlock.style.display = 'block';
-            ruBlock.style.display = 'none';
-        };
-
-        /* 2. АККОРДЕОНЫ ПРАВИЛ */
-        const accs = document.querySelectorAll('.acc-head-v5');
-        accs.forEach(acc => {
-            acc.onclick = function() {
-                const body = this.nextElementSibling;
-                body.classList.toggle('open');
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fa-chevron-down');
-                icon.classList.toggle('fa-chevron-up');
-            };
-        });
-
-        /* 3. КОПИРОВАНИЕ IP */
-        function copyIP() {
-            navigator.clipboard.writeText("mc.hivegrief.su");
-            alert("SERVER IP COPIED! JOIN US NOW!");
-        }
-
-        /* 4. CANVAS TRAIL ENGINE (СУПЕР-ХВОСТ) */
-        const canvas = document.getElementById('trail-canvas');
+        // --- 1. КУРСОРНЫЙ ХВОСТ (CANVAS) ---
+        const canvas = document.getElementById('cursor-canvas');
         const ctx = canvas.getContext('2d');
-        let points = [];
-        let mX = 0, mY = 0;
+        let particles = [];
 
-        function resize() {
+        function initCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-        window.onresize = resize;
-        resize();
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
 
-        window.onmousemove = e => {
-            mX = e.clientX;
-            mY = e.clientY;
-            // Добавляем точки при движении
-            for(let i=0; i<3; i++) {
-                points.push({
-                    x: mX,
-                    y: mY,
-                    vx: (Math.random() - 0.5) * 2,
-                    vy: (Math.random() - 0.5) * 2,
-                    age: 0,
-                    maxAge: 40 + Math.random() * 20
-                });
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 5 + 2;
+                this.speedX = (Math.random() - 0.5) * 2;
+                this.speedY = (Math.random() - 0.5) * 2;
+                this.color = `rgba(255, 204, 0, ${Math.random() * 0.5 + 0.5})`;
+                this.life = 1;
             }
-        };
-
-        function updateTrail() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Отрисовка основной линии
-            if (points.length > 2) {
-                ctx.beginPath();
-                ctx.moveTo(points[0].x, points[0].y);
-                for (let i = 1; i < points.length; i++) {
-                    ctx.lineTo(points[i].x, points[i].y);
-                }
-                ctx.strokeStyle = `rgba(255, 204, 0, 0.5)`;
-                ctx.lineWidth = 2;
-                ctx.lineCap = 'round';
-                ctx.stroke();
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= 0.02;
             }
-
-            // Отрисовка светящихся частиц
-            for (let i = 0; i < points.length; i++) {
-                let p = points[i];
-                p.x += p.vx;
-                p.y += p.vy;
-                p.age++;
-
-                let alpha = 1 - (p.age / p.maxAge);
-                ctx.fillStyle = `rgba(255, 136, 0, ${alpha})`;
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.life;
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, (1 - p.age/p.maxAge) * 8, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
+            }
+        }
 
-                // Эффект свечения
-                if (i % 5 === 0) {
-                    ctx.shadowBlur = 15;
-                    ctx.shadowColor = "rgba(255, 204, 0, 0.8)";
-                } else {
-                    ctx.shadowBlur = 0;
+        window.addEventListener('mousemove', (e) => {
+            for (let i = 0; i < 3; i++) {
+                particles.push(new Particle(e.clientX, e.clientY));
+            }
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
                 }
             }
-
-            points = points.filter(p => p.age < p.maxAge);
-            requestAnimationFrame(updateTrail);
+            requestAnimationFrame(animate);
         }
-        updateTrail();
+        animate();
 
-        /* 5. ФЕЙК ОНЛАЙН ДИНАМИКА */
-        const onlineEl = document.getElementById('online-count');
-        setInterval(() => {
-            let val = parseInt(onlineEl.innerText);
-            val += Math.floor(Math.random() * 5) - 2;
-            onlineEl.innerText = val;
-        }, 3000);
+        // --- 2. АККОРДЕОНЫ ---
+        function toggleAcc(btn) {
+            const panel = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            panel.classList.toggle('active');
+            icon.classList.toggle('fa-plus');
+            icon.classList.toggle('fa-minus');
+        }
 
-        /* 6. LOG CONSOLE */
-        console.log("%c HIVEGRIEF TITAN SYSTEM LOADED ", "background: #ffcc00; color: #000; font-weight: bold; padding: 10px; border-radius: 5px;");
-        console.log("Welcome, BL0Xa. The grid is yours.");
+        // --- 3. КОПИРОВАНИЕ IP ---
+        function copyIP() {
+            navigator.clipboard.writeText("mc.hivegrief.su");
+            alert("Айпи сервера скопирован в буфер обмена!");
+        }
+
+        console.log("HIVEGRIEF SYSTEM LOADED. HELLO BL0Xa.");
     </script>
 </body>
 </html>
