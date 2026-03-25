@@ -9,7 +9,7 @@
             margin: 0;
             font-family: 'Inter', sans-serif;
             color: #f0f0f0;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), 
                         url('https://wallpaperaccess.com/full/1271164.jpg');
             background-size: cover;
             background-attachment: fixed;
@@ -18,145 +18,140 @@
             padding: 20px;
         }
 
-        .container { max-width: 1000px; width: 100%; }
+        .container { max-width: 900px; width: 100%; }
 
         .glass-card {
-            background: rgba(10, 10, 10, 0.7);
+            background: rgba(15, 15, 15, 0.7);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
+            border-radius: 24px; /* Полукруглые углы */
+            padding: 35px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
+
+        /* Блок навигации */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .nav-link {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #fff;
+            text-align: center;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 204, 0, 0.15);
+            border-color: #ffcc00;
+            transform: translateY(-3px);
+        }
+
+        .ip-copy {
+            background: #ffcc00;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .ip-copy:active { transform: scale(0.95); }
 
         h1 {
             text-align: center;
-            font-size: 3.5rem;
+            font-size: 3rem;
             background: linear-gradient(45deg, #ffcc00, #ffa200);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin: 0;
             letter-spacing: 2px;
-        }
-
-        .ip-box {
-            text-align: center;
-            border: 2px dashed #ffcc00;
-            padding: 10px;
-            border-radius: 10px;
-            width: fit-content;
-            margin: 0 auto 30px;
-            color: #ffcc00;
-            font-weight: bold;
         }
 
         h2 {
             color: #ffcc00;
             text-transform: uppercase;
-            font-size: 1.5rem;
-            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
-            padding-bottom: 10px;
-            margin-top: 40px;
+            font-size: 1.3rem;
+            border-left: 4px solid #ffcc00;
+            padding-left: 15px;
+            margin-top: 30px;
         }
 
         .rule-item {
-            background: rgba(255, 255, 255, 0.05);
-            margin-bottom: 15px;
-            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 12px;
+            padding: 15px;
             border-radius: 12px;
-            border-left: 4px solid #ffcc00;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
-        .rule-id {
-            font-weight: bold;
-            color: #ffcc00;
-            margin-right: 10px;
-        }
-
+        .rule-id { color: #ffcc00; font-weight: bold; margin-right: 8px; }
+        
         .punishment {
             display: block;
-            margin-top: 8px;
-            color: #ff4444;
+            margin-top: 5px;
+            color: #ff5555;
+            font-size: 0.85rem;
             font-weight: bold;
-            font-size: 0.9rem;
         }
 
-        footer { text-align: center; opacity: 0.4; padding: 20px; }
+        footer { text-align: center; opacity: 0.4; padding: 20px; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="glass-card">
+    <div class="glass-card" style="text-align: center;">
         <h1>HIVEGRIEF</h1>
-        <div class="ip-box">IP: HIVEGRIEF.SU</div>
-        <p style="text-align:center;">Добро пожаловать на страницу правил проекта. Регистрируясь, вы соглашаетесь со всеми пунктами ниже.</p>
+        <p style="opacity: 0.7;">Лучший гриферский опыт в Minecraft</p>
+        
+        <div class="nav-grid">
+            <div class="nav-link ip-copy" onclick="copyIP()">
+                IP: mc.hivegrief.su
+                <div style="font-size: 10px; text-transform: uppercase; margin-top: 4px;">Нажми, чтобы скопировать</div>
+            </div>
+            <a href="https://shop.hivegrief.su" class="nav-link" target="_blank">🛒 Магазин доната</a>
+            <a href="https://t.me/HiveGriefOff" class="nav-link" target="_blank">✈️ Наш Telegram</a>
+            <a href="https://discord.gg/hivegrief" class="nav-link" target="_blank">💬 Наш Discord</a>
+        </div>
     </div>
 
     <div class="glass-card">
         <h2>Основные правила</h2>
-        
+        <div class="rule-item"><span class="rule-id">1.1</span> Правила HiveGrief обязательны для всех. Незнание не освобождает от ответственности.</div>
+        <div class="rule-item"><span class="rule-id">1.2</span> Официальный IP: <strong>mc.hivegrief.su</strong>. Другие домены к нам не относятся.</div>
         <div class="rule-item">
-            <span class="rule-id">1.1</span> Настоящие правила разработаны администрацией сервера HiveGrief и действуют на всех игровых режимах. Незнание правил не является оправданием.
-        </div>
-
-        <div class="rule-item">
-            <span class="rule-id">1.2</span> Официальный адрес проекта: <strong>hivegrief.su</strong>. Регистрируясь, вы автоматически соглашаетесь с данными правилами.
-        </div>
-
-        <div class="rule-item">
-            <span class="rule-id">1.5</span> Обман администрации, взломы, передача аккаунтов, вред серверу, а также купля/продажа за реальную валюту — строго запрещены.
-            <span class="punishment">Наказание: Бан навсегда + обнуление аккаунта.</span>
-        </div>
-
-        <div class="rule-item">
-            <span class="rule-id">2.1</span> Никнейм не должен содержать оскорблений, названий читов (Celestial и др.) или иметь сексуальный подтекст.
-            <span class="punishment">Наказание: Бан навсегда.</span>
+            <span class="rule-id">1.5</span> Обман администрации, взломы и вред серверу запрещены.
+            <span class="punishment">Наказание: Бан навсегда + обнуление.</span>
         </div>
 
         <h2>Правила чата</h2>
-
         <div class="rule-item">
-            <span class="rule-id">3.1</span> Запрещено организовывать флуд и спам. Более 10 одинаковых символов или 3 похожих сообщения подряд.
+            <span class="rule-id">3.1</span> Флуд и спам (более 10 символов или 3 повтора).
             <span class="punishment">Наказание: Мут на 2 часа.</span>
         </div>
-
         <div class="rule-item">
-            <span class="rule-id">3.4</span> Оскорбление, унижение или аморальное поведение по отношению к игрокам.
-            <span class="punishment">Наказание: Мут на 4 часа.</span>
-        </div>
-
-        <div class="rule-item">
-            <span class="rule-id">3.5</span> Оскорбление или упоминание родных в негативном ключе.
+            <span class="rule-id">3.5</span> Оскорбление родных в любом ключе.
             <span class="punishment">Наказание: Мут на 1 день.</span>
         </div>
-
         <div class="rule-item">
-            <span class="rule-id">4.3</span> Реклама сторонних проектов и ресурсов.
+            <span class="rule-id">4.3</span> Реклама сторонних проектов.
             <span class="punishment">Наказание: Бан навсегда.</span>
         </div>
 
-        <h2>Игровые нарушения</h2>
-
+        <h2>Игровой процесс</h2>
         <div class="rule-item">
-            <span class="rule-id">5.2</span> Игра с читами, макросами или запрещенным ПО. Проверка учитывает нарушения за последние 30 дней.
+            <span class="rule-id">5.2</span> Использование читов, макросов и запрещенного ПО.
             <span class="punishment">Наказание: Бан на 50 дней.</span>
         </div>
-
-        <div class="rule-item">
-            <span class="rule-id">6.1</span> Строительство лаг-машин, лава-кастов и конструкций, вредящих серверу.
-            <span class="punishment">Наказание: Бан от 3 дней до навсегда.</span>
-        </div>
-
-        <p style="text-align: center; margin-top: 30px; opacity: 0.7;">
-            Полный список правил доступен в нашей технической поддержке.
-        </p>
     </div>
 
-    <footer>&copy; 2026 HIVEGRIEF.SU — Гриферский сервер Minecraft</footer>
-</div>
-
-</body>
-</html>
+    <footer>&copy; 2026 HIVEGRIEF.SU — Официа
