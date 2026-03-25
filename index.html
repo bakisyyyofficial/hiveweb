@@ -3,22 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | TITAN V13 | OTCHAO EDITION</title>
+    <title>HIVEGRIEF | TITAN V13.1 | BLACK EDITION</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/bakisyyyofficial/hiveweb/main/83234d750c18251e.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
     
     <style>
-        /* CSS ARCHITECTURE v13.0
-           By Gemini for HIVEGRIEF
-        */
         :root {
             --primary: #ffcc00;
             --secondary: #ff8800;
-            --bg: #050505;
-            --panel: rgba(10, 10, 12, 0.9);
-            --border: rgba(255, 204, 0, 0.15);
+            --bg: #000000; /* ПОЛНОСТЬЮ ЧЕРНЫЙ ФОН */
+            --panel: rgba(10, 10, 12, 0.95);
+            --border: rgba(255, 204, 0, 0.2);
             --text: #ffffff;
             --text-dim: #888888;
             --error: #ff3333;
@@ -34,7 +31,7 @@
         }
 
         body {
-            background-color: var(--bg);
+            background-color: var(--bg); /* УБРАЛ БЕЛУЮ ХУЙНЮ */
             color: var(--text);
             font-family: 'Inter', sans-serif;
             height: 100vh;
@@ -44,7 +41,6 @@
             justify-content: center;
         }
 
-        /* --- ГРАФИЧЕСКИЕ СЛОИ --- */
         #main-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -63,450 +59,194 @@
             backdrop-filter: blur(40px);
             border: 1px solid var(--border);
             border-radius: 40px;
-            box-shadow: 0 0 100px rgba(0,0,0,0.9), inset 0 0 20px rgba(255,204,0,0.05);
+            box-shadow: 0 0 100px rgba(0,0,0,1);
             overflow: hidden;
-            animation: panelSpawn 1s var(--transition);
         }
 
-        @keyframes panelSpawn {
-            from { opacity: 0; transform: scale(0.9) translateY(30px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        /* --- НАВИГАЦИЯ (TABS) --- */
         .nav-container {
             display: flex;
             padding: 20px;
             gap: 15px;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.8);
             border-bottom: 1px solid var(--border);
         }
 
         .nav-item {
             flex: 1;
             padding: 20px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid transparent;
+            background: rgba(255,255,255,0.02);
             border-radius: 20px;
             text-align: center;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 3px;
-            font-size: 0.9rem;
             color: var(--text-dim);
             transition: 0.4s var(--transition);
             position: relative;
-            overflow: hidden;
-        }
-
-        .nav-item i { margin-right: 10px; font-size: 1.2rem; }
-
-        .nav-item::before {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; width: 0; height: 3px;
-            background: var(--primary);
-            transition: 0.4s var(--transition);
         }
 
         .nav-item.active {
             color: var(--primary);
-            background: rgba(255,204,0,0.08);
-            border-color: var(--border);
-            transform: translateY(-2px);
+            background: rgba(255,204,0,0.1);
+            border: 1px solid var(--border);
         }
 
-        .nav-item.active::before { width: 100%; }
-
-        .nav-item:hover:not(.active) {
-            background: rgba(255,255,255,0.07);
-            color: #fff;
-        }
-
-        /* --- КОНТЕНТНЫЙ ДВИЖОК --- */
         .content-viewport {
             flex: 1;
             overflow-y: auto;
             padding: 50px;
-            scroll-behavior: smooth;
         }
 
-        .content-viewport::-webkit-scrollbar { width: 10px; }
-        .content-viewport::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; border: 3px solid #000; }
+        .content-viewport::-webkit-scrollbar { width: 8px; }
+        .content-viewport::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
-        .tab-pane {
-            display: none;
-            animation: tabSlide 0.6s var(--transition);
-        }
-
-        .tab-pane.active { display: block; }
-
-        @keyframes tabSlide {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        /* --- СТИЛИ ПРАВИЛ (БЕЗ УРЕЗАНИЙ) --- */
-        .rules-wrapper { display: flex; flex-direction: column; gap: 30px; }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .rule-card {
-            background: rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.03);
             border: 1px solid var(--border);
             border-left: 6px solid var(--primary);
-            padding: 35px;
-            border-radius: 25px;
-            transition: 0.3s;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
         }
 
-        .rule-card:hover {
-            background: rgba(255,204,0,0.03);
-            transform: scale(1.01);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+        .rule-header { color: var(--primary); font-weight: 900; font-size: 1.3rem; margin-bottom: 15px; text-transform: uppercase; }
+        .rule-body { line-height: 1.8; color: #eee; white-space: pre-line; }
 
-        .rule-header {
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: var(--primary);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .rule-body {
-            font-size: 1.05rem;
-            line-height: 1.9;
-            color: #ccc;
-            white-space: pre-line;
-        }
-
-        .punish-tag {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 5px 15px;
-            background: rgba(255, 51, 51, 0.15);
-            border: 1px solid var(--error);
-            color: var(--error);
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 0.9rem;
-        }
-
-        /* --- СОЦСЕТИ И ЮТУБ --- */
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-        }
-
+        .social-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
         .social-box {
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            background: rgba(255,255,255,0.02);
             border: 1px solid var(--border);
             padding: 40px;
-            border-radius: 30px;
+            border-radius: 25px;
             text-decoration: none;
             color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             text-align: center;
-            transition: 0.5s var(--transition);
+            transition: 0.3s;
         }
-
-        .social-box i { font-size: 4rem; margin-bottom: 20px; color: var(--primary); transition: 0.5s; }
-        
-        .social-box:hover {
-            border-color: var(--primary);
-            transform: translateY(-10px);
-            background: rgba(255,204,0,0.05);
-        }
-
-        .social-box:hover i { transform: scale(1.2) rotate(5deg); filter: drop-shadow(0 0 20px var(--primary)); }
+        .social-box:hover { background: rgba(255,204,0,0.05); transform: translateY(-5px); border-color: var(--primary); }
+        .social-box i { font-size: 3.5rem; color: var(--primary); margin-bottom: 15px; }
 
         .yt-hero {
             width: 100%;
             height: 400px;
-            background: linear-gradient(rgba(255,0,0,0.2), transparent), url('https://img.youtube.com/vi/BL0Xa_off/maxresdefault.jpg') center/cover;
+            background: rgba(0,0,0,0.6);
+            border: 2px solid #ff0000;
             border-radius: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255,0,0,0.3);
-            transition: 0.5s;
         }
 
-        .yt-hero:hover { border-color: #ff0000; box-shadow: 0 0 50px rgba(255,0,0,0.2); }
-
         .btn-yt {
-            padding: 25px 70px;
+            padding: 20px 60px;
             background: #ff0000;
             color: #fff;
             text-decoration: none;
-            border-radius: 20px;
+            border-radius: 15px;
             font-weight: 900;
             font-size: 1.5rem;
-            text-transform: uppercase;
-            box-shadow: 0 10px 40px rgba(255,0,0,0.4);
-            transition: 0.3s;
+            box-shadow: 0 0 30px rgba(255,0,0,0.5);
         }
 
-        .btn-yt:hover { transform: scale(1.1); box-shadow: 0 0 60px rgba(255,0,0,0.6); }
-
-        /* --- КУРСОР --- */
-        #custom-cursor {
-            position: fixed;
-            width: 10px; height: 10px;
-            background: var(--primary);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            mix-blend-mode: difference;
-        }
-
-        #cursor-ring {
-            position: fixed;
-            width: 40px; height: 40px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99998;
-            transition: transform 0.1s;
-        }
-
-        /* Адаптив */
-        @media (max-width: 900px) {
-            .social-grid { grid-template-columns: 1fr; }
-            .nav-container { flex-wrap: wrap; }
-            #custom-cursor, #cursor-ring { display: none; }
-            * { cursor: auto !important; }
-        }
+        #custom-cursor { position: fixed; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; pointer-events: none; z-index: 100000; }
     </style>
 </head>
 <body>
 
     <div id="custom-cursor"></div>
-    <div id="cursor-ring"></div>
-
     <canvas id="main-canvas"></canvas>
 
     <div id="ui-layer">
-        
         <nav class="nav-container">
-            <div class="nav-item active" onclick="switchTab(this, 'tab-socials')">
-                <i class="fa-solid fa-house-signal"></i> Соцсети
-            </div>
-            <div class="nav-item" onclick="switchTab(this, 'tab-rules')">
-                <i class="fa-solid fa-gavel"></i> Правила Проекта
-            </div>
-            <div class="nav-item" onclick="switchTab(this, 'tab-youtube')">
-                <i class="fa-brands fa-youtube"></i> Канал BL0Xa
-            </div>
+            <div class="nav-item active" onclick="switchTab(this, 'tab-socials')">Соцсети</div>
+            <div class="nav-item" onclick="switchTab(this, 'tab-rules')">Правила</div>
+            <div class="nav-item" onclick="switchTab(this, 'tab-youtube')">YouTube</div>
         </nav>
 
         <div class="content-viewport">
-            
             <section id="tab-socials" class="tab-pane active">
                 <div class="social-grid">
                     <a href="https://t.me/HiveGriefOff" class="social-box" target="_blank">
                         <i class="fa-brands fa-telegram"></i>
                         <h2>TELEGRAM</h2>
-                        <p>Свежие новости, промокоды и конкурсы на донат!</p>
                     </a>
                     <a href="https://discord.gg/hivegrief" class="social-box" target="_blank">
                         <i class="fa-brands fa-discord"></i>
                         <h2>DISCORD</h2>
-                        <p>Голосовые каналы, общение с тимой и поддержка.</p>
                     </a>
                     <a href="https://shop.hivegrief.su" class="social-box" target="_blank">
                         <i class="fa-solid fa-cart-shopping"></i>
                         <h2>МАГАЗИН</h2>
-                        <p>Самый выгодный донат для Bedrock Edition.</p>
                     </a>
                     <div class="social-box" onclick="copyIp()" style="cursor: pointer;">
                         <i class="fa-solid fa-server"></i>
-                        <h2>MC.HIVEGRIEF.SU</h2>
-                        <p>Нажми, чтобы скопировать IP сервера!</p>
+                        <h2>IP: MC.HIVEGRIEF.SU</h2>
                     </div>
                 </div>
             </section>
 
             <section id="tab-rules" class="tab-pane">
-                <div class="rules-wrapper">
-                    
-                    <div class="rule-card">
-                        <div class="rule-header"><i class="fa-solid fa-shield-halved"></i> 1.0 Общие Положения</div>
-                        <div class="rule-body">
-                            1.0 Данный свод правил составлен представителем проекта HiveGrief и действителен ТОЛЬКО в рамках режимов "Гриферское выживание" проекта HiveGrief.
-                            1.1. Регистрируясь на нашем проекте, вы автоматически принимаете данные правила.
-                            1.2. Незнание правил не освобождает нарушителя от ответственности.
-                            1.3. Правила могут быть изменены без оповещения аудитории.
-                            1.5. Главная администрация вправе выдавать наказания вне рамок данных правил.
-                            1.6. Решения и действия главной администрации (<strong>otxao</strong>) не обсуждаются и не подлежат обжалованию.
-                            1.8.1 Продажа/покупка ресурсов за реальную валюту запрещена.
-                            <div class="punish-tag">НАКАЗАНИЕ: БАН НАВСЕГДА + СНЯТИЕ ПРИВИЛЕГИЙ</div>
-                        </div>
+                <div class="rule-card">
+                    <div class="rule-header">1.0 Регламент</div>
+                    <div class="rule-body">
+                        1.6. Решения и действия главной администрации (<strong>otxao</strong>) не обсуждаются и не подлежат обжалованию.
+                        1.8.1 Продажа/покупка ресурсов за реальную валюту запрещена.
                     </div>
-
-                    <div class="rule-card">
-                        <div class="rule-header"><i class="fa-solid fa-comments"></i> 4.0 Поведение в чате</div>
-                        <div class="rule-body">
-                            4.2. Запрещено флудить (от 2-х похожих сообщений). <span class="punish-tag">Мут на 4 часа</span>
-                            4.5. Злоупотребление матом в глобальном чате. <span class="punish-tag">Мут на 2-4 часа</span>
-                            4.10. Оскорбление родителей игрока. <span class="punish-tag">Мут на 5-15 дней</span>
-                            4.15. Оскорбление администрации проекта. <span class="punish-tag">Бан от 5 до 15 дней</span>
-                            4.22. Разглашение личных данных (доксинг). <span class="punish-tag">Бан на 30 дней</span>
-                        </div>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-header">5.0 Читы</div>
+                    <div class="rule-body">
+                        5.2. Использование любого запрещенного софта (читы). Наказание: Бан 50 дней.
                     </div>
-
-                    <div class="rule-card">
-                        <div class="rule-header"><i class="fa-solid fa-bug"></i> 5.0 Читы и Стороннее ПО</div>
-                        <div class="rule-body">
-                            5.1. Намеренное причинение вреда серверу (лаг-машины). <span class="punish-tag">Бан 25 дней / Перманент</span>
-                            5.2. Использование любого запрещенного софта (читы). <span class="punish-tag">Бан на 50 дней / Бан по IP</span>
-                            5.4. Использование макросов и автокликеров. <span class="punish-tag">Бан на 3 дня</span>
-                            
-                            <strong>ЗАПРЕЩЕННЫЕ МОДЫ:</strong>
-                            X-Ray, AutoAttack, FreeCam, AutoTotem, ElytraSwap, AFK-Fish, InvMove, TopkaAutoBuy.
-                        </div>
-                    </div>
-
                 </div>
             </section>
 
             <section id="tab-youtube" class="tab-pane">
                 <div class="yt-hero">
-                    <i class="fa-brands fa-youtube" style="font-size: 10rem; color: #ff0000; margin-bottom: 30px;"></i>
-                    <h1 style="font-size: 4rem; margin-bottom: 20px;">BL0Xa_off</h1>
+                    <h1 style="font-size: 3rem; margin-bottom: 30px;">BL0Xa_off</h1>
                     <a href="https://www.youtube.com/@BL0Xa_off" target="_blank" class="btn-yt">ПОДПИСАТЬСЯ</a>
                 </div>
             </section>
-
         </div>
     </div>
 
     <script>
-        // --- 1. CORE GRAPHICS ENGINE ---
         const canvas = document.getElementById('main-canvas');
         const ctx = canvas.getContext('2d');
         let w, h;
+        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+        window.onresize = resize; resize();
 
-        function resize() {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
+        const sticks = Array.from({length: 40}, () => ({
+            x: Math.random() * w, y: Math.random() * h,
+            l: Math.random() * 100 + 50, s: Math.random() * 2 + 1
+        }));
+
+        function draw() {
+            ctx.fillStyle = '#000'; ctx.fillRect(0,0,w,h);
+            ctx.strokeStyle = '#ffcc00'; ctx.lineWidth = 2;
+            sticks.forEach(s => {
+                s.y -= s.s; if(s.y < -s.l) s.y = h + s.l;
+                ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x, s.y + s.l); ctx.stroke();
+            });
+            requestAnimationFrame(draw);
         }
-        window.onresize = resize;
-        resize();
+        draw();
 
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * w;
-                this.y = Math.random() * h;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = (Math.random() - 0.5) * 1.5;
-                this.speedY = (Math.random() - 0.5) * 1.5;
-                this.alpha = Math.random() * 0.5 + 0.1;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > w) this.speedX *= -1;
-                if (this.y < 0 || this.y > h) this.speedY *= -1;
-            }
-            draw() {
-                ctx.fillStyle = `rgba(255, 204, 0, ${this.alpha})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        const sticks = [];
-        class NeonStick {
-            constructor() {
-                this.x = Math.random() * w;
-                this.y = Math.random() * h;
-                this.len = Math.random() * 150 + 50;
-                this.speed = Math.random() * 0.5 + 0.2;
-                this.color = Math.random() > 0.5 ? '#ffcc00' : '#ff8800';
-            }
-            draw() {
-                this.y -= this.speed;
-                if (this.y < -this.len) {
-                    this.y = h + this.len;
-                    this.x = Math.random() * w;
-                }
-                ctx.strokeStyle = this.color;
-                ctx.lineWidth = 2;
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = this.color;
-                ctx.beginPath();
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(this.x, this.y + this.len);
-                ctx.stroke();
-                ctx.shadowBlur = 0;
-            }
-        }
-
-        const pArray = Array.from({length: 80}, () => new Particle());
-        const sArray = Array.from({length: 25}, () => new NeonStick());
-
-        function animate() {
-            ctx.clearRect(0, 0, w, h);
-            
-            // Фон (Грид)
-            ctx.strokeStyle = 'rgba(255, 204, 0, 0.05)';
-            ctx.lineWidth = 1;
-            for(let i=0; i<w; i+=80) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,h); ctx.stroke(); }
-            for(let j=0; j<h; j+=80) { ctx.beginPath(); ctx.moveTo(0,j); ctx.lineTo(w,j); ctx.stroke(); }
-
-            sArray.forEach(s => s.draw());
-            pArray.forEach(p => { p.update(); p.draw(); });
-
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        // --- 2. UI LOGIC ---
-        function switchTab(el, tabId) {
+        function switchTab(el, id) {
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
             document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-            
-            el.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-            
-            // Хептик-эффект (визуальный)
-            el.style.transform = 'scale(0.95)';
-            setTimeout(() => el.style.transform = 'scale(1)', 100);
+            el.classList.add('active'); document.getElementById(id).classList.add('active');
         }
 
-        function copyIp() {
-            navigator.clipboard.writeText("mc.hivegrief.su");
-            alert("✅ IP СЕРВЕРА СКОПИРОВАН!");
-        }
-
-        // --- 3. CURSOR ENGINE ---
         const cursor = document.getElementById('custom-cursor');
-        const ring = document.getElementById('cursor-ring');
-        
-        window.onmousemove = (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            
-            // Кольцо с задержкой (плавность)
-            ring.animate({
-                left: (e.clientX - 20) + 'px',
-                top: (e.clientY - 20) + 'px'
-            }, { duration: 500, fill: 'forwards' });
-        };
-
-        console.log("HIVEGRIEF TITAN v13.0 | BY OTCHAO | STATUS: PERFECT");
+        window.onmousemove = (e) => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; };
+        function copyIp() { navigator.clipboard.writeText("mc.hivegrief.su"); alert("IP скопирован!"); }
     </script>
 </body>
 </html>
