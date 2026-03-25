@@ -3,446 +3,424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | NEXT GEN INTERFACE</title>
+    <title>HIVEGRIEF | OFFICIAL</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/bakisyyyofficial/hiveweb/main/83234d750c18251e.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ПАЛИТРА: КИБЕР-ПАНК 2026 */
         :root {
-            --accent: #00f2ff;
-            --accent-glow: rgba(0, 242, 255, 0.4);
-            --bg-deep: #020617;
-            --card-bg: rgba(15, 23, 42, 0.6);
+            --accent: #00e5ff;
+            --accent-glow: rgba(0, 229, 255, 0.3);
+            --bg: #030712;
+            --glass: rgba(17, 24, 39, 0.7);
             --border: rgba(255, 255, 255, 0.08);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --grad: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
-            --radius: 24px;
+            --text: #f3f4f6;
+            --text-dim: #9ca3af;
         }
 
-        /* RESET & BASE */
+        /* УБИРАЕМ СТАНДАРТНЫЙ КУРСОР ВЕЗДЕ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none !important;
+            cursor: none !important; 
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-deep);
-            color: var(--text-primary);
+            background-color: var(--bg);
+            color: var(--text);
             font-family: 'Plus Jakarta Sans', sans-serif;
             height: 100vh;
+            width: 100vw;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* ЭФФЕКТ "ЗВЕЗДНАЯ ПЫЛЬ" НА ФОНЕ */
-        #bg-canvas {
+        /* НОВЫЙ ДВИЖОК КУРСОРА (ФИКС УЛЕТАНИЯ) */
+        #cursor-main {
             position: fixed;
-            top: 0;
-            left: 0;
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            border-radius: 50%;
+            z-index: 999999;
+            pointer-events: none;
+            box-shadow: 0 0 15px #fff;
+            left: -10px; top: -10px; /* Скрыт по дефолту */
+        }
+        #cursor-aura {
+            position: fixed;
+            width: 26px;
+            height: 26px;
+            border: 1.5px solid var(--accent);
+            border-radius: 50%;
+            z-index: 999998;
+            pointer-events: none;
+            left: -50px; top: -50px;
+            transition: width 0.3s, height 0.3s, background 0.3s;
+        }
+
+        /* ФОНОВАЯ СЕТКА И ЧАСТИЦЫ */
+        #nebula {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 1;
             pointer-events: none;
         }
 
-        /* УЛЬТРА-ЛЕГКИЙ КУРСОР */
-        #pointer-dot {
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: #fff;
-            border-radius: 50%;
-            z-index: 100000;
-            pointer-events: none;
-            box-shadow: 0 0 15px #fff;
-        }
-        #pointer-ring {
-            position: fixed;
-            width: 24px;
-            height: 24px;
-            border: 1px solid var(--accent);
-            border-radius: 50%;
-            z-index: 99999;
-            pointer-events: none;
-            transition: transform 0.06s ease-out, opacity 0.3s;
-        }
-
-        /* ОСНОВНОЙ ТЕРМИНАЛ (GLASSMORPHISM) */
-        .terminal {
+        /* ГЛАВНЫЙ ИНТЕРФЕЙС */
+        .app-container {
             position: relative;
             z-index: 10;
-            width: 94%;
-            max-width: 1550px;
-            height: 88vh;
-            background: var(--card-bg);
-            backdrop-filter: blur(40px);
+            width: 95%;
+            max-width: 1500px;
+            height: 90vh;
+            background: var(--glass);
+            backdrop-filter: blur(50px);
             border: 1px solid var(--border);
-            border-radius: calc(var(--radius) * 1.5);
+            border-radius: 35px;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05);
-            animation: terminalReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            animation: appEntry 1s ease-out;
         }
 
-        @keyframes terminalReveal {
-            from { opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        @keyframes appEntry {
+            from { opacity: 0; transform: translateY(30px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* ВЕРХНЯЯ НАВИГАЦИЯ */
-        .top-bar {
+        /* ШАПКА */
+        header {
             display: flex;
             align-items: center;
-            padding: 25px 50px;
-            background: rgba(0, 0, 0, 0.2);
+            padding: 30px 50px;
+            background: rgba(0,0,0,0.3);
             border-bottom: 1px solid var(--border);
-            border-radius: calc(var(--radius) * 1.5) calc(var(--radius) * 1.5) 0 0;
+            border-radius: 35px 35px 0 0;
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .logo {
             font-weight: 800;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            color: var(--text-primary);
-        }
-        .brand span { color: var(--accent); }
-
-        .nav-links {
-            margin-left: auto;
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn-nav {
-            padding: 12px 28px;
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid transparent;
-        }
-
-        .btn-nav.active {
-            background: var(--grad);
-            color: #000;
-            box-shadow: 0 0 30px var(--accent-glow);
-        }
-
-        .btn-nav:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.07);
+            font-size: 1.5rem;
+            letter-spacing: 3px;
             color: #fff;
-            border-color: rgba(0, 242, 255, 0.3);
-            transform: translateY(-2px);
+        }
+        .logo span { color: var(--accent); }
+
+        nav { margin-left: auto; display: flex; gap: 15px; }
+
+        .nav-btn {
+            padding: 12px 30px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid transparent;
+            border-radius: 15px;
+            color: var(--text-dim);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            transition: 0.4s;
         }
 
-        /* КОНТЕНТНЫЙ БЛОК */
-        .content-engine {
+        .nav-btn.active {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 25px var(--accent-glow);
+        }
+
+        .nav-btn:hover:not(.active) {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        /* КОНТЕНТ */
+        .content-wrap {
             flex: 1;
-            padding: 50px 70px;
+            padding: 60px;
             overflow-y: auto;
-            scroll-behavior: smooth;
+            scrollbar-width: none;
         }
-        .content-engine::-webkit-scrollbar { width: 4px; }
-        .content-engine::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+        .content-wrap::-webkit-scrollbar { display: none; }
 
-        .view { display: none; }
-        .view.active { display: block; animation: viewSlide 0.6s ease-out; }
-        @keyframes viewSlide { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
+        .page { display: none; }
+        .page.active { display: block; animation: pageFade 0.5s ease; }
+        @keyframes pageFade { from { opacity: 0; } to { opacity: 1; } }
 
-        /* GRID: СОЦСЕТИ */
-        .soc-grid {
+        /* КАРТОЧКИ СОЦСЕТЕЙ */
+        .grid-links {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
         }
 
-        .soc-card {
-            background: rgba(255, 255, 255, 0.03);
+        .box {
+            background: rgba(255,255,255,0.02);
             border: 1px solid var(--border);
             padding: 45px 30px;
-            border-radius: var(--radius);
+            border-radius: 25px;
+            text-align: center;
             text-decoration: none;
             color: #fff;
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        .soc-card i { font-size: 3.5rem; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 25px; }
-        .soc-card h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; letter-spacing: 1px; }
-        .soc-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
-
-        .soc-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--grad);
-            opacity: 0;
-            transition: 0.4s;
-            z-index: -1;
-        }
-
-        .soc-card:hover {
+        .box i { font-size: 3.5rem; color: var(--accent); margin-bottom: 25px; }
+        .box h3 { margin-bottom: 10px; font-weight: 800; font-size: 1.3rem; }
+        .box p { color: var(--text-dim); font-size: 0.9rem; }
+        .box:hover {
+            transform: translateY(-10px);
             border-color: var(--accent);
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(0, 229, 255, 0.05);
         }
-        .soc-card:hover::before { opacity: 0.05; }
 
-        /* СПИСОК ПРАВИЛ */
-        .rules-list { display: flex; flex-direction: column; gap: 20px; }
-        .rule-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
+        /* ПРАВИЛА (ПОЛНЫЙ СПИСОК) */
+        .rules-stack { display: flex; flex-direction: column; gap: 20px; }
+        .rule-card {
+            background: rgba(255,255,255,0.02);
+            border-left: 5px solid var(--accent);
             padding: 35px;
-            border-radius: 20px;
-            border-left: 4px solid var(--accent);
-            transition: 0.3s;
+            border-radius: 15px;
         }
-        .rule-box:hover { background: rgba(255, 255, 255, 0.04); border-left-width: 10px; }
-        .rule-box h2 { font-size: 1.3rem; margin-bottom: 15px; color: var(--accent); font-weight: 800; text-transform: uppercase; }
-        .rule-box p { font-size: 1rem; line-height: 1.8; color: #cbd5e1; white-space: pre-wrap; font-family: 'Plus Jakarta Sans', sans-serif; }
-
-        .badge-punish {
+        .rule-card h2 { color: var(--accent); font-size: 1.3rem; margin-bottom: 15px; font-weight: 800; }
+        .rule-card p { line-height: 1.8; color: #d1d5db; white-space: pre-wrap; font-size: 0.95rem; }
+        
+        .punish {
             display: inline-block;
             margin-top: 15px;
             padding: 6px 14px;
-            background: rgba(244, 63, 94, 0.1);
-            border: 1px solid #f43f5e;
-            color: #fb7185;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #f87171;
             border-radius: 8px;
             font-weight: 700;
             font-size: 0.75rem;
-            text-transform: uppercase;
         }
 
-        /* YOUTUBE ГРИД */
-        .yt-shelf { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
-        .yt-author {
+        /* YOUTUBE КАРТОЧКИ */
+        .media-flex { display: flex; gap: 30px; }
+        .yt-card {
+            flex: 1;
             background: #000;
-            border: 1px solid #333;
-            border-radius: var(--radius);
+            border: 1px solid #222;
             padding: 40px;
+            border-radius: 30px;
             text-align: center;
             text-decoration: none;
             transition: 0.4s;
         }
-        .yt-author:hover { border-color: #ff0000; box-shadow: 0 0 40px rgba(255,0,0,0.15); transform: translateY(-5px); }
-        .yt-author i { font-size: 3rem; color: #ff0000; margin-bottom: 20px; }
-        .yt-author span { display: block; font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 20px; }
-        .btn-sub { padding: 12px 30px; background: #ff0000; color: #fff; border-radius: 12px; font-weight: 800; font-size: 0.9rem; }
+        .yt-card:hover { border-color: #ff0000; transform: scale(1.02); box-shadow: 0 0 30px rgba(255,0,0,0.1); }
+        .yt-card i { font-size: 3rem; color: #ff0000; margin-bottom: 20px; }
+        .yt-card h4 { font-size: 1.8rem; color: #fff; margin-bottom: 15px; }
+        .yt-card .sub-btn { background: #ff0000; padding: 10px 25px; border-radius: 10px; color: #fff; font-weight: 800; }
 
         /* FOOTER */
-        .footer-info {
+        footer {
             padding: 20px 50px;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.4);
             border-top: 1px solid var(--border);
             display: flex;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            border-radius: 0 0 calc(var(--radius) * 1.5) calc(var(--radius) * 1.5);
+            align-items: center;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            border-radius: 0 0 35px 35px;
         }
-        .footer-info .sys-info { margin-left: auto; color: var(--accent); font-family: 'JetBrains Mono'; }
-
+        .sys-log { margin-left: auto; color: var(--accent); font-family: 'JetBrains Mono'; }
     </style>
 </head>
 <body>
 
-    <div id="pointer-dot"></div>
-    <div id="pointer-ring"></div>
-    <canvas id="bg-canvas"></canvas>
+    <div id="cursor-main"></div>
+    <div id="cursor-aura"></div>
 
-    <div class="terminal">
-        <header class="top-bar">
-            <div class="brand">
-                <i class="fa-solid fa-shield-halved"></i>
-                HIVE<span>GRIEF</span>
-            </div>
-            <nav class="nav-links">
-                <button class="btn-nav active" onclick="nav(this, 'v-links')">Сервисы</button>
-                <button class="btn-nav" onclick="nav(this, 'v-rules')">Регламент</button>
-                <button class="btn-nav" onclick="nav(this, 'v-media')">Медиа</button>
+    <canvas id="nebula"></canvas>
+
+    <div class="app-container">
+        <header>
+            <div class="logo">HIVE<span>GRIEF</span></div>
+            <nav>
+                <button class="nav-btn active" onclick="tab(this, 'p-links')">Сервисы</button>
+                <button class="nav-btn" onclick="tab(this, 'p-rules')">Правила</button>
+                <button class="nav-btn" onclick="tab(this, 'p-yt')">Авторы</button>
             </nav>
         </header>
 
-        <main class="content-engine">
+        <main class="content-wrap">
             
-            <section id="v-links" class="view active">
-                <div class="soc-grid">
-                    <a href="https://t.me/HiveGriefOff" class="soc-card" target="_blank">
+            <section id="p-links" class="page active">
+                <div class="grid-links">
+                    <a href="https://t.me/HiveGriefOff" class="box" target="_blank">
                         <i class="fa-brands fa-telegram"></i>
                         <h3>TELEGRAM</h3>
-                        <p>Новости, промокоды и конкурсы в реальном времени.</p>
+                        <p>Будь в курсе всех новостей и акций первым.</p>
                     </a>
-                    <a href="https://discord.gg/hivegrief" class="soc-card" target="_blank">
+                    <a href="https://discord.gg/hivegrief" class="box" target="_blank">
                         <i class="fa-brands fa-discord"></i>
                         <h3>DISCORD</h3>
-                        <p>Комьюнити, поддержка и голосовые каналы для тимов.</p>
+                        <p>Голосовое общение, поиск тимейтов и поддержка.</p>
                     </a>
-                    <a href="https://shop.hivegrief.su" class="soc-card" target="_blank">
-                        <i class="fa-solid fa-cube"></i>
-                        <h3>STORE</h3>
-                        <p>Покупка донат-услуг, кейсов и игровой валюты.</p>
+                    <a href="https://shop.hivegrief.su" class="box" target="_blank">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <h3>SHOP</h3>
+                        <p>Самые дешевые товары и донат-услуги.</p>
                     </a>
-                    <div class="soc-card" onclick="copyIp()" style="cursor: pointer;">
-                        <i class="fa-solid fa-terminal"></i>
-                        <h3>IP: HIVEGRIEF.SU</h3>
-                        <p>Кликни, чтобы скопировать адрес сервера в буфер.</p>
+                    <div class="box" onclick="copyIp()" style="cursor: pointer;">
+                        <i class="fa-solid fa-bolt"></i>
+                        <h3>HIVEGRIEF.SU</h3>
+                        <p>Нажми сюда, чтобы скопировать IP сервера.</p>
                     </div>
                 </div>
             </section>
 
-            <section id="v-rules" class="view">
-                <div class="rules-list">
+            <section id="p-rules" class="page">
+                <div class="rules-stack">
                     
-                    <div class="rule-box">
-                        <h2>1.0 Положения проекта</h2>
-                        <p>1.1. Данный свод правил составлен представителем проекта HiveGrief и действителен ТОЛЬКО в рамках режимов "Гриферское выживание".
-                        1.2. Регистрируясь, вы автоматически принимаете данные правила.
-                        1.3. Незнание правил не освобождает от ответственности.
-                        1.6. Решения высшей администрации (<strong>Bakisyyy (otaxao), Z1tlex</strong>) не обсуждаются.
-                        1.8.1 Продажа ресурсов за реал (FunPay и т.д.) строго запрещена. <span class="badge-punish">Снятие + Бан навсегда</span>
-                        6.9. Шутки про "нашел дюп" запрещены. Нашли реально? ЛС @otxao. Награда: 20к рилликов. <span class="badge-punish">За шутку - Мут 1 день</span></p>
+                    <div class="rule-card">
+                        <h2>1.0 Общие положения</h2>
+                        <p>1.1. Данный свод правил составлен представителем проекта HiveGrief и действителен ТОЛЬКО в рамках режимов "Гриферское выживание" проекта HiveGrief.
+                        1.6. Решения и действия главной администрации (<strong>Bakisyyy (otaxao), Z1tlex</strong>) не обсуждаются и не поддаются разжалованию.
+                        1.8.1 Продажа, покупка ресурсов, аккаунтов за реальную валюту запрещена. <span class="punish">Наказание - Снятие всех привилегий, Бан навсегда.</span>
+                        6.9. Запрещается шутить про то что нашёл дюп. Если вы реально нашли дюп, то пишите в лс @otxao. За дюп вы получите 20 тыщ рилликов. <span class="punish">Нарушение - Мут 1 день.</span></p>
                     </div>
 
-                    <div class="rule-box">
-                        <h2>4.0 Правила коммуникации</h2>
-                        <p>4.2. Флуд (от 3-х похожих сообщений за минуту). <span class="badge-punish">Мут 4 часа</span>
-                        4.3. Флуд символами/бессмыслицей (более 10 символов). <span class="badge-punish">Мут 4 часа</span>
-                        4.5. Злоупотребление матом. <span class="badge-punish">Мут 4 часа</span>
-                        4.10. Оскорбление своих родителей. <span class="badge-punish">Мут 5-15 дней</span>
-                        4.15. Оскорбление модерации/администрации. <span class="badge-punish">Бан 5-15 дней</span>
-                        4.22. Распространение личных данных (Доксинг). <span class="badge-punish">Бан 30 дней</span>
-                        4.29. Упоминание денежных операций (реальная валюта). <span class="badge-punish">Мут 2 дня</span></p>
+                    <div class="rule-card">
+                        <h2>4.0 Общение и чат</h2>
+                        <p>4.2. Запрещено флудить (более 2-ух одинаковых сообщений подряд за минуту). <span class="punish">Мут на 4 часа.</span>
+                        4.10. Оскорбление своих родителей. <span class="punish">Мут 5-15 дней.</span>
+                        4.15. Оскорбление модерации и администрации. <span class="punish">Бан от 5 до 15 дней.</span>
+                        4.22. Распространение личных данных (доксинг). <span class="punish">Бан на 30 дней.</span>
+                        4.29. Любое упоминание денежных операций с реальной валютой. <span class="punish">Мут на 2 дня.</span></p>
                     </div>
 
-                    <div class="rule-box">
-                        <h2>5.0 Геймплей и ПО</h2>
-                        <p>5.1. Лаг-машины, багоюз, намеренный вред серверу. <span class="badge-punish">Бан 25 дней / Перманент</span>
-                        5.2. Использование читов/стороннего ПО. <span class="badge-punish">Бан 50 дней / По IP</span>
-                        5.2.1. Совместная игра (тим) с читером. <span class="badge-punish">Бан 50 дней</span>
-                        5.2.6. Неадекватное поведение на проверке. <span class="badge-punish">Бан 50 дней</span>
-                        5.4. Использование макросов и кликеров. <span class="badge-punish">Бан 3 дня</span>
+                    <div class="rule-card">
+                        <h2>5.0 Игровой процесс</h2>
+                        <p>5.1. Намеренное причинение вреда проекту, заливы, лаг-машины, багоюз. <span class="punish">Перманентная блокировка.</span>
+                        5.2. Использование вредоносного, читерского ПО. <span class="punish">Бан на 50 дней либо Бан по IP.</span>
+                        5.2.1. Совместная игра с читером. <span class="punish">Бан на 50 дней.</span>
+                        5.4. Использование макросов, запрещённых модов, кликеров. <span class="punish">Бан на 3 дня.</span>
 
-                        <strong>ЗАПРЕЩЕННЫЕ МОДЫ:</strong>
-                        FreeCam, AutoTotem, ElytraSwap, X-Ray, Spawner Location, DiamondSim, AutoAttack, TopkaAutoBuy.</p>
+                        <strong>ЗАПРЕЩЕННЫЕ МОДЫ:</strong> ElytraSwap, AFK-Fish, InvMove, TopkaAutoBuy, StepUp, FreeCam, AutoTotem.</p>
                     </div>
 
-                    <div class="rule-box">
-                        <h2>6.0 Привилегии и донат</h2>
-                        <p>6.1. Права во вред проекту. <span class="badge-punish">Снятие + Бан</span>
-                        6.3. Некорректная выдача наказаний. <span class="badge-punish">Бан 14 дней</span>
-                        6.6. Тест команд только на себе с причиной "Тест". Иначе - <span class="badge-punish">Бан 14 дней</span>
-                        6.8. Обман игроков персоналом на ресурсы запрещен.</p>
+                    <div class="rule-card">
+                        <h2>6.0 Правила донатеров</h2>
+                        <p>6.1. Использование прав в целях вреда проекта. <span class="punish">Снятие привилегии + Бан.</span>
+                        6.3. Некорректная выдача наказания без доказательств. <span class="punish">Бан на 14 дней.</span>
+                        6.8. Модератору запрещено обманывать игроков на ресурсы.</p>
                     </div>
 
                 </div>
             </section>
 
-            <section id="v-media" class="view">
-                <div class="yt-shelf">
-                    <a href="https://www.youtube.com/@BL0Xa_off" target="_blank" class="yt-author">
+            <section id="p-yt" class="page">
+                <div class="media-flex">
+                    <a href="https://www.youtube.com/@BL0Xa_off" target="_blank" class="yt-card">
                         <i class="fa-brands fa-youtube"></i>
-                        <span>BL0Xa_off</span>
-                        <div class="btn-sub">ПОДПИСАТЬСЯ</div>
+                        <h4>BL0Xa_off</h4>
+                        <div class="sub-btn">СМОТРЕТЬ</div>
                     </a>
-                    <a href="https://www.youtube.com/@Z1tleXx" target="_blank" class="yt-author">
+                    <a href="https://www.youtube.com/@Z1tleXx" target="_blank" class="yt-card">
                         <i class="fa-brands fa-youtube"></i>
-                        <span>Z1tlex</span>
-                        <div class="btn-sub" style="background: #222;">ПОДПИСАТЬСЯ</div>
+                        <h4>Z1tlex</h4>
+                        <div class="sub-btn" style="background: #333;">СМОТРЕТЬ</div>
                     </a>
                 </div>
             </section>
 
         </main>
 
-        <footer class="footer-info">
-            <div class="copy">© 2026 HIVEGRIEF NETWORK. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</div>
-            <div class="sys-info">CORE_VERSION: 1.0.8 // STATUS: STABLE</div>
+        <footer>
+            <div class="copy">© 2026 HIVEGRIEF NETWORK. DEVELOPED BY GEMINI PRO.</div>
+            <div class="sys-log">ENCRYPTED_SESSION: OK // STATUS: 200</div>
         </footer>
     </div>
 
     <script>
-        // --- BACKGROUND ENGINE: CYBER DUST ---
-        const canvas = document.getElementById('bg-canvas');
+        // --- CURSOR ENGINE V2.0 (NO DRIFT) ---
+        const dot = document.getElementById('cursor-main');
+        const aura = document.getElementById('cursor-aura');
+        
+        document.addEventListener('mousemove', (e) => {
+            // Мгновенное обновление
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+            
+            // Плавное следование ауры
+            aura.animate({
+                left: (e.clientX - 13) + 'px',
+                top: (e.clientY - 13) + 'px'
+            }, { duration: 150, fill: 'forwards' });
+        });
+
+        // Эффект наведения
+        document.querySelectorAll('a, button, .box').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                aura.style.width = '45px';
+                aura.style.height = '45px';
+                aura.style.background = 'rgba(0, 229, 255, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                aura.style.width = '26px';
+                aura.style.height = '26px';
+                aura.style.background = 'transparent';
+            });
+        });
+
+        // --- BACKGROUND ENGINE (STARS) ---
+        const canvas = document.getElementById('nebula');
         const ctx = canvas.getContext('2d');
-        let w, h;
-        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-        window.onresize = resize; resize();
+        let w, h, stars = [];
 
-        let mouse = { x: -100, y: -100 };
-        window.onmousemove = e => {
-            mouse.x = e.clientX; mouse.y = e.clientY;
-            document.getElementById('pointer-dot').style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-            document.getElementById('pointer-ring').style.transform = `translate(${e.clientX - 12}px, ${e.clientY - 12}px)`;
-        };
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+        window.onresize = resize;
+        resize();
 
-        const stars = Array.from({length: 100}, () => ({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            size: Math.random() * 2,
-            spX: (Math.random() - 0.5) * 0.5,
-            spY: (Math.random() - 0.5) * 0.5
-        }));
+        for(let i=0; i<150; i++) {
+            stars.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                s: Math.random() * 2,
+                v: Math.random() * 0.5
+            });
+        }
 
-        function draw() {
-            ctx.fillStyle = '#020617'; ctx.fillRect(0,0,w,h);
+        function animate() {
+            ctx.fillStyle = '#030712';
+            ctx.fillRect(0,0,w,h);
+            ctx.fillStyle = 'rgba(0, 229, 255, 0.4)';
             
             stars.forEach(s => {
-                s.x += s.spX; s.y += s.spY;
-                if(s.x < 0) s.x = w; if(s.x > w) s.x = 0;
-                if(s.y < 0) s.y = h; if(s.y > h) s.y = 0;
-
-                // Притяжение к мыши (плавное)
-                let dx = mouse.x - s.x;
-                let dy = mouse.y - s.y;
-                let dist = Math.sqrt(dx*dx + dy*dy);
-                if(dist < 150) {
-                    s.x += dx * 0.01;
-                    s.y += dy * 0.01;
-                }
-
-                ctx.fillStyle = `rgba(0, 242, 255, ${0.1 + Math.random() * 0.4})`;
-                ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill();
+                s.y += s.v;
+                if(s.y > h) s.y = 0;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.s, 0, Math.PI*2);
+                ctx.fill();
             });
-            requestAnimationFrame(draw);
+            requestAnimationFrame(animate);
         }
-        draw();
+        animate();
 
-        // --- NAVIGATION ---
-        function nav(btn, viewId) {
-            document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        // --- TAB SYSTEM ---
+        function tab(btn, id) {
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             btn.classList.add('active');
-            document.getElementById(viewId).classList.add('active');
+            document.getElementById(id).classList.add('active');
         }
 
         function copyIp() {
             navigator.clipboard.writeText('hivegrief.su');
             alert('IP СКОПИРОВАН: HIVEGRIEF.SU');
         }
-
-        // Блокировка стандартного контекстного меню для атмосферы
-        window.oncontextmenu = (e) => e.preventDefault();
     </script>
 </body>
 </html>
