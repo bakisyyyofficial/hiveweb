@@ -3,100 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | Майнкрафт Сервер</title>
+    <title>HIVEGRIEF | Официальные правила</title>
     <style>
         body {
             margin: 0;
-            font-family: 'Inter', -apple-system, sans-serif;
-            color: #eeeeee;
-            /* Темный игровой фон */
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+            font-family: 'Inter', sans-serif;
+            color: #f0f0f0;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
                         url('https://wallpaperaccess.com/full/1271164.jpg');
             background-size: cover;
             background-attachment: fixed;
             display: flex;
             justify-content: center;
-            padding: 40px 10px;
+            padding: 20px;
         }
 
-        .container {
-            max-width: 900px;
-            width: 100%;
-        }
+        .container { max-width: 1000px; width: 100%; }
 
-        /* Тот самый стеклянный стиль */
         .glass-card {
-            background: rgba(15, 15, 15, 0.75);
+            background: rgba(10, 10, 10, 0.7);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         h1 {
-            font-size: 3rem;
-            margin: 0;
-            background: linear-gradient(45deg, #ffcc00, #ffaa00);
+            text-align: center;
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #ffcc00, #ffa200);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .ip-box {
             text-align: center;
-            letter-spacing: 3px;
-        }
-
-        .ip-badge {
-            background: rgba(255, 204, 0, 0.1);
-            border: 1px solid #ffcc00;
-            color: #ffcc00;
-            padding: 10px 20px;
-            border-radius: 50px;
-            display: block;
+            border: 2px dashed #ffcc00;
+            padding: 10px;
+            border-radius: 10px;
             width: fit-content;
-            margin: 20px auto;
+            margin: 0 auto 30px;
+            color: #ffcc00;
             font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .ip-badge:hover {
-            background: #ffcc00;
-            color: black;
         }
 
         h2 {
             color: #ffcc00;
-            border-left: 4px solid #ffcc00;
-            padding-left: 15px;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
+            padding-bottom: 10px;
             margin-top: 40px;
         }
 
-        .rule-block {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
+        .rule-item {
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 15px;
             padding: 15px 20px;
-            margin-bottom: 12px;
-            transition: 0.2s;
+            border-radius: 12px;
+            border-left: 4px solid #ffcc00;
+            line-height: 1.6;
         }
 
-        .rule-block:hover {
-            background: rgba(255, 255, 255, 0.06);
-            transform: translateX(5px);
-        }
-
-        .rule-num {
-            color: #ffcc00;
+        .rule-id {
             font-weight: bold;
+            color: #ffcc00;
             margin-right: 10px;
         }
 
-        footer {
-            text-align: center;
-            opacity: 0.5;
+        .punishment {
+            display: block;
+            margin-top: 8px;
+            color: #ff4444;
+            font-weight: bold;
             font-size: 0.9rem;
-            margin-top: 20px;
         }
+
+        footer { text-align: center; opacity: 0.4; padding: 20px; }
     </style>
 </head>
 <body>
@@ -104,28 +91,71 @@
 <div class="container">
     <div class="glass-card">
         <h1>HIVEGRIEF</h1>
-        <div class="ip-badge">IP: HIVEGRIEF.SU</div>
-        <p style="text-align: center; opacity: 0.8;">Добро пожаловать в наше сообщество! Ниже ты найдешь правила и важную информацию.</p>
+        <div class="ip-box">IP: HIVEGRIEF.SU</div>
+        <p style="text-align:center;">Добро пожаловать на страницу правил проекта. Регистрируясь, вы соглашаетесь со всеми пунктами ниже.</p>
     </div>
 
     <div class="glass-card">
-        <h2>Правила сервера</h2>
+        <h2>Основные правила</h2>
         
-        <div class="rule-block">
-            <span class="rule-num">1.1</span> Запрещено использование стороннего ПО (читы, макросы, автокликеры).
+        <div class="rule-item">
+            <span class="rule-id">1.1</span> Настоящие правила разработаны администрацией сервера HiveGrief и действуют на всех игровых режимах. Незнание правил не является оправданием.
         </div>
-        <div class="rule-block">
-            <span class="rule-num">1.2</span> Запрещен спам, флуд и неадекватное поведение в чате.
+
+        <div class="rule-item">
+            <span class="rule-id">1.2</span> Официальный адрес проекта: <strong>hivegrief.su</strong>. Регистрируясь, вы автоматически соглашаетесь с данными правилами.
         </div>
-        <div class="rule-block">
-            <span class="rule-num">1.3</span> Уважительно относитесь к администрации и другим игрокам.
+
+        <div class="rule-item">
+            <span class="rule-id">1.5</span> Обман администрации, взломы, передача аккаунтов, вред серверу, а также купля/продажа за реальную валюту — строго запрещены.
+            <span class="punishment">Наказание: Бан навсегда + обнуление аккаунта.</span>
         </div>
-        
-        <h2>О сервере</h2>
-        <p>HIVEGRIEF — это уникальный гриферский проект, где каждый может стать королем или пасть в бою. У нас стабильный ТПС, честная администрация и лучшие ивенты.</p>
+
+        <div class="rule-item">
+            <span class="rule-id">2.1</span> Никнейм не должен содержать оскорблений, названий читов (Celestial и др.) или иметь сексуальный подтекст.
+            <span class="punishment">Наказание: Бан навсегда.</span>
+        </div>
+
+        <h2>Правила чата</h2>
+
+        <div class="rule-item">
+            <span class="rule-id">3.1</span> Запрещено организовывать флуд и спам. Более 10 одинаковых символов или 3 похожих сообщения подряд.
+            <span class="punishment">Наказание: Мут на 2 часа.</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-id">3.4</span> Оскорбление, унижение или аморальное поведение по отношению к игрокам.
+            <span class="punishment">Наказание: Мут на 4 часа.</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-id">3.5</span> Оскорбление или упоминание родных в негативном ключе.
+            <span class="punishment">Наказание: Мут на 1 день.</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-id">4.3</span> Реклама сторонних проектов и ресурсов.
+            <span class="punishment">Наказание: Бан навсегда.</span>
+        </div>
+
+        <h2>Игровые нарушения</h2>
+
+        <div class="rule-item">
+            <span class="rule-id">5.2</span> Игра с читами, макросами или запрещенным ПО. Проверка учитывает нарушения за последние 30 дней.
+            <span class="punishment">Наказание: Бан на 50 дней.</span>
+        </div>
+
+        <div class="rule-item">
+            <span class="rule-id">6.1</span> Строительство лаг-машин, лава-кастов и конструкций, вредящих серверу.
+            <span class="punishment">Наказание: Бан от 3 дней до навсегда.</span>
+        </div>
+
+        <p style="text-align: center; margin-top: 30px; opacity: 0.7;">
+            Полный список правил доступен в нашей технической поддержке.
+        </p>
     </div>
 
-    <footer>&copy; 2026 HIVEGRIEF.SU. Все права защищены.</footer>
+    <footer>&copy; 2026 HIVEGRIEF.SU — Гриферский сервер Minecraft</footer>
 </div>
 
 </body>
