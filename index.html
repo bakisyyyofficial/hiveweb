@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | OFFICIAL SITE</title>
+    <title>HIVEGRIEF | OFFICIAL</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/bakisyyyofficial/hiveweb/main/83234d750c18251e.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --accent: #00f2ff;
             --bg: #020617;
-            --glass: rgba(15, 23, 42, 0.8);
-            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(15, 23, 42, 0.7); /* Тот самый матовый стиль */
+            --border: rgba(255, 255, 255, 0.1);
             --yt-red: #ff0000;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; user-select: none; }
         
         body {
-            background-color: var(--bg);
+            background: radial-gradient(circle at top right, #0a192f 0%, #020617 100%);
             color: #f8fafc;
             font-family: 'Plus Jakarta Sans', sans-serif;
             height: 100vh;
@@ -35,8 +35,8 @@
         /* 3D CUBE MOON (STATIC + HOVER ZOOM) */
         .moon-anchor {
             position: fixed;
-            top: 50px;
-            left: 50px;
+            top: 40px;
+            left: 40px;
             z-index: 1000;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -47,7 +47,7 @@
             height: 60px;
             position: relative;
             transform-style: preserve-3d;
-            transform: rotateX(-25deg) rotateY(35deg); /* Фиксированный угол */
+            transform: rotateX(-20deg) rotateY(30deg);
         }
         .face {
             position: absolute;
@@ -55,7 +55,7 @@
             height: 60px;
             background: rgba(0, 242, 255, 0.05);
             border: 2px solid var(--accent);
-            box-shadow: inset 0 0 15px var(--accent), 0 0 20px rgba(0, 242, 255, 0.4);
+            box-shadow: inset 0 0 15px var(--accent), 0 0 20px rgba(0, 242, 255, 0.3);
         }
         .f1 { transform: translateZ(30px); }
         .f2 { transform: rotateY(180deg) translateZ(30px); }
@@ -64,82 +64,93 @@
         .f5 { transform: rotateX(90deg) translateZ(30px); }
         .f6 { transform: rotateX(-90deg) translateZ(30px); }
 
-        /* CURSOR SYSTEM */
-        #dot { position: fixed; width: 6px; height: 6px; background: #fff; border-radius: 50%; z-index: 999999; pointer-events: none; box-shadow: 0 0 15px #fff; }
+        /* CURSOR */
+        #dot { position: fixed; width: 6px; height: 6px; background: #fff; border-radius: 50%; z-index: 999999; pointer-events: none; }
         #ring { position: fixed; width: 30px; height: 30px; border: 1.5px solid var(--accent); border-radius: 50%; z-index: 999998; pointer-events: none; transition: transform 0.1s ease-out; }
 
-        /* MAIN UI SHELL */
+        /* MAIN UI */
         .shell {
             position: relative;
             z-index: 10;
             width: 94%;
-            max-width: 1600px;
+            max-width: 1550px;
             height: 88vh;
             background: var(--glass);
-            backdrop-filter: blur(50px);
+            backdrop-filter: blur(25px); /* Матовое стекло */
             border: 1px solid var(--border);
-            border-radius: 40px;
+            border-radius: 16px; /* 16px скругление как просил */
             display: flex;
             flex-direction: column;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+            overflow: hidden;
         }
 
         header {
-            padding: 30px 60px;
+            padding: 25px 50px;
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             background: rgba(0,0,0,0.2);
-            border-radius: 40px 40px 0 0;
         }
 
-        .logo { font-weight: 900; font-size: 1.6rem; letter-spacing: 4px; color: #fff; }
+        .logo { font-weight: 900; font-size: 1.5rem; letter-spacing: 3px; }
         .logo span { color: var(--accent); }
 
-        .nav { margin-left: auto; display: flex; gap: 15px; }
+        .nav { margin-left: auto; display: flex; gap: 12px; }
         .n-btn {
-            padding: 12px 35px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 15px;
-            color: #64748b;
+            padding: 10px 25px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            color: #94a3b8;
             font-weight: 800;
             text-transform: uppercase;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             transition: 0.3s;
             border: 1px solid transparent;
         }
-        .n-btn.active { background: var(--accent); color: #000; box-shadow: 0 0 30px rgba(0,242,255,0.4); }
+        .n-btn.active { background: var(--accent); color: #000; }
         .n-btn:hover:not(.active) { color: #fff; border-color: var(--accent); }
 
-        .content { flex: 1; padding: 50px 70px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--accent) transparent; }
-        .content::-webkit-scrollbar { width: 4px; }
-        .content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+        /* TRANSITION CONTENT */
+        .content { flex: 1; position: relative; }
 
-        .tab { display: none; }
-        .tab.active { display: block; animation: tabShow 0.5s ease-out; }
-        @keyframes tabShow { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            padding: 40px 60px;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.95);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-        /* ПРАВИЛА - ОГРОМНЫЙ СПИСОК */
-        .rules-list { display: flex; flex-direction: column; gap: 30px; }
-        .rule-section { background: rgba(255,255,255,0.01); padding: 45px; border-radius: 30px; border-left: 4px solid var(--accent); }
-        .rule-section h2 { color: var(--accent); margin-bottom: 25px; font-weight: 900; font-size: 1.4rem; letter-spacing: 1px; }
-        .rule-section p { line-height: 1.9; color: #cbd5e1; font-size: 0.95rem; white-space: pre-wrap; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .strong { color: #fff; font-weight: 800; }
-        .punish-tag { display: inline-block; margin-top: 10px; padding: 5px 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; border-radius: 8px; font-weight: 800; font-size: 0.75rem; }
+        .tab.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
 
-        /* MEDIA CARDS */
-        .yt-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .yt-card { background: #000; padding: 60px; border-radius: 35px; text-align: center; text-decoration: none; border: 1px solid #1e293b; transition: 0.4s; }
-        .yt-card:hover { border-color: var(--yt-red); transform: translateY(-8px); box-shadow: 0 20px 50px rgba(255,0,0,0.15); }
-        .yt-card i { font-size: 4rem; color: var(--yt-red); margin-bottom: 25px; }
-        .yt-card h3 { font-size: 2.2rem; color: #fff; margin-bottom: 25px; font-weight: 900; }
-        .watch { background: var(--yt-red); padding: 14px 45px; border-radius: 12px; color: #fff; font-weight: 900; font-size: 0.9rem; letter-spacing: 1px; }
+        .tab::-webkit-scrollbar { width: 5px; }
+        .tab::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 
-        /* SERVICES */
-        .svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
-        .svc-item { background: rgba(255,255,255,0.02); padding: 45px; border-radius: 30px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: #fff; transition: 0.4s; }
-        .svc-item:hover { border-color: var(--accent); background: rgba(0, 242, 255, 0.04); transform: translateY(-10px); }
-        .svc-item i { font-size: 3rem; color: var(--accent); margin-bottom: 20px; }
+        /* RULES STYLE */
+        .rule-block { background: rgba(255,255,255,0.02); padding: 30px; border-radius: 12px; border-left: 4px solid var(--accent); margin-bottom: 25px; }
+        .rule-block h2 { color: var(--accent); margin-bottom: 15px; font-size: 1.2rem; }
+        .rule-block p { line-height: 1.7; color: #cbd5e1; font-size: 0.9rem; white-space: pre-wrap; }
+        .punish { color: #ff4444; font-weight: 800; }
+
+        /* YT */
+        .yt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .yt-card { background: rgba(0,0,0,0.3); padding: 40px; border-radius: 16px; text-align: center; text-decoration: none; border: 1px solid var(--border); transition: 0.3s; }
+        .yt-card:hover { border-color: var(--yt-red); transform: translateY(-5px); }
+        .yt-card i { font-size: 3rem; color: var(--yt-red); margin-bottom: 15px; }
+        .watch { background: var(--yt-red); padding: 10px 30px; border-radius: 8px; color: #fff; font-weight: 800; display: inline-block; }
+
+        /* SVC */
+        .svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .svc-card { background: rgba(255,255,255,0.02); padding: 35px; border-radius: 16px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: #fff; transition: 0.3s; }
+        .svc-card:hover { border-color: var(--accent); transform: translateY(-5px); }
 
     </style>
 </head>
@@ -160,135 +171,137 @@
         <header>
             <div class="logo">HIVE<span>GRIEF</span></div>
             <nav class="nav">
-                <button class="n-btn active" onclick="sh('s1', this)">Сервисы</button>
-                <button class="n-btn" onclick="sh('s2', this)">Правила</button>
-                <button class="n-btn" onclick="sh('s3', this)">Авторы</button>
+                <button class="n-btn active" onclick="tab('t1', this)">Сервисы</button>
+                <button class="n-btn" onclick="tab('t2', this)">Правила</button>
+                <button class="n-btn" onclick="tab('t3', this)">Медиа</button>
             </nav>
         </header>
 
         <main class="content">
-            
-            <section id="s1" class="tab active">
+            <div id="t1" class="tab active">
                 <div class="svc-grid">
-                    <a href="https://t.me/HiveGriefOff" class="svc-item" target="_blank"><i class="fa-brands fa-telegram"></i><h3>TELEGRAM</h3><p>Новости и промокоды</p></a>
-                    <a href="https://discord.gg/hivegrief" class="svc-item" target="_blank"><i class="fa-brands fa-discord"></i><h3>DISCORD</h3><p>Общение и тикеты</p></a>
-                    <a href="https://shop.hivegrief.su" class="svc-item" target="_blank"><i class="fa-solid fa-cart-shopping"></i><h3>МАГАЗИН</h3><p>Донат и ресурсы</p></a>
-                    <div class="svc-item" onclick="navigator.clipboard.writeText('hivegrief.su');alert('IP скопирован!')" style="cursor:pointer">
-                        <i class="fa-solid fa-server"></i><h3>HIVEGRIEF.SU</h3><p>Кликни для копирования IP</p>
+                    <a href="https://t.me/HiveGriefOff" class="svc-card" target="_blank"><i class="fa-brands fa-telegram" style="font-size:2.5rem;color:var(--accent);margin-bottom:15px;"></i><h3>TELEGRAM</h3></a>
+                    <a href="https://discord.gg/hivegrief" class="svc-card" target="_blank"><i class="fa-brands fa-discord" style="font-size:2.5rem;color:var(--accent);margin-bottom:15px;"></i><h3>DISCORD</h3></a>
+                    <a href="https://shop.hivegrief.su" class="svc-card" target="_blank"><i class="fa-solid fa-gem" style="font-size:2.5rem;color:var(--accent);margin-bottom:15px;"></i><h3>МАГАЗИН</h3></a>
+                    <div class="svc-card" onclick="navigator.clipboard.writeText('hivegrief.su');alert('IP скопирован!')" style="cursor:pointer">
+                        <i class="fa-solid fa-wifi" style="font-size:2.5rem;color:var(--accent);margin-bottom:15px;"></i><h3>HIVEGRIEF.SU</h3>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <section id="s2" class="tab">
-                <div class="rules-list">
-                    
-                    <div class="rule-section">
-                        <h2>1.0 ОБЩЕЕ ПОЛОЖЕНИЕ</h2>
-                        <p>1.1. Данный свод правил составлен представителем проекта HiveGrief и действителен ТОЛЬКО в рамках режимов "Гриферское выживание" проекта HiveGrief.
+            <div id="t2" class="tab">
+                <div class="rule-block">
+                    <h2>1.0 Общее положение.</h2>
+                    <p>1.1. Данный свод правил составлен представителем проекта HiveGrief и действителен ТОЛЬКО в рамках режимов "Гриферское выживание" проекта HiveGrief.
 1.2. Регистрируясь на нашем проекте, вы автоматически принимаете данные правила, а также правила других режимов.
 1.3. Незнание правил не освобождает нарушителя от ответственности, а также может усугубить наказание.
 1.4. Правила могут быть изменены без явного оповещения основной аудитории проекта.
 1.5.1. При значительных изменениях правил, на форуме проекта отображается сопутствуещее объявление.
 1.5. Главная администрация вправе выдавать наказания вне рамок данных правил.
-1.6. Решения и действия главной администрации <span class="strong">(Bakisyyy (otaxao), Z1tlex)</span> не обсуждаются и не поддаются разжалованию.
+1.6. Решения и действия главной администрации (Bakisyyy (otaxao), Z1tlex) не обсуждаются и не поддаются разжалованию.
 1.7. Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).
 1.8. За любой вид чата будут наказываться сообщения, которые имеют такие категории: любой вид пиара, признание в читах, оскорбление родителей, попытка передачи аккаунта или взлома, оскорбления администрации, ютуберов.
-1.8.1 <span class="strong">Продажа, покупка ресурсов, аккаунтов за реальную валюту запрещена</span>, так же это касается различных сайтов, таких как FunPay и.т.д. <span class="punish-tag">Наказание - снятие всех привилегий, бан навсегда.</span> Старшие Модераторы и выше по должности имеют право проверить ваш FunPay.</p>
-                    </div>
-
-                    <div class="rule-section">
-                        <h2>3.0 ПЛАТНЫЕ УСЛУГИ</h2>
-                        <p>3.1. Игра на проекте не подразумевает платы за использование ресурсов HiveGrief.
-3.2. Игрок вправе добровольно оплатить определённую сумму проекту за внутриигровую услугу в одностороннем порядке.
-3.3. При ошибке платежа, либо отсутствия внутриигровой услуги после оплаты, можно обращаться в техподдержку.
-3.4. Денежные средства за платные услуги не возвращаются.
-3.5. Покупка платных групп не даёт привилегии на игнорирование данных правил.</p>
-                    </div>
-
-                    <div class="rule-section">
-                        <h2>4.0 ВНУТРИИГРОВОЕ ОБЩЕНИЕ</h2>
-                        <p>4.2. Запрещено флудить, отправлять больше 2-ух похожих по смыслу, или одинаковых сообщения подряд (2 сообщения можно, три нельзя) (за одну минуту) <span class="punish-tag">мут на 4 часа</span>
-4.2.1. Использование твинков для обхода флуда. <span class="punish-tag">мут каждому участнику на 4 часа</span>
-4.3. Флуд символами (более 10 символов, смех и т.д.) <span class="punish-tag">мут на 4 часа</span>
-4.3.1. Злоупотребление капсом (более 50% в предложении от 3 слов). <span class="punish-tag">мут на 4 часа</span>
-4.5. Злоупотребление нецензурной лексикой. <span class="punish-tag">мут на 2 - 4 часа</span>
-4.10. <span class="strong">Оскорбление своих родителей.</span> <span class="punish-tag">мут 5-15 дней</span>
-4.11. Затрагивание политики, политическая агитация. <span class="punish-tag">бан 3-7 дней / мут 2 дня</span>
-4.15. Оскорбление модерации и администрации. <span class="punish-tag">бан от 5 до 15 дней</span>
-4.22. Распространение личных данных (доксинг). <span class="punish-tag">бан на 30 дней</span>
-4.29. Упоминание денежных операций с реальной валютой. <span class="punish-tag">мут на 2 дня</span></p>
-                    </div>
-
-                    <div class="rule-section">
-                        <h2>5.0 ГЕЙМПЛЕЙ И ЧИТЫ</h2>
-                        <p>5.1. Намеренное причинение вреда проекту, заливы, лаг-машины, багоюз. <span class="punish-tag">БАН 25 ДНЕЙ / ПЕРМАНЕНТ</span>
-5.2. Использование вредоносного ПО. <span class="punish-tag">БАН 50 ДНЕЙ / IP BAN</span>
-5.2.6. Неадекватное поведение на проверке. <span class="strong">Использование виртуальных машин, манипуляции с доступом к дискам.</span> <span class="punish-tag">БАН 50 ДНЕЙ</span>
-
-<span class="strong">ЗАПРЕЩЕННЫЕ МОДЫ (СРОКИ БАНА):</span>
-ElytraSwap (5д), AFK-Fish (5д), InvMove (7д), TopkaAutoBuy (7д), StepUp (30д), Spawner Location (50д), DiamondSim (50д), FreeCam (50д), AutoTotem (50д), X-ray Mod (50д).
-
-5.3.2. <span class="strong">Обязательные программы для проверки:</span> Luyten, SystemInformer, Everything, RecentView, ShellbagAnalyzer, RegScanner.</p>
-                    </div>
-
-                    <div class="rule-section">
-                        <h2>6.0 ПРАВИЛА ДЛЯ ДОНАТЕРОВ</h2>
-                        <p>6.1. Использование прав в целях вреда проекта. <span class="punish-tag">СНЯТИЕ + БАН</span>
-6.3. Некорректная выдача наказания игроку. <span class="punish-tag">бан на 14 дней</span>
-6.6. Тест команд разрешен ТОЛЬКО на своём аккаунте с причиной "Тест" или "Проверка". Иначе - <span class="punish-tag">бан на 14 дней</span>
-6.8. Модератор/состав не имеет права обманывать игроков на деньги/ресурсы. <span class="punish-tag">ВАРН / СНЯТИЕ</span>
-6.9. <span class="strong">Запрещается шутить про дюп.</span> Нашли? Пишите @otxao. Награда: 20к рилликов. <span class="punish-tag">МУТ 1 ДЕНЬ ЗА ШУТКУ</span>
-7.0. Хелперу/Модеру запрещено оскорблять игроков (в т.ч. "Езз", "Поплачь"). <span class="punish-tag">ВАРН</span></p>
-                    </div>
-
-                    <div class="rule-section" style="border: none; text-align: center; opacity: 0.5;">
-                        <p>By HiveGrief 💫<br>(Bakisyyy, Z1tlex)</p>
-                    </div>
-
+1.8.1 Продажа, покупка ресурсов, аккаунтов за реальную валюту запрещена, так же это касается различных сайтов, таких как FunPay и.т.д. <span class="punish">Наказание - снятие всех привилегий, бан навсегда.</span> Старшие Модераторы и выше по должности имеют право проверить ваш FunPay.</p>
                 </div>
-            </section>
 
-            <section id="s3" class="tab">
-                <div class="yt-flex">
+                <div class="rule-block">
+                    <h2>3.0 Приобретение платных возможностей, вещей.</h2>
+                    <p>3.1. Игра на проекте не подразумевает платы за использование ресурсов HiveGrief.
+3.2. Игрок вправе добровольно оплатить определённую сумму проекту за внутриигровую услугу в одностороннем порядке.
+3.3. При ошибке платежа, либо отсутствия внутриигровой услуги после оплаты, можно обращаться в техподдержку. (см. 2.6)
+3.4. Денежные средства за платные услуги не возвращаются.
+3.5. Покупка платных групп не даёт привилегии на игнорирование/нарушение данных правил.</p>
+                </div>
+
+                <div class="rule-block">
+                    <h2>4.0 Внутриигровое общение.</h2>
+                    <p>4.1. На серверах присутствует локальный и глобальный чат. 
+4.2. Запрещено флудить, отправлять больше 2-ух похожих по смыслу, или одинаковых сообщения подряд (2 сообщения можно, три нельзя) (за одну минуту) <span class="punish">[мут на 4 часа]</span>
+4.2.1. Запрещено согласовывать с другими игроками или использовать свои твинки для отправки одного и того же сообщения... <span class="punish">[мут каждому участник на 4 часа]</span>
+4.3. Запрещено флудить символами (более 10 символов). <span class="punish">[мут на 4 часа]</span>
+4.3.1. Злоупотребление капсом (больше 50%). <span class="punish">[мут на 4 часа]</span>
+4.5. Злоупотребление нецензурной лексикой + пункт 4.11. <span class="punish">[мут на 2 - 4 часа]</span>
+4.10. Оскорбление своих родителей <span class="punish">[мут 5-15 дней]</span>
+4.11. Затрагивание политики, политическая агитация. <span class="punish">[бан от 3 до 7 дней] или [мут на 2 дня]</span>
+4.15. Оскорбление модерации и администрации. <span class="punish">[бан от 5 до 15 дней]</span>
+4.22. Распростронение личных данных игрков (доксинг). <span class="punish">[бан на 30 дней]</span>
+4.29. Любое упоминание денежных операций с реальной валютой. <span class="punish">[мут на 2 дня]</span></p>
+                </div>
+
+                <div class="rule-block">
+                    <h2>5.0 Игровой процесс и прочее.</h2>
+                    <p>5.1. Намеренное причинение вреда проекту, лаг-машины, багоюз. <span class="punish">[бан 25 дней / перманент + снятие]</span>
+5.2. Использование читерского ПО. <span class="punish">[бан на 50 дней либо бан айпи]</span>
+5.2.1. Тим с читером. <span class="punish">[бан на 50 дней]</span>
+5.2.6. Неадекват на проверке / манипуляции с дисками / вирт. машины. <span class="punish">[бан на 50 дней]</span>
+
+<strong>Список запрещенных модификаций:</strong>
+ElytraSwap (5д), ArmorHotSwap (5д), AFK-Fish Mod (5д), InvMove (7д), TopkaAutoBuy (7д), GoProne (15д), StepUp Mod (30д), Spawner Location (50д), DiamondSim (50д), Entity/Player X-Ray (50д), InventoryProfilesNext (50д), AutoAttack (50д), Chest Locator (50д), FreeCam (50д), AutoTotem (50д), CameraNoClip (50д).
+
+5.3.3. Старшие Модераторы и выше имеют право проверить ваш FunPay.</p>
+                </div>
+
+                <div class="rule-block">
+                    <h2>6.0 Правила для донатеров.</h2>
+                    <p>6.1. Использование прав в целях вреда проекта. <span class="punish">[снятие привилегии, бан]</span>
+6.3. Некорректная выдача наказания. <span class="punish">[бан на 14 дней]</span>
+6.6. Проверка команд (Тест/Проверка) только на себе. <span class="punish">[бан на 14 дней]</span>
+6.8. Обман игроков хелпером/модером на ресурсы/деньги запрещен. <span class="punish">[варн или снятие]</span>
+6.9. Запрещается шутить про то что нашёл дюп. Если вы реально нашли дюп, то пишите в лс @otxao. Награда: 20 тыщ рилликов. <span class="punish">[Нарушение: мут 1 день]</span></p>
+                </div>
+
+                <div class="rule-block">
+                    <h2>7.0 Дополнительно.</h2>
+                    <p>7.0. Хелперу/Модеру запрещено оскорблять игроков ("Езз", "Поплачь" и т.д.). <span class="punish">[варн]</span>
+7.3 Запрещено упоминать родню <span class="punish">[Мут - 1 день]</span>
+7.4 Запрещено оскорблять родню <span class="punish">[Мут - 2 дня]</span>
+
+・Любое нарушение в локальном чате подлежит наказанию.
+・Жалобы на Высшую Администрацию не подлежат обжалованию (Bakisyyy, Z1tlex).
+By HiveGrief 💫</p>
+                </div>
+            </div>
+
+            <div id="t3" class="tab">
+                <div class="yt-grid">
                     <a href="https://www.youtube.com/@BL0Xa_off" target="_blank" class="yt-card">
-                        <i class="fa-brands fa-youtube"></i>
-                        <h3>BL0Xa_off</h3>
-                        <div class="watch">СМОТРЕТЬ</div>
+                        <i class="fa-brands fa-youtube"></i><h3>BL0Xa_off</h3><div class="watch">СМОТРЕТЬ</div>
                     </a>
                     <a href="https://www.youtube.com/@Z1tleXx" target="_blank" class="yt-card">
-                        <i class="fa-brands fa-youtube"></i>
-                        <h3>Z1tlex</h3>
-                        <div class="watch">СМОТРЕТЬ</div>
+                        <i class="fa-brands fa-youtube"></i><h3>Z1tlex</h3><div class="watch">СМОТРЕТЬ</div>
                     </a>
                 </div>
-            </section>
-
+            </div>
         </main>
-        
-        <footer style="padding: 20px 60px; border-top: 1px solid var(--border); font-size: 0.7rem; color: #475569; display: flex;">
-            <div>© 2026 HIVEGRIEF NETWORK</div>
-            <div style="margin-left: auto; color: var(--accent); font-family: 'JetBrains Mono';">PROTOCOL: 2.0.1 // AUTH: BAKISYYY_Z1TLEX</div>
-        </footer>
     </div>
 
     <script>
-        const d = document.getElementById('dot');
-        const r = document.getElementById('ring');
-        
+        const dot = document.getElementById('dot');
+        const ring = document.getElementById('ring');
         document.addEventListener('mousemove', (e) => {
-            d.style.left = e.clientX + 'px';
-            d.style.top = e.clientY + 'px';
-            r.animate({
-                left: (e.clientX - 15) + 'px',
-                top: (e.clientY - 15) + 'px'
-            }, { duration: 100, fill: 'forwards' });
+            dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
+            ring.animate({ left: (e.clientX - 15) + 'px', top: (e.clientY - 15) + 'px' }, { duration: 100, fill: 'forwards' });
         });
 
-        function sh(id, b) {
-            document.querySelectorAll('.n-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            b.classList.add('active');
-            document.getElementById(id).classList.add('active');
+        function tab(id, btn) {
+            const current = document.querySelector('.tab.active');
+            const target = document.getElementById(id);
+            if(current === target) return;
+
+            document.querySelectorAll('.n-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            current.style.opacity = '0';
+            current.style.transform = 'scale(1.05)';
+            
+            setTimeout(() => {
+                current.classList.remove('active');
+                current.style.visibility = 'hidden';
+                target.style.visibility = 'visible';
+                target.classList.add('active');
+                target.style.opacity = '1';
+                target.style.transform = 'scale(1)';
+            }, 300);
         }
     </script>
 </body>
