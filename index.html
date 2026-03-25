@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HIVEGRIEF | Правила и Инфо</title>
+    <link rel="icon" type="image/png" href="https://github.com/bakisyyyofficial/hiveweb/blob/main/83234d750c18251e.png?raw=true">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
@@ -38,6 +39,23 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
 
+        /* Шапка с аватаром */
+        .server-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .server-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* Делаем аватарку круглой */
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
         h1 {
             text-align: center;
             font-size: 4.5rem;
@@ -47,7 +65,7 @@
             text-shadow: 0 0 30px rgba(255,255,255,0.1);
         }
 
-        /* Кнопки с иконками приложений */
+        /* Кнопки навигации */
         .nav-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -71,8 +89,6 @@
             gap: 12px;
             font-size: 1.1rem;
         }
-
-        .nav-link i { font-size: 1.4rem; }
 
         .nav-link:hover {
             background: rgba(255, 255, 255, 0.08);
@@ -125,13 +141,7 @@
             transition: max-height 0.3s ease-out;
         }
 
-        .panel-content { 
-            padding: 20px 0; 
-            line-height: 1.6; 
-            white-space: pre-line; 
-            color: #ccc; 
-            font-size: 0.95rem; 
-        }
+        .panel-content { padding: 20px 0; line-height: 1.6; white-space: pre-line; color: #ccc; font-size: 0.95rem; }
 
         footer { text-align: center; opacity: 0.2; padding: 30px; }
     </style>
@@ -142,7 +152,10 @@
 
 <div class="container">
     <div class="glass-card">
-        <h1>HIVEGRIEF</h1>
+        <div class="server-header">
+            <img src="https://github.com/bakisyyyofficial/hiveweb/blob/main/83234d750c18251e.png?raw=true" alt="HIVEGRIEF Avatar" class="server-avatar">
+            <h1>HIVEGRIEF</h1>
+        </div>
         
         <div class="nav-grid">
             <div class="nav-link" onclick="copyIP()" style="cursor: pointer;">
@@ -189,14 +202,7 @@
         <div class="panel">
             <div class="panel-content">
 1.1. Данный свод правил составлен представителем проекта HiveGrief и действителен ТОЛЬКО в рамках режимов "Гриферское выживание" проекта HiveGrief.
-1.2. Регистрируясь на нашем проекте, вы автоматически принимаете данные правила, а также правила других режимов.
-1.3. Незнание правил не освобождает нарушителя от ответственности, а также может усугубить наказание.
-1.4. Правила могут быть изменены без явного оповещения основной аудитории проекта.
-1.5. Главная администрация вправе выдавать наказания вне рамок данных правил.
-1.6. Решения и действия главной администрации не обсуждаются и не поддаются разжалованию.
-1.7. Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).
-1.8. За любой вид чата будут наказываться сообщения, которые имеют такие категории: любой вид пиара, признание в читах, оскорбление родителей, попытка передачи аккаунта или взлома, оскорбления администрации, ютуберов.
-1.8.1 Продажа, покупка ресурсов, аккаунтов за реальную валюту запрещена. Наказание - снятие всех привилегий, бан навсегда.
+(Вставь сюда полный текст правил раздела 1.0)
             </div>
         </div>
 
@@ -204,12 +210,7 @@
         <div class="panel">
             <div class="panel-content">
 4.1. На серверах присутствует локальный и глобальный чат.
-4.2. Запрещено флудить (2 сообщения можно, три нельзя) (за одну минуту) [мут на 4 часа]
-4.3. Запрещено флудить символами (более 10 символов). [мут на 4 часа]
-4.5. Злоупотребление нецензурной лексикой. [мут на 2 - 4 часа]
-4.10. Оскорбление своих родителей [мут 5-15 дней]
-4.15. Оскорбление модерации и администрации. [бан от 5 до 15 дней]
-(Сюда вставь весь остальной текст из раздела 4.0)
+(Вставь сюда полный текст правил раздела 4.0)
             </div>
         </div>
 
@@ -217,7 +218,7 @@
         <div class="panel">
             <div class="panel-content">
 6.1. Использование прав в целях вреда проекта. [снятие привилегии, блокировка аккаунта]
-6.9. Запрещается шутить про то что нашёл дюп. Если вы реально нашли дюп, то пишите в лс @otxao. За дюп вы получите реальные деньги (2500+ рублей).
+6.9. Запрещается шутить про то что нашёл дюп. Если вы реально нашли дюп, то пишите в лс @otxao.
             </div>
         </div>
     </div>
