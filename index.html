@@ -3,81 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | Твой сервер</title>
+    <title>HIVEGRIEF | Майнкрафт Сервер</title>
     <style>
         body {
             margin: 0;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            color: white;
-            /* Здесь можно вставить ссылку на свой крутой скриншот */
-            background: url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?q=80&w=1974&auto=format&fit=crop') no-repeat center center fixed;
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: #eeeeee;
+            /* Темный игровой фон */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://wallpaperaccess.com/full/1271164.jpg');
             background-size: cover;
-        }
-
-        .overlay {
-            background: rgba(0, 0, 0, 0.5); /* Затемнение фона */
-            min-height: 100vh;
+            background-attachment: fixed;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
+            justify-content: center;
+            padding: 40px 10px;
         }
 
-        .glass-panel {
-            background: rgba(0, 0, 0, 0.65); /* Черное стекло */
-            backdrop-filter: blur(12px); /* Эффект размытия */
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px; /* Округлые края */
-            padding: 30px;
-            max-width: 800px;
+        .container {
+            max-width: 900px;
             width: 100%;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
-        h1 { color: #ffcc00; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
-        h2 { border-bottom: 2px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; }
-        
-        .rules-list { line-height: 1.6; }
-        .rule-item { margin-bottom: 15px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; }
+        /* Тот самый стеклянный стиль */
+        .glass-card {
+            background: rgba(15, 15, 15, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
 
-        .btn-copy {
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(45deg, #ffcc00, #ffaa00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            letter-spacing: 3px;
+        }
+
+        .ip-badge {
+            background: rgba(255, 204, 0, 0.1);
+            border: 1px solid #ffcc00;
+            color: #ffcc00;
+            padding: 10px 20px;
+            border-radius: 50px;
             display: block;
             width: fit-content;
             margin: 20px auto;
-            background: #ffcc00;
-            color: black;
-            padding: 12px 24px;
-            border-radius: 12px;
-            text-decoration: none;
             font-weight: bold;
+            cursor: pointer;
             transition: 0.3s;
         }
-        .btn-copy:hover { transform: scale(1.05); background: #fff; }
+
+        .ip-badge:hover {
+            background: #ffcc00;
+            color: black;
+        }
+
+        h2 {
+            color: #ffcc00;
+            border-left: 4px solid #ffcc00;
+            padding-left: 15px;
+            margin-top: 40px;
+        }
+
+        .rule-block {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            transition: 0.2s;
+        }
+
+        .rule-block:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(5px);
+        }
+
+        .rule-num {
+            color: #ffcc00;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        footer {
+            text-align: center;
+            opacity: 0.5;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
-<div class="overlay">
-    <div class="glass-panel">
-        <h1>HIVEGRIEF.SU</h1>
-        <p style="text-align: center;">Добро пожаловать на лучший гриферский сервер!</p>
-        <a href="#" class="btn-copy">IP: HIVEGRIEF.SU (Нажми, чтобы скопировать)</a>
+<div class="container">
+    <div class="glass-card">
+        <h1>HIVEGRIEF</h1>
+        <div class="ip-badge">IP: HIVEGRIEF.SU</div>
+        <p style="text-align: center; opacity: 0.8;">Добро пожаловать в наше сообщество! Ниже ты найдешь правила и важную информацию.</p>
     </div>
 
-    <div class="glass-panel">
+    <div class="glass-card">
+        <h2>Правила сервера</h2>
+        
+        <div class="rule-block">
+            <span class="rule-num">1.1</span> Запрещено использование стороннего ПО (читы, макросы, автокликеры).
+        </div>
+        <div class="rule-block">
+            <span class="rule-num">1.2</span> Запрещен спам, флуд и неадекватное поведение в чате.
+        </div>
+        <div class="rule-block">
+            <span class="rule-num">1.3</span> Уважительно относитесь к администрации и другим игрокам.
+        </div>
+        
         <h2>О сервере</h2>
-        <p>Здесь напиши кратко, что крутого есть на сервере (например: честный ПвП, уникальные кланы, ивенты каждый день).</p>
+        <p>HIVEGRIEF — это уникальный гриферский проект, где каждый может стать королем или пасть в бою. У нас стабильный ТПС, честная администрация и лучшие ивенты.</p>
     </div>
 
-    <div class="glass-panel">
-        <h2>Правила проекта</h2>
-        <div class="rules-list">
-            <div class="rule-item"><strong>1.1</strong> Не использовать читы и стороннее ПО.</div>
-            <div class="rule-item"><strong>1.2</strong> Уважительно относиться к другим игрокам.</div>
-            </div>
-    </div>
+    <footer>&copy; 2026 HIVEGRIEF.SU. Все права защищены.</footer>
 </div>
 
 </body>
