@@ -3,711 +3,539 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | ЛУЧШИЙ ГРИФЕРСКИЙ ПРОЕКТ 2026</title>
+    <title>HIVEGRIEF | ULTRA PERFORMANCE</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/bakisyyyofficial/hiveweb/main/83234d750c18251e.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
     
     <style>
-        /* === БАЗОВЫЕ НАСТРОЙКИ (DARK ENGINE) === */
         :root {
             --primary: #ffcc00;
-            --primary-glow: rgba(255, 204, 0, 0.4);
+            --primary-glow: rgba(255, 204, 0, 0.6);
             --secondary: #ff8800;
+            --secondary-glow: rgba(255, 136, 0, 0.4);
             --accent: #4CAF50;
-            --bg-dark: #080808;
-            --glass: rgba(15, 15, 15, 0.85);
-            --border: rgba(255, 255, 255, 0.08);
-            --text-main: #f0f0f0;
-            --text-dim: #a0a0a0;
-            --yt-red: #ff0000;
+            --bg-dark: #050505;
+            --glass: rgba(10, 10, 10, 0.9);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-dim: #888888;
         }
 
-        * {
-            box-sizing: border-box;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; outline: none; }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background-color: var(--bg-dark);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            min-height: 200vh; /* Чтобы было куда скроллить */
+            min-height: 100vh;
         }
 
-        /* === ФОНОВЫЕ ЭФФЕКТЫ (MATRIX & HOLO) === */
-        #main-canvas-bg {
+        /* === НЕОНОВЫЕ МАГИСТРАЛИ (ВЕРХ) === */
+        .neon-top-bar {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%),
-                linear-gradient(rgba(255,204,0,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,204,0,0.05) 1px, transparent 1px);
-            background-size: 100% 100%, 50px 50px, 50px 50px;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, var(--secondary), var(--primary), var(--secondary), transparent);
+            z-index: 10001;
+            box-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary);
+            animation: neon-flow 3s infinite linear;
         }
 
-        /* Кибер-сетка в движении */
+        .neon-line-extra {
+            position: fixed;
+            top: 10px; left: 0; width: 100%; height: 1px;
+            background: rgba(255, 204, 0, 0.2);
+            z-index: 10000;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        @keyframes neon-flow {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* === ФОНОВЫЙ ДВИЖОК === */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
         .cyber-grid {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 100px 100px;
-            perspective: 500px;
+            background-image: 
+                linear-gradient(rgba(255,204,0,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,204,0,0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
             z-index: -1;
-            transform: rotateX(60deg);
-            transform-origin: top;
-            animation: grid-move 20s linear infinite;
+            mask-image: radial-gradient(ellipse at center, black, transparent 80%);
         }
 
-        @keyframes grid-move {
-            from { background-position: 0 0; }
-            to { background-position: 0 1000px; }
-        }
-
-        /* Голографические столбы света */
-        .hologram-pillar {
+        /* === ХВОСТ КУРСОРНОЙ ЭНЕРГИИ === */
+        .cursor-trail-dot {
             position: fixed;
-            width: 2px;
-            height: 100vh;
-            background: linear-gradient(to bottom, transparent, var(--primary), transparent);
-            opacity: 0.2;
-            z-index: 0;
-            filter: blur(4px);
-        }
-
-        /* === ТРЕЙЛ КУРСОРНОЙ ЭНЕРГИИ === */
-        .cursor-energy {
-            position: fixed;
-            width: 8px; height: 8px;
+            width: 12px; height: 12px;
             background: var(--primary);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 10000;
-            mix-blend-mode: screen;
+            z-index: 99999;
+            filter: blur(2px);
             box-shadow: 0 0 15px var(--primary), 0 0 30px var(--secondary);
-            transition: transform 0.1s ease-out;
+            transition: width 0.2s, height 0.2s;
         }
 
-        /* === ЛИСТОПАД (SVG ENGINE) === */
-        #leaf-scene {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 999;
-        }
-        .falling-leaf {
-            position: absolute;
-            fill: var(--accent);
-            filter: drop-shadow(0 0 5px rgba(76, 175, 80, 0.5));
-            animation: fall-complex linear forwards;
-        }
-        @keyframes fall-complex {
-            0% { transform: translateY(-100px) rotate(0deg) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(110vh) rotate(720deg) translateX(200px); opacity: 0; }
+        /* === ЛИСТОПАД 4.0 === */
+        #leaf-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 998; }
+        .leaf-entity { position: absolute; fill: var(--accent); animation: leaf-physics linear forwards; filter: drop-shadow(0 0 10px rgba(76,175,80,0.3)); }
+        @keyframes leaf-physics {
+            0% { transform: translateY(-10vh) rotate(0deg) scale(0); opacity: 0; }
+            10% { opacity: 1; scale: 1; }
+            100% { transform: translateY(110vh) rotate(1080deg) translateX(300px); opacity: 0; }
         }
 
-        /* === ОСНОВНОЙ КОНТЕНТ === */
-        .wrapper {
-            max-width: 1200px;
+        /* === КОНТЕНТ === */
+        .main-container {
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 150px 20px;
+            padding: 180px 20px 100px;
             position: relative;
             z-index: 10;
         }
 
-        /* Хедер сайта */
-        .hero-section {
-            text-align: center;
-            margin-bottom: 100px;
-        }
-
-        .main-logo {
-            font-size: 8rem;
+        .hero-box { text-align: center; margin-bottom: 120px; }
+        .glitch-logo {
+            font-size: 9rem;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 30px;
-            margin: 0;
-            background: linear-gradient(to bottom, #fff 30%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 40px var(--primary-glow));
-            animation: logo-flicker 3s infinite;
-        }
-
-        @keyframes logo-flicker {
-            0%, 100% { opacity: 1; filter: drop-shadow(0 0 40px var(--primary-glow)); }
-            50% { opacity: 0.9; filter: drop-shadow(0 0 60px var(--primary)); }
-        }
-
-        /* Счётчик онлайна */
-        .online-counter {
-            background: rgba(255, 255, 255, 0.05);
-            display: inline-block;
-            padding: 10px 30px;
-            border-radius: 50px;
-            border: 1px solid var(--border);
-            font-weight: 800;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        /* КАРТОЧКА ВЛАДЕЛЬЦА */
-        .owner-glass {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 40px;
-            padding: 50px;
-            text-align: center;
-            margin-bottom: 50px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .owner-glass:hover { transform: scale(1.02); border-color: var(--primary); }
-
-        .owner-title { color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 10px; margin-bottom: 15px; }
-        .owner-name { font-size: 4rem; margin: 0 0 30px; font-weight: 900; }
-        
-        .yt-btn {
-            background: linear-gradient(45deg, #ff0000, #b30000);
+            letter-spacing: 40px;
             color: #fff;
-            text-decoration: none;
-            padding: 20px 50px;
-            border-radius: 20px;
+            text-shadow: 0 0 50px var(--primary-glow);
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .online-badge {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            padding: 12px 40px;
+            border-radius: 100px;
+            color: var(--accent);
             font-weight: 900;
-            font-size: 1.2rem;
+            letter-spacing: 4px;
+            backdrop-filter: blur(15px);
             display: inline-flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.3);
-            transition: 0.3s;
-        }
-        .yt-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(255, 0, 0, 0.5); }
-
-        /* НАВИГАЦИЯ И ВЫБОР (GRID) */
-        .layout-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-            margin-bottom: 50px;
         }
 
-        .main-nav {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .nav-card {
+        /* КАРТОЧКИ */
+        .glass-panel {
             background: var(--glass);
             border: 1px solid var(--border);
-            padding: 40px;
-            border-radius: 35px;
-            text-decoration: none;
+            border-radius: 50px;
+            padding: 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            backdrop-filter: blur(30px);
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .glass-panel:hover { border-color: var(--primary); transform: translateY(-10px); }
+
+        .owner-section { text-align: center; }
+        .role-tag { color: var(--primary); font-weight: 900; letter-spacing: 12px; text-transform: uppercase; margin-bottom: 20px; font-size: 1.1rem; }
+        .nickname { font-size: 5rem; font-weight: 900; margin-bottom: 40px; display: block; }
+        
+        .btn-yt {
+            background: linear-gradient(45deg, #f00, #900);
+            padding: 25px 60px;
+            border-radius: 25px;
             color: #fff;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 1.4rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 20px 50px rgba(255,0,0,0.4);
+            transition: 0.4s;
+        }
+        .btn-yt:hover { transform: scale(1.05); box-shadow: 0 25px 60px rgba(255,0,0,0.6); }
+
+        /* НАВИГАЦИЯ И "ПОЧЕМУ МЫ" */
+        .info-layout {
+            display: grid;
+            grid-template-columns: 1.8fr 1.2fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .link-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            padding: 45px 20px;
+            border-radius: 40px;
+            color: #fff;
+            text-decoration: none;
             text-align: center;
             transition: 0.4s;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            gap: 15px;
-            cursor: pointer;
+            gap: 20px;
         }
-        .nav-card i { font-size: 2.5rem; color: var(--primary); }
-        .nav-card span { font-weight: 900; font-size: 1.3rem; text-transform: uppercase; }
-        .nav-card:hover { background: rgba(255, 204, 0, 0.1); border-color: var(--primary); transform: translateY(-5px); }
+        .link-item i { font-size: 3rem; color: var(--primary); filter: drop-shadow(0 0 15px var(--primary-glow)); }
+        .link-item b { font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px; }
+        .link-item:hover { background: rgba(255,204,0,0.08); border-color: var(--primary); }
 
-        /* ВКЛАДКА "ПОЧЕМУ МЫ" */
-        .why-us-card {
-            background: linear-gradient(135deg, rgba(255, 204, 0, 0.1), rgba(0, 0, 0, 0.9));
+        .sidebar-why {
+            background: linear-gradient(180deg, rgba(255,204,0,0.1), transparent);
             border: 2px solid var(--primary);
-            padding: 40px;
-            border-radius: 35px;
-            height: 100%;
-        }
-        .why-us-card h2 { color: var(--primary); text-transform: uppercase; margin-top: 0; font-size: 1.8rem; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
-        .why-list { list-style: none; padding: 0; margin: 0; }
-        .why-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px; }
-        .why-item i { color: var(--accent); font-size: 1.4rem; margin-top: 5px; }
-        .why-item div b { display: block; color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
-        .why-item div p { margin: 0; color: var(--text-dim); font-size: 0.95rem; line-height: 1.4; }
-
-        /* СЕКЦИЯ ПРАВИЛ (ULTRA ACCORDION) */
-        .rules-container {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            padding: 80px;
-        }
-
-        .rules-header { text-align: center; margin-bottom: 60px; }
-        .rules-header h2 { font-size: 4rem; font-weight: 900; text-transform: uppercase; letter-spacing: 10px; margin: 0; }
-        .rules-header p { color: var(--text-dim); letter-spacing: 5px; text-transform: uppercase; }
-
-        .acc-item { margin-bottom: 20px; }
-        .acc-trigger {
-            width: 100%;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border);
-            padding: 35px 45px;
-            border-radius: 25px;
-            color: #fff;
-            font-size: 1.6rem;
-            font-weight: 900;
-            text-align: left;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: 0.3s;
-            border-left: 15px solid var(--primary);
-            text-transform: uppercase;
-        }
-        .acc-trigger:hover { background: rgba(255,204,0,0.05); transform: translateX(10px); }
-        .acc-trigger.active { border-radius: 25px 25px 0 0; background: rgba(255,204,0,0.1); }
-        
-        .acc-panel {
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0, 1, 0, 1);
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border);
-            border-top: none;
-            border-radius: 0 0 25px 25px;
-        }
-        .acc-panel.show { max-height: 4000px; transition: all 0.5s cubic-bezier(1, 0, 1, 0); }
-        
-        .rules-content {
+            border-radius: 45px;
             padding: 50px;
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: #e0e0e0;
-            white-space: pre-line;
         }
+        .sidebar-why h2 { font-size: 2.2rem; margin-bottom: 40px; border-left: 8px solid var(--primary); padding-left: 20px; text-transform: uppercase; }
+        
+        .reason-box { margin-bottom: 35px; display: flex; gap: 20px; }
+        .reason-box i { color: var(--accent); font-size: 1.8rem; }
+        .reason-box h4 { margin: 0 0 8px; font-size: 1.3rem; color: #fff; }
+        .reason-box p { margin: 0; color: var(--text-dim); line-height: 1.6; font-size: 1rem; }
 
-        .punish-tag {
-            color: #ff4d4d;
-            background: rgba(255, 77, 77, 0.15);
-            padding: 5px 12px;
-            border-radius: 8px;
-            font-weight: 900;
-            border: 1px solid rgba(255, 77, 77, 0.3);
-        }
-
-        .mod-box {
-            background: rgba(255, 204, 0, 0.05);
-            border: 2px dashed var(--primary);
-            padding: 30px;
-            border-radius: 20px;
-            margin: 25px 0;
-        }
-
-        /* ПРЕИМУЩЕСТВА (НИЖНИЙ БЛОК) */
-        .bottom-features {
+        /* ПРЕИМУЩЕСТВА СНИЗУ */
+        .triple-cards {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-top: 100px;
+            gap: 30px;
+            margin-bottom: 40px;
         }
-        .b-feat-card {
-            text-align: center;
-            padding: 40px;
+        .t-card {
             background: var(--glass);
-            border-radius: 30px;
             border: 1px solid var(--border);
-            transition: 0.3s;
-        }
-        .b-feat-card i { font-size: 3.5rem; color: var(--primary); margin-bottom: 20px; }
-        .b-feat-card h3 { font-size: 1.5rem; text-transform: uppercase; margin-bottom: 10px; }
-        .b-feat-card p { color: var(--text-dim); }
-        .b-feat-card:hover { border-color: var(--primary); transform: translateY(-10px); }
-
-        /* ФУТЕР */
-        .site-footer {
-            margin-top: 150px;
-            padding: 100px 20px;
+            padding: 50px 30px;
+            border-radius: 40px;
             text-align: center;
-            background: linear-gradient(to top, #000, transparent);
-            border-top: 1px solid var(--border);
         }
-        .footer-logo { font-size: 3rem; font-weight: 900; color: var(--primary); letter-spacing: 10px; opacity: 0.3; }
-        .copyright { margin-top: 20px; color: var(--text-dim); font-weight: 700; letter-spacing: 3px; }
+        .t-card i { font-size: 4rem; color: var(--primary); margin-bottom: 30px; }
+        .t-card h3 { font-size: 1.6rem; margin-bottom: 15px; text-transform: uppercase; }
 
-        /* Кнопка "Наверх" */
-        #btn-up {
-            position: fixed; bottom: 40px; right: 40px;
-            width: 60px; height: 60px;
-            background: var(--primary); color: #000;
-            border: none; border-radius: 50%;
-            font-size: 1.5rem; cursor: pointer;
-            z-index: 1000; display: none;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        /* ПРАВИЛА (ПОЛНЫЙ СПИСОК) */
+        .rules-block { padding: 80px 60px; border-radius: 60px; }
+        .rules-title { font-size: 4rem; text-align: center; margin-bottom: 60px; letter-spacing: 15px; }
+
+        .rules-acc { margin-bottom: 25px; }
+        .rules-btn {
+            width: 100%; padding: 40px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-left: 20px solid var(--primary);
+            border-radius: 30px;
+            color: #fff; font-size: 1.8rem; font-weight: 900;
+            text-align: left; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: 0.4s;
+        }
+        .rules-btn:hover { background: rgba(255,204,0,0.1); transform: translateX(15px); }
+        
+        .rules-panel {
+            max-height: 0; overflow: hidden; transition: 0.8s ease;
+            background: rgba(0,0,0,0.4); border-radius: 0 0 30px 30px;
+        }
+        .rules-panel.active { max-height: 5000px; padding: 50px; border: 1px solid var(--border); border-top: none; }
+        
+        .text-wrap { line-height: 2; font-size: 1.2rem; color: #ddd; white-space: pre-line; }
+        .tag-p { color: #ff5555; background: rgba(255,0,0,0.1); padding: 5px 15px; border-radius: 10px; font-weight: 800; border: 1px solid rgba(255,0,0,0.2); }
+        .mod-grid { background: rgba(255,204,0,0.05); border: 2px dashed var(--primary); padding: 30px; border-radius: 25px; margin-top: 30px; }
+
+        /* FOOTER */
+        .footer {
+            padding: 120px 0; border-top: 1px solid var(--border);
+            text-align: center; opacity: 0.6; font-weight: 900;
         }
 
-        /* === RESPONSIVE === */
-        @media (max-width: 900px) {
-            .layout-grid { grid-template-columns: 1fr; }
-            .main-logo { font-size: 4rem; letter-spacing: 10px; }
-            .rules-container { padding: 30px; }
-            .bottom-features { grid-template-columns: 1fr; }
-            .acc-trigger { font-size: 1.1rem; padding: 25px; }
+        #scroll-top {
+            position: fixed; bottom: 50px; right: 50px;
+            width: 70px; height: 70px; border-radius: 20px;
+            background: var(--primary); border: none; cursor: pointer;
+            z-index: 9999; display: none; box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 1000px) {
+            .info-layout, .triple-cards { grid-template-columns: 1fr; }
+            .glitch-logo { font-size: 4rem; letter-spacing: 10px; }
+            .rules-btn { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <div id="main-canvas-bg"></div>
+    <div class="neon-top-bar"></div>
+    <div class="neon-line-extra"></div>
+    <div id="bg-canvas"></div>
     <div class="cyber-grid"></div>
-    <div id="leaf-scene"></div>
-    <button id="btn-up"><i class="fa-solid fa-arrow-up"></i></button>
+    <div id="leaf-overlay"></div>
+    <button id="scroll-top"><i class="fa-solid fa-chevron-up"></i></button>
 
-    <div class="wrapper">
+    <div class="main-container">
         
-        <header class="hero-section">
-            <h1 class="main-logo">HIVEGRIEF</h1>
-            <div class="online-counter">
-                <i class="fa-solid fa-circle" style="font-size: 0.7rem; margin-right: 10px; animation: pulse 2s infinite;"></i>
-                Онлайн: <span id="player-count">482</span> / 1000
+        <header class="hero-box">
+            <h1 class="glitch-logo">HIVEGRIEF</h1>
+            <div class="online-badge">
+                <i class="fa-solid fa-bolt" style="animation: pulse 1s infinite;"></i>
+                ОНЛАЙН: <span id="online-val">512</span> / 1000
             </div>
         </header>
 
-        <section class="owner-glass">
-            <div class="owner-title">Head of Administration</div>
-            <h2 class="owner-name">BL0Xa</h2>
-            <p style="color: var(--text-dim); max-width: 600px; margin: 0 auto 30px; font-style: italic;">
-                "Мы строим проект, где сила игрока определяется его мастерством, а не только донатом. HiveGrief — это история, которую ты пишешь сам."
+        <section class="glass-panel owner-section">
+            <div class="role-tag">Project Owner</div>
+            <span class="nickname">BL0Xa</span>
+            <p style="color: var(--text-dim); font-size: 1.2rem; margin-bottom: 50px;">
+                "Мы создаем не просто сервер, а место, где каждый грифер найдет свой дом... или цель для рейда."
             </p>
-            <a href="https://www.youtube.com/@BL0Xa_off" target="_blank" class="yt-btn">
-                <i class="fa-brands fa-youtube"></i> ПОДПИСАТЬСЯ НА КАНАЛ
+            <a href="https://www.youtube.com/@BL0Xa_off" target="_blank" class="btn-yt">
+                <i class="fa-brands fa-youtube"></i> КАНАЛ ВЛАДЕЛЬЦА
             </a>
         </section>
 
-        <div class="layout-grid">
-            <div class="main-nav">
-                <div class="nav-card" onclick="copyIP()">
-                    <i class="fa-solid fa-terminal"></i>
-                    <span>IP: MC.HIVEGRIEF.SU</span>
-                    <small style="opacity: 0.5;">Нажми, чтобы скопировать</small>
+        <div class="info-layout">
+            <div class="nav-buttons">
+                <div class="link-item" onclick="copyIP()">
+                    <i class="fa-solid fa-plug"></i>
+                    <b>MC.HIVEGRIEF.SU</b>
+                    <small>Нажми для копирования</small>
                 </div>
-                <a href="https://shop.hivegrief.su" class="nav-card" target="_blank">
-                    <i class="fa-solid fa-gem"></i>
-                    <span>МАГАЗИН ДОНАТА</span>
+                <a href="https://shop.hivegrief.su" class="link-item" target="_blank">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <b>ДОНАТ МАГАЗИН</b>
                 </a>
-                <a href="https://t.me/HiveGriefOff" class="nav-card" target="_blank">
+                <a href="https://t.me/HiveGriefOff" class="link-item" target="_blank">
                     <i class="fa-brands fa-telegram"></i>
-                    <span>TELEGRAM КАНАЛ</span>
+                    <b>TELEGRAM</b>
                 </a>
-                <a href="https://discord.gg/hivegrief" class="nav-card" target="_blank">
+                <a href="https://discord.gg/hivegrief" class="link-item" target="_blank">
                     <i class="fa-brands fa-discord"></i>
-                    <span>DISCORD СЕРВЕР</span>
+                    <b>DISCORD</b>
                 </a>
             </div>
 
-            <aside class="why-us-card">
-                <h2>Почему HiveGrief?</h2>
-                <div class="why-list">
-                    <div class="why-item">
-                        <i class="fa-solid fa-bolt"></i>
-                        <div>
-                            <b>Мощный Хостинг</b>
-                            <p>Мы используем выделенные сервера с процессорами i9-14900K. Твой пинг будет ниже, чем реакция крипера.</p>
-                        </div>
+            <aside class="sidebar-why">
+                <h2>Почему стоит выбрать нас?</h2>
+                <div class="reason-box">
+                    <i class="fa-solid fa-server"></i>
+                    <div>
+                        <h4>Топовое Железо</h4>
+                        <p>Наш хостинг тянет 1000+ игроков без просадок ТПС. Плавность гарантирована.</p>
                     </div>
-                    <div class="why-item">
-                        <i class="fa-solid fa-shield-heart"></i>
-                        <div>
-                            <b>Доброе КП</b>
-                            <p>Наша команда персонала проходит жесткий отбор. Никакого пафоса — только помощь игрокам 24/7.</p>
-                        </div>
+                </div>
+                <div class="reason-box">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <div>
+                        <h4>Адекватное КП</h4>
+                        <p>Команда проекта всегда на связи. Поможем, подскажем, накажем нарушителей.</p>
                     </div>
-                    <div class="why-item">
-                        <i class="fa-solid fa-brain"></i>
-                        <div>
-                            <b>Уникальные Ивенты</b>
-                            <p>Каждую неделю мы проводим масштабные замесы, конкурсы на реальные деньги и уникальные квесты.</p>
-                        </div>
+                </div>
+                <div class="reason-box">
+                    <i class="fa-solid fa-gift"></i>
+                    <div>
+                        <h4>Честный Донат</h4>
+                        <p>У нас нет "имбовых" вещей, которые рушат баланс. Победа зависит от рук!</p>
                     </div>
-                    <div class="why-item">
-                        <i class="fa-solid fa-handshake"></i>
-                        <div>
-                            <b>Слышим каждого</b>
-                            <p>Предложил идею в Discord? Она реально может появиться на сервере через пару дней.</p>
-                        </div>
+                </div>
+                <div class="reason-box">
+                    <i class="fa-solid fa-heart"></i>
+                    <div>
+                        <h4>Атмосфера</h4>
+                        <p>Дружное комьюнити и отсутствие токсичности в глобальном чате.</p>
                     </div>
                 </div>
             </aside>
         </div>
 
-        <div class="bottom-features">
-            <div class="b-feat-card">
-                <i class="fa-solid fa-skull-crossbones"></i>
-                <h3>Хардкорный Гриф</h3>
-                <p>Никаких ограничений на взрывы и рейды. Только настоящий хардкор!</p>
+        <div class="triple-cards">
+            <div class="t-card">
+                <i class="fa-solid fa-fire"></i>
+                <h3>Классика Грифа</h3>
+                <p>Все механики старого доброго грифа сохранены и улучшены.</p>
             </div>
-            <div class="b-feat-card">
-                <i class="fa-solid fa-coins"></i>
-                <h3>Честная Экономика</h3>
-                <p>Сбалансированный рынок, где каждый может разбогатеть своим трудом.</p>
+            <div class="t-card">
+                <i class="fa-solid fa-microchip"></i>
+                <h3>Свои Плагины</h3>
+                <p>Уникальные разработки, которых вы не увидите на других серверах.</p>
             </div>
-            <div class="b-feat-card">
-                <i class="fa-solid fa-mask"></i>
-                <h3>Тайные Кланы</h3>
-                <p>Создавай союзы, захватывай территории и стань королем сервера.</p>
+            <div class="t-card">
+                <i class="fa-solid fa-trophy"></i>
+                <h3>Турниры</h3>
+                <p>Регулярные ПвП турниры с призами в виде реальных денег и доната.</p>
             </div>
         </div>
 
-        <section class="rules-container" id="rules">
-            <div class="rules-header">
-                <h2>Регламент</h2>
-                <p>Правила проекта HiveGrief</p>
-            </div>
-
-            <div class="acc-item">
-                <button class="acc-trigger">1.0 Общее положение и 3.0 Донат</button>
-                <div class="acc-panel">
-                    <div class="rules-content">
+        <section class="glass-panel rules-block">
+            <h2 class="rules-title">РЕГЛАМЕНТ</h2>
+            
+            <div class="rules-acc">
+                <button class="rules-btn" onclick="toggleAcc(this)">1.0 - 3.0 ОБЩЕЕ & ДОНАТ <i class="fa-solid fa-plus"></i></button>
+                <div class="rules-panel">
+                    <div class="text-wrap">
 1.0 Общее положение.
 1.1. Данный свод правил составлен представителем проекта <strong>HiveGrief</strong> и действителен ТОЛЬКО в рамках режимов "Гриферское выживание" проекта HiveGrief .
-1.2. Регистрируясь на нашем проекте, вы автоматически принимаете данные правила, а также правила других режимов.
-1.3. Незнание правил не освобождает нарушителя от ответственности, а также может усугубить наказание.
-1.4. Правила могут быть изменены без явного оповещения основной аудитории проекта.
-1.5.1. При значительных изменениях правил, на форуме проекта отображается сопутствуещее объявление.
+1.2. Регистрируясь на нашем проекте, вы автоматически принимаете данные правила.
+1.3. Незнание правил не освобождает нарушителя от ответственности.
+1.4. Правила могут быть изменены без явного оповещения аудитории.
 1.5. Главная администрация вправе выдавать наказания вне рамок данных правил.
-1.6. Решения и действия главной администрации не обсуждаются и не поддаются разжалованию.
-1.7. Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).
-1.8. За любой вид чата будут наказываться сообщения, которые имеют такие категории: любой вид пиара, признание в читах, оскорбление родителей, попытка передачи аккаунта или взлома, оскорбления администрации, ютуберов.
-1.8.1 Продажа, покупка ресурсов, аккаунтов за реальную валюту запрещена, так же это касается различных сайтов, таких как FunPay и.т.д. <span class="punish-tag">Наказание - снятие всех привилегий, бан навсегда.</span> Старшие Модераторы и выше по должности имеют право проверить ваш FunPay.
+1.7. Администрация сервера не выдаёт игровые ресурсы за их потерю в результате багов или читеров.
+1.8.1 Продажа, покупка ресурсов за реальную валюту запрещена. <span class="tag-p">Наказание - БАН НАВСЕГДА.</span>
 
-3.0 Приобретение платных возможностей, вещей.
-3.1. Игра на проекте не подразумевает платы за использование ресурсов <strong>HiveGrief</strong> .
-3.2. Игрок вправе добровольно оплатить определённую сумму проекту за внутриигровую услугу в одностороннем порядке.
-3.3. При ошибке платежа, либо отсутствия внутриигровой услуги после оплаты, можно обращаться в техподдержку.
+3.0 Приобретение платных возможностей.
+3.1. Игра на проекте бесплатна.
+3.2. Игрок добровольно поддерживает проект.
 3.4. Денежные средства за платные услуги не возвращаются.
-3.5. Покупка платных групп не даёт привилегии на игнорирование/нарушение данных правил.
                     </div>
                 </div>
             </div>
 
-            <div class="acc-item">
-                <button class="acc-trigger">4.0 Правила Общения (Чат)</button>
-                <div class="acc-panel">
-                    <div class="rules-content">
-4.1. На серверах присутствует локальный и глобальный чат. Для комфортной игры необходимо соблюдать нижеприведённые правила.
-4.2. Запрещено флудить, отправлять больше 2-ух похожих по смыслу, или одинаковых сообщения подряд <span class="punish-tag">[мут на 4 часа]</span>
-4.2.1. Запрещено использовать твинки для отправки одного и того же сообщения. <span class="punish-tag">[мут каждому на 4 часа]</span>
-4.2.2. Запрещено использовать объявления для обхода наказания за флуд. <span class="punish-tag">[мут на 4 часа]</span>
-4.3. Запрещено флудить символами (более 10 символов). <span class="punish-tag">[мут на 4 часа]</span>
-4.3.1. Злоупотребление капсом (больше 50% в предложении). <span class="punish-tag">[мут на 4 часа]</span>
-4.4. Запрещено организовывать флуд опросами, по типу "отправьте + в чат". <span class="punish-tag">[мут на 4 часа]</span>
-4.5. Злоупотребление нецензурной лексикой. <span class="punish-tag">[мут на 2 - 4 часа]</span>
-4.6. Оскорбления, унижения, угрозы к участникам сервера. <span class="punish-tag">[мут на 4 часа]</span>
-4.7. Аморальное поведение, темы для совершеннолетних. <span class="punish-tag">[мут на 2 - 3 часа]</span>
-4.8. Внеигровой обман игроков (Alt+F4 и т.д.). <span class="punish-tag">[мут на 6 часов]</span>
-4.9. Публичная критика проекта в чате запрещена. <span class="punish-tag">[мут на 1 - 5 дней]</span>
-4.10. Оскорбление своих родителей. <span class="punish-tag">[мут 5-15 дней]</span>
-4.11. Затрагивание политики, политическая агитация. <span class="punish-tag">[бан от 3 до 7 дней]</span>
-4.12. Выдача себя за администрацию проекта. <span class="punish-tag">[бан на 3 дня]</span>
-4.15. Оскорбление модерации и администрации. <span class="punish-tag">[бан от 5 до 15 дней]</span>
-4.16. Оскорбление ютуберов проекта. <span class="punish-tag">[бан от 1 до 5 дней]</span>
-4.20. Реклама и пиар соцсетей, групп. <span class="punish-tag">[бан на 3 дня]</span>
-4.22. Доксинг (разглашение личных данных). <span class="punish-tag">[бан на 30 дней]</span>
-4.30. Помеха работе персоналу. <span class="punish-tag">[Бан на 6 часов]</span>
+            <div class="rules-acc">
+                <button class="rules-btn" onclick="toggleAcc(this)">4.0 ПРАВИЛА ЧАТА <i class="fa-solid fa-plus"></i></button>
+                <div class="rules-panel">
+                    <div class="text-wrap">
+4.2. Запрещено флудить (2+ сообщения). <span class="tag-p">[мут 4 часа]</span>
+4.3. Злоупотребление капсом. <span class="tag-p">[мут 4 часа]</span>
+4.5. Злоупотребление матом. <span class="tag-p">[мут 2-4 часа]</span>
+4.6. Оскорбления игроков. <span class="tag-p">[мут 4 часа]</span>
+4.9. Критика проекта. <span class="tag-p">[мут 1-5 дней]</span>
+4.10. Оскорбление родителей. <span class="tag-p">[мут 5-15 дней]</span>
+4.11. Политика. <span class="tag-p">[бан 3-7 дней]</span>
+4.15. Оскорбление модерации. <span class="tag-p">[бан 5-15 дней]</span>
+4.22. Доксинг. <span class="tag-p">[бан 30 дней]</span>
                     </div>
                 </div>
             </div>
 
-            <div class="acc-item">
-                <button class="acc-trigger">5.0 Игровой процесс</button>
-                <div class="acc-panel">
-                    <div class="rules-content">
-5.1. Намеренное причинение вреда проекту, заливы, лаг-машины, багоюз. <span class="punish-tag">[бан 25 дней / перманент]</span>
-5.1.1. Запрещено использование версий 1.13+ для получения преимущества. <span class="punish-tag">[бан на 15 дней]</span>
-5.2. Использование читов и стороннего ПО. <span class="punish-tag">[бан на 50 дней либо бан айпи]</span>
-5.2.1. Совместная игра с читером. <span class="punish-tag">[бан на 50 дней]</span>
-5.2.6. Неадекватное поведение на проверке. <span class="punish-tag">[бан на 50 дней]</span>
+            <div class="rules-acc">
+                <button class="rules-btn" onclick="toggleAcc(this)">5.0 ИГРОВОЙ ПРОЦЕСС <i class="fa-solid fa-plus"></i></button>
+                <div class="rules-panel">
+                    <div class="text-wrap">
+5.1. Намеренный вред проекту/лаг-машины. <span class="tag-p">[перманент]</span>
+5.2. Использование читов. <span class="tag-p">[бан 50 дней]</span>
+5.2.1. Совместная игра с читером. <span class="tag-p">[бан 50 дней]</span>
 
-<div class="mod-box">
-<strong>Запрещенные модификации:</strong><br>
-ElytraSwap, ArmorHotSwap, AFK-Fish, InvMove, TopkaAutoBuy, GoProne, StepUp, X-Ray, AutoAttack, FreeCam, AutoTotem, Middle Click Pearl.
+<div class="mod-grid">
+<strong>ЗАПРЕЩЕННЫЕ МОДЫ:</strong><br>
+X-Ray, AutoAttack, FreeCam, AutoTotem, ElytraSwap, ArmorHotSwap, AFK-Fish, InvMove, TopkaAutoBuy.
 </div>
 
-5.4. Использование макросов, кликеров (кроме фармилок). <span class="punish-tag">[бан на 3 дня]</span>
-5.5. Хранение запрещенного ПО приравнивается к использованию. <span class="punish-tag">[бан на 50 дней]</span>
-5.9. Реклама, продажа, распространение читов. <span class="punish-tag">[перманентный бан]</span>
+5.4. Использование макросов/кликеров. <span class="tag-p">[бан 3 дня]</span>
+5.9. Реклама/продажа читов. <span class="tag-p">[перманент]</span>
                     </div>
                 </div>
             </div>
 
-            <div class="acc-item">
-                <button class="acc-trigger">6.0 и 7.0 Правила для Донатеров и Персонала</button>
-                <div class="acc-panel">
-                    <div class="rules-content">
-6.1. Использование прав в целях вреда проекта. <span class="punish-tag">[снятие привилегии + бан]</span>
-6.2. Угроза игрокам баном/мутом/киком без реальной причины. <span class="punish-tag">[бан на 12 часов]</span>
-6.3. Некорректная выдача наказания. <span class="punish-tag">[бан на 14 дней]</span>
-6.6. Использование /bc не по назначению. <span class="punish-tag">[бан от 1 до 4 дней]</span>
-6.8. Персоналу запрещено обманывать игроков на деньги/ресурсы. Скам - варн/снятие. Траперить разрешено.
-6.9. Запрещается шутить про дюп. За реальный дюп - выплата 2500+ рублей. За шутку - <span class="punish-tag">[мут 1 день]</span>
-7.0. Персоналу запрещено оскорблять любых игроков (Езз, поплачь). <span class="punish-tag">[варн]</span>
-7.1. Запрещено строить закрытый варп/варп в трапе. <span class="punish-tag">[удаление / бан 3 дня]</span>
-7.4 Запрещено оскорблять родню <span class="punish-tag">[Мут - 2 дня]</span>
-
-By HiveGrief
+            <div class="rules-acc">
+                <button class="rules-btn" onclick="toggleAcc(this)">6.0 - 7.0 ДОНАТЕРЫ & ПЕРСОНАЛ <i class="fa-solid fa-plus"></i></button>
+                <div class="rules-panel">
+                    <div class="text-wrap">
+6.1. Вред проекту через права. <span class="tag-p">[снятие + бан]</span>
+6.2. Угрозы наказанием без причины. <span class="tag-p">[бан 12 часов]</span>
+6.3. Некорректная выдача наказания. <span class="tag-p">[бан 14 дней]</span>
+6.8. Обман игроков персоналом. <span class="tag-p">[варн/снятие]</span>
+7.0. Оскорбление игроков персоналом. <span class="tag-p">[варн]</span>
+7.4 Оскорбление родни. <span class="tag-p">[мут 2 дня]</span>
                     </div>
                 </div>
             </div>
 
         </section>
 
-        <footer class="site-footer">
-            <div class="footer-logo">HIVEGRIEF</div>
-            <p class="copyright">© 2026 OFFICIAL LANDING | ALL RIGHTS RESERVED</p>
-            <div style="margin-top: 20px; opacity: 0.3; font-family: 'JetBrains Mono'; font-size: 0.8rem;">
-                Built with precision for BL0Xa. Stability confirmed. 20 TPS.
-            </div>
+        <footer class="footer">
+            <h3 style="letter-spacing: 20px;">HIVEGRIEF.SU</h3>
+            <p>© 2026. ВСЕ ПРАВА ЗАЩИЩЕНЫ. ВЛАДЕЛЕЦ: BL0Xa</p>
+            <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 20px;">ENGINE: PURE_CRYSTAL_CODE | STABILITY: 99.9%</p>
         </footer>
 
     </div>
 
     <script>
-        // 1. Копирование IP
-        function copyIP() {
-            const ip = "mc.hivegrief.su";
-            navigator.clipboard.writeText(ip);
-            const btn = event.currentTarget;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = "<i class='fa-solid fa-check'></i><span>СКОПИРОВАНО!</span>";
-            setTimeout(() => { btn.innerHTML = originalText; }, 2000);
-        }
-
-        // 2. Аккордеоны правил
-        const triggers = document.querySelectorAll('.acc-trigger');
-        triggers.forEach(trigger => {
-            trigger.addEventListener('click', function() {
-                const panel = this.nextElementSibling;
-                this.classList.toggle('active');
-                panel.classList.toggle('show');
-                
-                // Закрываем остальные (опционально)
-                triggers.forEach(other => {
-                    if (other !== trigger) {
-                        other.classList.remove('active');
-                        other.nextElementSibling.classList.remove('show');
-                    }
-                });
-            });
-        });
-
-        // 3. Листопад (SVG Engine)
-        const leafScene = document.getElementById('leaf-scene');
-        const leafPath = "M12,2L10,5L12,13L14,5L12,2M12,14L10,18L12,22L14,18L12,14M5,10L2,12L5,14L8,12L5,10M19,10L16,12L19,14L22,12L19,10Z";
-        
-        function spawnLeaf() {
-            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            svg.setAttribute("viewBox", "0 0 24 24");
-            svg.classList.add("falling-leaf");
-            
-            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            path.setAttribute("d", leafPath);
-            svg.appendChild(path);
-            
-            const size = Math.random() * 20 + 15;
-            const startX = Math.random() * window.innerWidth;
-            const duration = Math.random() * 4 + 6;
-            const delay = Math.random() * 5;
-            
-            svg.style.width = `${size}px`;
-            svg.style.height = `${size}px`;
-            svg.style.left = `${startX}px`;
-            svg.style.top = `-50px`;
-            svg.style.animationDuration = `${duration}s`;
-            svg.style.animationDelay = `${delay}s`;
-            
-            leafScene.appendChild(svg);
-            
-            setTimeout(() => { svg.remove(); }, (duration + delay) * 1000);
-        }
-        
-        for(let i=0; i<30; i++) spawnLeaf();
-        setInterval(spawnLeaf, 300);
-
-        // 4. Трейл курсора
-        const dots = [];
-        const DOT_COUNT = 12;
-        for(let i=0; i<DOT_COUNT; i++) {
+        // 1. ХВОСТ КУРСОРНОЙ ЭНЕРГИИ (PRO ENGINE)
+        const trailDots = [];
+        const trailCount = 20;
+        for(let i=0; i<trailCount; i++) {
             const d = document.createElement('div');
-            d.className = 'cursor-energy';
+            d.className = 'cursor-trail-dot';
             document.body.appendChild(d);
-            dots.push({ el: d, x: 0, y: 0 });
+            trailDots.push({ el: d, x: 0, y: 0 });
         }
 
-        let mouseX = 0, mouseY = 0;
-        window.addEventListener('mousemove', e => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
+        let mX = 0, mY = 0;
+        window.addEventListener('mousemove', e => { mX = e.clientX; mY = e.clientY; });
 
-        function animateCursor() {
-            let x = mouseX;
-            let y = mouseY;
-            
-            dots.forEach((dot, index) => {
-                const nextDot = dots[index + 1] || dots[0];
-                dot.x = x;
-                dot.y = y;
-                dot.el.style.transform = `translate(${x}px, ${y}px) scale(${1 - index/DOT_COUNT})`;
-                
-                x += (nextDot.x - x) * 0.3;
-                y += (nextDot.y - y) * 0.3;
+        function drawTrail() {
+            let x = mX; let y = mY;
+            trailDots.forEach((dot, i) => {
+                dot.x += (x - dot.x) * 0.35;
+                dot.y += (y - dot.y) * 0.35;
+                dot.el.style.left = dot.x + 'px';
+                dot.el.style.top = dot.y + 'px';
+                dot.el.style.transform = `scale(${1 - i/trailCount})`;
+                dot.el.style.opacity = 1 - (i/trailCount);
+                x = dot.x; y = dot.y;
             });
-            requestAnimationFrame(animateCursor);
+            requestAnimationFrame(drawTrail);
         }
-        animateCursor();
+        drawTrail();
 
-        // 5. Динамика онлайна
-        const countEl = document.getElementById('player-count');
+        // 2. АККОРДЕОНЫ
+        function toggleAcc(btn) {
+            const panel = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            panel.classList.toggle('active');
+            btn.classList.toggle('active-btn');
+            icon.classList.toggle('fa-plus');
+            icon.classList.toggle('fa-minus');
+        }
+
+        // 3. КОПИРОВАНИЕ IP
+        function copyIP() {
+            navigator.clipboard.writeText("mc.hivegrief.su");
+            alert("Айпи скопирован! Ждем тебя на сервере!");
+        }
+
+        // 4. ЛИСТОПАД
+        const leafWrap = document.getElementById('leaf-overlay');
+        const leafP = "M12,2L10,5L12,13L14,5L12,2M12,14L10,18L12,22L14,18L12,14M5,10L2,12L5,14L8,12L5,10M19,10L16,12L19,14L22,12L19,10Z";
+        function createLeaf() {
+            const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            s.setAttribute("viewBox", "0 0 24 24"); s.classList.add("leaf-entity");
+            const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            p.setAttribute("d", leafP); s.appendChild(p);
+            const size = Math.random() * 25 + 10;
+            s.style.width = size + 'px'; s.style.left = Math.random() * 100 + 'vw';
+            const dur = Math.random() * 5 + 5; s.style.animationDuration = dur + 's';
+            leafWrap.appendChild(s);
+            setTimeout(() => s.remove(), dur * 1000);
+        }
+        setInterval(createLeaf, 400);
+
+        // 5. ОНЛАЙН (FAKE REAL-TIME)
+        const onlineVal = document.getElementById('online-val');
         setInterval(() => {
-            let current = parseInt(countEl.innerText);
-            let change = Math.floor(Math.random() * 3) - 1; // -1, 0, или 1
-            countEl.innerText = current + change;
-        }, 3000);
+            let cur = parseInt(onlineVal.innerText);
+            onlineVal.innerText = cur + (Math.random() > 0.5 ? 1 : -1);
+        }, 2500);
 
-        // 6. Голограммы
-        const holoContainer = document.body;
-        for(let i=0; i<10; i++) {
-            const p = document.createElement('div');
-            p.className = 'hologram-pillar';
-            p.style.left = Math.random() * 100 + '%';
-            p.style.animationDelay = Math.random() * 5 + 's';
-            holoContainer.appendChild(p);
-        }
+        // 6. SCROLL TOP
+        const sTop = document.getElementById('scroll-top');
+        window.onscroll = () => { sTop.style.display = window.scrollY > 600 ? "block" : "none"; };
+        sTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        // 7. Кнопка наверх
-        const btnUp = document.getElementById('btn-up');
-        window.onscroll = () => {
-            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-                btnUp.style.display = "block";
-            } else {
-                btnUp.style.display = "none";
-            }
-        };
-        btnUp.onclick = () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-        console.log("%c HIVEGRIEF RUNNING ", "background: #ffcc00; color: #000; font-weight: bold; padding: 5px;");
+        console.log("HIVEGRIEF READY. BY BL0XA.");
     </script>
 </body>
 </html>
