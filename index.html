@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | OFFICIAL</title>
+    <title>HIVEGRIEF | OFFICIAL HUB</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/bakisyyyofficial/hiveweb/main/83234d750c18251e.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -24,46 +24,57 @@
             overflow-x: hidden; position: relative; min-height: 100vh;
         }
 
-        /* АНИМАЦИИ ФОНА */
-        #hologram-bg { position: fixed; top: -50px; right: -50px; width: 500px; height: 1000px; pointer-events: none; z-index: 0; opacity: 0.4; transform: rotate(-20deg); }
+        /* ЭФФЕКТЫ ФОНА */
+        #hologram-bg { position: fixed; top: -50px; right: -50px; width: 500px; height: 1000px; pointer-events: none; z-index: 0; opacity: 0.3; transform: rotate(-20deg); }
         .hologram-bar { position: absolute; width: 8px; height: 200px; background: linear-gradient(to bottom, transparent, var(--secondary), var(--primary), transparent); border-radius: 20px; filter: blur(1px) drop-shadow(0 0 15px var(--primary)); animation: holo-slide 6s infinite linear; }
         @keyframes holo-slide { 0% { transform: translateY(-100%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(500%); opacity: 0; } }
 
         #leaf-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 500; }
-        .leaf-svg { position: absolute; width: 25px; height: 25px; fill: var(--leaf-color); filter: drop-shadow(0 0 8px rgba(76, 175, 80, 0.3)); animation-iteration-count: infinite; animation-timing-function: linear; }
-        @keyframes leaf-fall { 0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(110vh) translateX(100px) rotate(360deg); opacity: 0; } }
+        .leaf-svg { position: absolute; width: 25px; height: 25px; fill: var(--leaf-color); filter: drop-shadow(0 0 8px rgba(76, 175, 80, 0.4)); animation-iteration-count: infinite; animation-timing-function: linear; }
+        @keyframes leaf-fall { 
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; } 
+            10% { opacity: 1; } 
+            90% { opacity: 1; } 
+            100% { transform: translateY(110vh) translateX(150px) rotate(720deg); opacity: 0; } 
+        }
 
         #cursor-trail { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
         .trail-dot { position: absolute; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 20px var(--primary); pointer-events: none; }
 
-        /* КОНТЕЙНЕР */
         .container { max-width: 1100px; width: 100%; z-index: 10; position: relative; }
-        .glass-card { background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 45px; padding: 60px; margin-bottom: 50px; box-shadow: 0 40px 100px rgba(0,0,0,0.9); }
+        .glass-card { background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 45px; padding: 60px; margin-bottom: 50px; box-shadow: 0 40px 100px rgba(0,0,0,0.9); transition: 0.3s; }
 
-        h1 { font-size: 6rem; text-align: center; letter-spacing: 20px; color: #fff; text-shadow: 0 0 60px var(--primary); text-transform: uppercase; margin-bottom: 40px; }
+        h1 { font-size: 6rem; text-align: center; letter-spacing: 20px; color: #fff; text-shadow: 0 0 60px var(--primary); text-transform: uppercase; margin: 0 0 40px; }
 
         /* ВЛАДЕЛЕЦ */
-        .author-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); padding: 30px; border-radius: 35px; text-align: center; margin-bottom: 40px; }
-        .author-role { color: var(--primary); text-transform: uppercase; letter-spacing: 5px; font-weight: 900; margin-bottom: 10px; }
-        .author-name { font-size: 2.5rem; font-weight: 900; color: #fff; margin-bottom: 20px; }
-        .yt-link { display: inline-flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; font-weight: 800; background: rgba(255, 0, 0, 0.2); padding: 12px 25px; border-radius: 15px; border: 1px solid rgba(255,0,0,0.4); transition: 0.3s; }
-        .yt-link:hover { background: var(--youtube); box-shadow: 0 0 30px var(--youtube); }
+        .author-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); padding: 40px; border-radius: 35px; text-align: center; margin-bottom: 40px; }
+        .author-role { color: var(--primary); text-transform: uppercase; letter-spacing: 5px; font-weight: 900; font-size: 1.2rem; margin-bottom: 15px; }
+        .author-name { font-size: 3rem; font-weight: 900; color: #fff; margin-bottom: 25px; }
+        .yt-link { display: inline-flex; align-items: center; gap: 15px; color: #fff; text-decoration: none; font-weight: 800; background: rgba(255, 0, 0, 0.2); padding: 15px 35px; border-radius: 20px; border: 1px solid rgba(255,0,0,0.4); transition: 0.4s; }
+        .yt-link:hover { background: var(--youtube); box-shadow: 0 0 40px var(--youtube); transform: scale(1.05); }
 
         .nav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 40px; }
-        .nav-link { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); padding: 25px; border-radius: 25px; text-decoration: none; color: #fff; text-align: center; font-weight: 900; transition: 0.3s; cursor: pointer; }
+        .nav-link { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); padding: 30px; border-radius: 25px; text-decoration: none; color: #fff; text-align: center; font-weight: 900; transition: 0.3s; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 15px; text-transform: uppercase; }
         .nav-link:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-5px); border-color: var(--primary); }
 
-        /* АККОРДЕОНЫ ПРАВИЛ */
-        .rules-title { text-align: center; font-size: 3rem; margin-bottom: 40px; letter-spacing: 5px; color: var(--primary); }
-        .accordion { background: rgba(255,255,255,0.02); color: #fff; cursor: pointer; padding: 30px; width: 100%; border: 1px solid var(--glass-border); text-align: left; font-size: 1.5rem; font-weight: 900; border-radius: 20px; margin-top: 15px; border-left: 10px solid var(--primary); transition: 0.3s; text-transform: uppercase; }
-        .accordion:hover { background: rgba(255,255,255,0.07); transform: translateX(10px); }
-        .panel { padding: 0 30px; max-height: 0; overflow: hidden; transition: max-height 0.6s ease-out; background: rgba(0,0,0,0.4); border-radius: 0 0 20px 20px; border: 1px solid var(--glass-border); border-top: none; }
-        .panel-content { padding: 40px 20px; line-height: 1.8; white-space: pre-line; color: #e0e0e0; font-size: 1.1rem; }
-        
-        .punish { color: #ff5555; font-weight: 900; background: rgba(255,85,85,0.15); padding: 3px 8px; border-radius: 5px; }
-        .mod-list { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; margin: 15px 0; border: 2px dashed var(--primary); color: #fff; }
+        /* ПРЕИМУЩЕСТВА (ВЕРНУЛ!) */
+        .promo-title { text-align: center; font-size: 3.5rem; margin-bottom: 50px; color: var(--primary); text-transform: uppercase; letter-spacing: 8px; font-weight: 900; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .feature-item { text-align: center; padding: 50px 20px; background: rgba(255,255,255,0.02); border-radius: 35px; border: 1px solid var(--glass-border); transition: 0.5s; }
+        .feature-item:hover { transform: translateY(-10px); border-color: var(--primary); background: rgba(0,0,0,0.4); }
+        .feature-item i { font-size: 4rem; color: var(--primary); margin-bottom: 25px; filter: drop-shadow(0 0 10px var(--primary)); }
+        .feature-item h3 { font-size: 1.5rem; text-transform: uppercase; margin-bottom: 15px; }
 
-        footer { text-align: center; opacity: 0.5; padding: 60px 0; border-top: 1px solid var(--glass-border); margin-top: 50px; font-weight: 900; letter-spacing: 3px; }
+        /* ПРАВИЛА (АККОРДЕОНЫ) */
+        .accordion { background: rgba(255,255,255,0.02); color: #fff; cursor: pointer; padding: 35px; width: 100%; border: 1px solid var(--glass-border); text-align: left; font-size: 1.6rem; font-weight: 900; border-radius: 20px; margin-top: 20px; border-left: 10px solid var(--primary); transition: 0.3s; text-transform: uppercase; }
+        .accordion:hover { background: rgba(255,255,255,0.08); transform: translateX(10px); }
+        .panel { padding: 0 40px; max-height: 0; overflow: hidden; transition: max-height 0.7s ease-out; background: rgba(0,0,0,0.5); border-radius: 0 0 20px 20px; border: 1px solid var(--glass-border); border-top: none; }
+        .panel-content { padding: 40px 20px; line-height: 1.8; white-space: pre-line; color: #fff; font-size: 1.15rem; }
+        
+        .punish { color: #ff4444; font-weight: 900; background: rgba(255,68,68,0.2); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255,68,68,0.3); }
+        .mod-list { background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; margin: 20px 0; border: 2px dashed var(--primary); }
+
+        footer { text-align: center; opacity: 0.5; padding: 100px 0; border-top: 1px solid var(--glass-border); margin-top: 50px; font-weight: 900; text-transform: uppercase; letter-spacing: 5px; }
     </style>
 </head>
 <body>
@@ -85,17 +96,46 @@
         </div>
 
         <div class="nav-grid">
-            <div class="nav-link" onclick="alert('IP mc.hivegrief.su скопирован!')">mc.hivegrief.su</div>
-            <a href="https://shop.hivegrief.su" class="nav-link" target="_blank">Магазин доната</a>
-            <a href="https://t.me/HiveGriefOff" class="nav-link" target="_blank">Наш Telegram</a>
-            <a href="https://discord.gg/hivegrief" class="nav-link" target="_blank">Наш Discord</a>
+            <div class="nav-link" onclick="alert('IP mc.hivegrief.su скопирован!')">
+                <i class="fa-solid fa-server"></i>mc.hivegrief.su
+            </div>
+            <a href="https://shop.hivegrief.su" class="nav-link" target="_blank">
+                <i class="fa-solid fa-cart-shopping"></i>Магазин доната
+            </a>
+            <a href="https://t.me/HiveGriefOff" class="nav-link" target="_blank">
+                <i class="fa-brands fa-telegram"></i>Наш Telegram
+            </a>
+            <a href="https://discord.gg/hivegrief" class="nav-link" target="_blank">
+                <i class="fa-brands fa-discord"></i>Наш Discord
+            </a>
         </div>
     </div>
 
     <div class="glass-card">
-        <h2 class="rules-title">РЕГЛАМЕНТ СЕРВЕРА</h2>
+        <h2 class="promo-title">Преимущества</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <i class="fa-solid fa-users-rays"></i>
+                <h3>Адекватное комьюнити</h3>
+                <p>Уютная атмосфера для каждого. Никакого мусора и токсиков в чате!</p>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-fire-glow"></i>
+                <h3>Тот самый грифер</h3>
+                <p>Настоящий гриферский дух: рейды и победы по канонам!</p>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-microchip"></i>
+                <h3>Hi-End Хостинг</h3>
+                <p>Стабильные 20 ТПС и минимальный пинг. Забудь про лаги.</p>
+            </div>
+        </div>
+    </div>
 
-        <button class="accordion">1.0 Общее положение и 3.0 Донат</button>
+    <div class="glass-card">
+        <h2 style="text-align: center; font-size: 3rem; text-transform: uppercase; color: var(--primary);">Регламент проекта</h2>
+
+        <button class="accordion">1.0 Общее положение и 3.0</button>
         <div class="panel">
             <div class="panel-content">
 1.0 Общее положение.
@@ -113,49 +153,40 @@
 3.0 Приобретение платных возможностей, вещей.
 3.1. Игра на проекте не подразумевает платы за использование ресурсов <strong>HiveGrief</strong> .
 3.2. Игрок вправе добровольно оплатить определённую сумму проекту за внутриигровую услугу в одностороннем порядке.
-3.3. При ошибке платежа, либо отсутствия внутриигровую услуги после оплаты, можно обращаться в техподдержку.
+3.3. При ошибке платежа, либо отсутствия внутриигровой услуги после оплаты, можно обращаться в техподдержку.
 3.4. Денежные средства за платные услуги не возвращаются.
 3.5. Покупка платных групп не даёт привилегии на игнорирование/нарушение данных правил.
             </div>
         </div>
 
-        <button class="accordion">4.0 Внутриигровое общение (ЧАТ)</button>
+        <button class="accordion">4.0 Внутриигровое общение</button>
         <div class="panel">
             <div class="panel-content">
 4.1. На серверах присутствует локальный и глобальный чат. Для комфортной игры необходимо соблюдать нижеприведённые правила.
-4.2. Запрещено флудить, отправлять больше 2-ух похожих по смыслу, или одинаковых сообщения подряд(2 сообщения можно, три нельзя) (за одну минуту) <span class="punish">[мут на 4 часа]</span>
-4.2.1. Запрещено согласовывать с другими игроками или использовать свои твинки для отправки одного и того же сообщения в короткий промежуток времени. <span class="punish">[мут каждому участник на 4 часа]</span>
-4.2.2. Запрещено использовать объявления для обхода наказания за флуд (использовать 2 /bc и сообщение в глобал, или наоборот, 2 сообщения и 1 /bc) <span class="punish">[мут на 4 часа]</span>
-4.3. Запрещено флудить символами, т.е. использовать комбинации бесмысленных символов, по типу "!!!!!!!!!!!!!!!!", или же смеха. <span class="punish">[мут на 4 часа, более 10 символов]</span>
-4.3.1. Злоупотребление капсом, если в предложении (от 3ёх слов) - больше 50% написано в Caps'е. <span class="punish">[мут на 4 часа]</span>
-4.4. Запрещено организовывать флуд опросами, по типу "отправьте + в чат". Исключение - просьба приютить или математические примеры. <span class="punish">[мут на 4 часа]</span>
-4.4.1. Если при организации флуда, на ваше сообщение ответило больше 5 человек, то вам выдаётся удвоенное наказания, а всем, кто отреагировал - мут на 2 часа.
-4.5. Злоупотребление нецензурной лексикой + пункт 4.11. <span class="punish">[мут на 2 - 4 часа]</span>
-4.5.1. Завуалированные маты также подходят под пункт 4.5.
-4.6. Оскорбления, унижения, угрозы к участникам сервера, игрокам. <span class="punish">[мут на 4 часа]</span>
-4.7. Аморальное поведение, темы для совершеннолетних. <span class="punish">[мут на 2 - 3 часа]</span>
-4.8. Внеигровой обман игроков. Например, сочитаниями клавиш Alt+F4, командами /рги и так далее. <span class="punish">[мут на 6 часов]</span>
-4.9. Публичная критика проекта в чате запрещена. <span class="punish">[мут на 1 день - 5 дней]</span>
-4.10. Оскорбление своих родителей <span class="punish">[мут 5-15 дней]</span> 
-4.11. Затрагивание политики, политическая агитация. <span class="punish">[бан от 3 дней до 7 дней] или [мут на 2 дня]</span>
-4.12. Выдача себя за администрацию проекта. <span class="punish">[бан на 3 дня]</span>
-4.13. Угрозы баном/киком/мутом <span class="punish">[бан на 12 часов]</span>
-4.14. Реклама в Личных сообщениях, попытка обойти наказание в глобальном чате. <span class="punish">[бан на 60 дней]</span>
-4.15. Оскорбление модерации и администрации. <span class="punish">[бан от 5 до 15 дней]</span>
-4.16. Оскорбление ютуберов проекта <span class="punish">[бан от 1 до 5 дней]</span>
-4.17. Пропаганда нацизма/расизма, табакокурения, наркотиков, оружия, и.т.д <span class="punish">[бан на 3 дня]</span>
+4.2. Запрещено флудить, отправлять больше 2-ух похожих по смыслу, или одинаковых сообщения подряд <span class="punish">[мут на 4 часа]</span>
+4.2.1. Запрещено использовать твинки для отправки одного и того же сообщения. <span class="punish">[мут каждому на 4 часа]</span>
+4.2.2. Запрещено использовать объявления для обхода флуда. <span class="punish">[мут на 4 часа]</span>
+4.3. Запрещено флудить символами (более 10 символов). <span class="punish">[мут на 4 часа]</span>
+4.3.1. Злоупотребление капсом (больше 50%). <span class="punish">[мут на 4 часа]</span>
+4.4. Запрещено организовывать флуд опросами. <span class="punish">[мут на 4 часа]</span>
+4.5. Злоупотребление нецензурной лексикой. <span class="punish">[мут на 2 - 4 часа]</span>
+4.6. Оскорбления, унижения, угрозы к игрокам. <span class="punish">[мут на 4 часа]</span>
+4.7. Аморальное поведение. <span class="punish">[мут на 2 - 3 часа]</span>
+4.8. Внеигровой обман игроков (Alt+F4 и тд). <span class="punish">[мут на 6 часов]</span>
+4.9. Публичная критика проекта. <span class="punish">[мут на 1 - 5 дней]</span>
+4.10. Оскорбление своих родителей <span class="punish">[мут 5-15 дней]</span>
+4.11. Затрагивание политики. <span class="punish">[бан 3-7 дней / мут 2 дня]</span>
+4.12. Выдача себя за администрацию. <span class="punish">[бан на 3 дня]</span>
+4.14. Реклама в ЛС. <span class="punish">[бан на 60 дней]</span>
+4.15. Оскорбление модерации и администрации. <span class="punish">[бан 5 - 15 дней]</span>
+4.16. Оскорбление ютуберов. <span class="punish">[бан 1 - 5 дней]</span>
+4.17. Пропаганда нацизма/наркотиков. <span class="punish">[бан на 3 дня]</span>
 4.18. Пропаганда терроризма. <span class="punish">[бан на 7 дней]</span>
-4.19. Продажа чего-либо за реальные деньги, бартер между играми. <span class="punish">[бан на 4 дня]</span>
-4.20. Реклама и пиар соцсетей, групп. <span class="punish">[бан на 3 дня]</span>
-4.21. Распростронение вредоносных ссылок (скримеры, стиллеры) <span class="punish">[бан на 14 дней]</span>
-4.22. Распростронение личных данных игрков (доксинг) <span class="punish">[бан на 30 дней]</span>
-4.23. Шутки или рофлы в сторону администрации, состава проекта. <span class="punish">[бан на 2 дня]</span>
-4.24. Шутки рофлы в сторону ютуберов проекта <span class="punish">[ бан на 1 день]</span>
-4.25. Провокация игроков на нарушение правил. <span class="punish">[бан от 12 часов до 4 дней]</span>
-4.26. Неуважительное/неадекватное общение с администрацией. <span class="punish">[мут на 12 часов]</span>
-4.27. Угроза администрации снятием, угроза наказанием. <span class="punish">[мут на 4 часа]</span>
-4.28. Неадекватное общение с ютуберами проекта <span class="punish">[мут на 6 часов]</span>
-4.29. Любое упоминание денежных операций с реальной валютой любой размерности. <span class="punish">[мут на 2 дня]</span>
+4.19. Продажа за реальные деньги. <span class="punish">[бан на 4 дня]</span>
+4.21. Вредоносные ссылки. <span class="punish">[бан на 14 дней]</span>
+4.22. Доксинг. <span class="punish">[бан на 30 дней]</span>
+4.23. Шутки в сторону администрации. <span class="punish">[бан на 2 дня]</span>
+4.29. Упоминание денежных операций (скиньте на киви). <span class="punish">[мут на 2 дня]</span>
 4.30. Помеха работе персоналу. <span class="punish">[Бан на 6 часов]</span>
             </div>
         </div>
@@ -163,54 +194,38 @@
         <button class="accordion">5.0 Игровой процесс</button>
         <div class="panel">
             <div class="panel-content">
-5.1. Намеренное причинение вреда проекту, заливы, лаг-машины, багоюз. <span class="punish">[снос постройки и бан на 25 дней / перманентная блокировка]</span>
-5.1.1. Запрещено использование более поздних версий игры (1.13 и выше) для получения преимущества. <span class="punish">[бан на 15 дней]</span>
-5.1.2. Запрещено строительство ловушек без возможности выхода за счёт ограничений сервера. <span class="punish">[бан на 25 дней + снос дома]</span>
-5.2. Использование вредоносного, читерского ПО, получение преимущества над игроками. <span class="punish">[бан на 50 дней либо бан айпи]</span>
-5.2.1. Совместная игра с игроком, нарушивший пункт 5.2. <span class="punish">[бан на 50 дней]</span>
-5.2.2. Признание на проверке. <span class="punish">[бан на 50 дней]</span>
-5.2.3. Использование Auto-копателей или лесорубов. <span class="punish">[бан на 2 дня]</span>
-5.2.5. Использование запрещенных плагинов, модификаций. <span class="punish">[бан на 14 дней]</span>
+5.1. Намеренное причинение вреда проекту, лаг-машины, багоюз. <span class="punish">[бан 25 дней / перманент]</span>
+5.1.1. Использование поздних версий игры для преимущества. <span class="punish">[бан на 15 дней]</span>
+5.1.2. Строительство ловушек без выхода. <span class="punish">[бан 25 дней + снос]</span>
+5.2. Использование читов. <span class="punish">[бан на 50 дней / бан айпи]</span>
+5.2.1. Совместная игра с читером. <span class="punish">[бан на 50 дней]</span>
+5.2.5. Использование запрещенных модификаций. <span class="punish">[бан на 14 дней]</span>
 5.2.6. Неадекватное поведение на проверке. <span class="punish">[бан на 50 дней]</span>
-5.2.6.1 Использование виртуальных машин при проверке - <span class="punish">[бан на 50 дней]</span>
-5.2.7. Читы удаленные менее 14 дней назад <span class="punish">[бан на 50 дней]</span>
 
 <div class="mod-list">
 <strong>Список запрещенных модификаций:</strong>
-ElytraSwap - 5д бана, ArmorHotSwap - 5д бана, AFK-Fish Mod - 5д бана, InvMove - 7д бана, TopkaAutoBuy v1, v2 - 7 дней бана. GoProne - 15d бана, StepUp Mod - 30д бана, Spawner Location - 50 дней бана, DiamondSim - 50д бана, Entity/Player X-Ray - 50d бана, InventoryProfilesNext - 50 дней бана, AutoAttack - 50д бана, Chest Locator - 50д бана, FreeCam - 50д бана, Slippery Mod - 50д бана, X-ray Mod - 50д бана, Launcher Feather - 50д бана, AutoTotem - 50д бана, Middle Click Pearl - 50д бана, CameraNoClip - 50д бана.
+ElytraSwap - 5д, ArmorHotSwap - 5д, AFK-Fish - 5д, InvMove - 7д, TopkaAutoBuy - 7д, GoProne - 15д, StepUp - 30д, Spawner Location - 50д, DiamondSim - 50д, X-Ray - 50д, AutoAttack - 50д, FreeCam - 50д, AutoTotem - 50д.
 </div>
 
-5.2.7.1 Признание в наличии читов (В любом виде чата) <span class="punish">[бан на 10 дней]</span>
-5.3. Примечание. Права модерации на проверке (см. полный регламент).
-5.4. Использование макросов, запрещённых модов, кликеров (кроме фармилок).<span class="punish">[бан на 3 дня]</span>
-5.5. Хранение запрещенного ПО приравнивается к использованию читов <span class="punish">[бан на 50 дней]</span>
-5.6. Флуд командами. <span class="punish">[кик, далее бан на 12 часов]</span>
-5.7. Некорректный текст на табличках, регионах, книгах. <span class="punish">[бан от 5 до 30 дней]</span>
-5.8. Запрещено подавать жалобу на самого себя или кидать ложные жалобы. <span class="punish">[бан на 3 дня]</span>
-5.9. Запрещена реклама, продажа читов, магазинов, дискорд каналов. <span class="punish">[перманентная блокировка]</span>
+5.4. Использование макросов, кликеров. <span class="punish">[бан на 3 дня]</span>
+5.9. Реклама/продажа читов. <span class="punish">[перманентный бан]</span>
             </div>
         </div>
 
-        <button class="accordion">6.0 Правила для донатеров и 7.0</button>
+        <button class="accordion">6.0 Правила для донатеров</button>
         <div class="panel">
             <div class="panel-content">
-6.1. Использование прав в целях вреда проекта. <span class="punish">[снятие привилегии, блокировка]</span>
-6.2. Угроза игрокам баном/мутом/киком без реальной причины. <span class="punish">[бан на 12 часов]</span>
-6.3. Некорректная выдача наказания игроку. <span class="punish">[бан на 14 дней]</span>
-6.4. Любой донатер обязан предоставить доказательства на форуме (в течении часа).
-6.5. Использование /bc не по назначению. <span class="punish">[бан от 1 до 4 дней]</span>
-6.6. Донатер имеет право проверить мут/кик/бан ТОЛЬКО на своём аккаунте и по причине "Тест", "Проверка". Иначе - <span class="punish">[бан 14 дней]</span>
-6.7. Флуд однотипной выдачей наказания 3 раза и более - бан за 6.3.
-6.8. Персоналу запрещено обманывать игроков на деньги/ресурсы. Скам - варн/снятие. Траперить разрешено.
-6.9. Запрещается шутить про то что нашёл дюп. За реальный дюп - выплата 2500+ рублей. За шутку - <span class="punish">[мут 1 день]</span>
-7.0. Хелперу/Модеру запрещено оскорблять любых игроков. "Езз", "поплачь" - варн.
-7.1. Запрещено строить закрытый варп/варп в трапе. <span class="punish">[удаление варпа / бан 3 дня]</span>
-7.2. Запрещено оскорблять администрацию в /nick <span class="punish">[Мут - 1 день.]</span>
+6.1. Использование прав в целях вреда проекта. <span class="punish">[снятие + бан]</span>
+6.2. Угроза баном/мутом без причины. <span class="punish">[бан на 12 часов]</span>
+6.3. Некорректная выдача наказания. <span class="punish">[бан на 14 дней]</span>
+6.5. Использование /bc не по назначению. <span class="punish">[бан 1 - 4 дня]</span>
+6.6. Причина "Тест" разрешена только на себе. <span class="punish">[иначе бан 14 дней]</span>
+6.8. Скам на деньги/ресурсы персоналу запрещен. Траперить разрешено.
+6.9. Шутки про дюп. <span class="punish">[мут 1 день]</span>
+7.0. Оскорбление игроков (Езз, поплачь). <span class="punish">[варн]</span>
+7.1. Закрытый варп. <span class="punish">[удаление / бан 3 дня]</span>
 7.3 Запрещено упоминать родню <span class="punish">[Мут - 1 день]</span>
 7.4 Запрещено оскорблять родню <span class="punish">[Мут - 2 дня]</span>
-
-・Любое нарушение в локальном чате подлежит наказанию.
-・Жалобы на Высшую Администрацию не подлежат обжалованию.
 
 By HiveGrief
             </div>
@@ -222,43 +237,42 @@ By HiveGrief
 
 <script>
     // Аккордеоны
-    var acc = document.getElementsByClassName("accordion");
-    for (var i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function() {
+    const accs = document.getElementsByClassName("accordion");
+    for (let i = 0; i < accs.length; i++) {
+        accs[i].onclick = function() {
             this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.maxHeight) { panel.style.maxHeight = null; } 
-            else { panel.style.maxHeight = panel.scrollHeight + "px"; }
-        });
+            const panel = this.nextElementSibling;
+            panel.style.maxHeight = panel.style.maxHeight ? null : panel.scrollHeight + "px";
+        }
     }
 
     // Голо-град
-    const holo = document.getElementById('hologram-bg');
+    const h = document.getElementById('hologram-bg');
     for (let i = 0; i < 15; i++) {
         const b = document.createElement('div');
         b.className = 'hologram-bar';
         b.style.left = Math.random() * 100 + '%';
         b.style.animationDelay = Math.random() * -6 + 's';
-        holo.appendChild(b);
+        h.appendChild(b);
     }
 
-    // Листопад
-    const leafContainer = document.getElementById('leaf-container');
-    const lPath = "M12,2L10,5L12,13L14,5L12,2M12,14L10,18L12,22L14,18L12,14M5,10L2,12L5,14L8,12L5,10M19,10L16,12L19,14L22,12L19,10Z";
+    // Листопад 2.0 (SVG)
+    const lC = document.getElementById('leaf-container');
+    const pth = "M12,2L10,5L12,13L14,5L12,2M12,14L10,18L12,22L14,18L12,14M5,10L2,12L5,14L8,12L5,10M19,10L16,12L19,14L22,12L19,10Z";
     function createLeaf() {
         const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("class", "leaf-svg");
         const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        p.setAttribute("d", lPath); s.appendChild(p);
+        p.setAttribute("d", pth); s.appendChild(p);
         s.style.left = Math.random() * 100 + 'vw';
-        const d = Math.random() * 5 + 5 + 's';
-        s.style.animation = `leaf-fall ${d} linear forwards`;
-        leafContainer.appendChild(s);
-        setTimeout(() => s.remove(), parseFloat(d) * 1000);
+        const dur = Math.random() * 5 + 5 + 's';
+        s.style.animation = `leaf-fall ${dur} linear forwards`;
+        lC.appendChild(s);
+        setTimeout(() => s.remove(), parseFloat(dur) * 1000);
     }
-    setInterval(createLeaf, 250);
+    setInterval(createLeaf, 200);
 
-    // Трейл
+    // Курсор
     const dots = [];
     for (let i = 0; i < 15; i++) {
         const d = document.createElement('div');
@@ -267,7 +281,7 @@ By HiveGrief
         dots.push(d);
     }
     let mx = 0, my = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    document.onmousemove = e => { mx = e.clientX; my = e.clientY; };
     function up() {
         dots[0].style.left = mx - 5 + 'px'; dots[0].style.top = my - 5 + 'px';
         for (let i = 14; i > 0; i--) { dots[i].style.left = dots[i-1].style.left; dots[i].style.top = dots[i-1].style.top; }
