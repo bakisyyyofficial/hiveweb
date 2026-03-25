@@ -3,33 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | ОФИЦИАЛЬНЫЙ САЙТ</title>
+    <title>HIVEGRIEF | ТВОЙ ПУТЬ В МИР ГРИФА</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/bakisyyyofficial/hiveweb/main/83234d750c18251e.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary: #ffcc00;
-            --primary-glow: rgba(255, 204, 0, 0.4);
+            --primary-glow: rgba(255, 204, 0, 0.3);
             --secondary: #ff8800;
             --accent: #4CAF50;
-            --bg: #080808;
-            --panel: rgba(15, 15, 15, 0.85);
-            --border: rgba(255, 255, 255, 0.08);
+            --bg: #070707;
+            --panel: rgba(18, 18, 18, 0.9);
+            --border: rgba(255, 255, 255, 0.06);
             --text: #ffffff;
-            --text-dim: #a0a0a0;
+            --text-dim: #909090;
         }
 
-        /* --- СИСТЕМНЫЙ СЛОЙ --- */
+        /* --- БАЗОВЫЕ НАСТРОЙКИ --- */
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+
         body {
             background-color: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 50%, #151515 0%, #080808 100%);
+            background-image: radial-gradient(circle at center, #121212 0%, #070707 100%);
+            min-height: 100vh;
+        }
+
+        /* --- КАСТОМНЫЙ КУРСОР --- */
+        #custom-cursor {
+            position: fixed;
+            width: 8px; height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            box-shadow: 0 0 10px var(--primary);
+            transition: transform 0.1s ease;
+        }
+
+        #cursor-ring {
+            position: fixed;
+            width: 30px; height: 30px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0.5;
+            transition: transform 0.15s ease-out;
         }
 
         #cursor-canvas {
@@ -37,252 +62,238 @@
             z-index: 9999; pointer-events: none;
         }
 
-        .neon-top-line {
-            position: fixed; top: 0; left: 0; width: 100%; height: 3px;
+        .neon-line {
+            position: fixed; top: 0; left: 0; width: 100%; height: 2px;
             background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), var(--primary), transparent);
-            z-index: 1000; box-shadow: 0 0 15px var(--primary);
+            z-index: 10002;
         }
 
-        /* --- КОНТЕНТ (УМЕНЬШЕННЫЙ МАСШТАБ) --- */
+        /* --- ГЛАВНЫЙ КОНТЕЙНЕР --- */
         .wrapper {
-            max-width: 1000px;
+            max-width: 950px;
             margin: 0 auto;
-            padding: 100px 20px;
+            padding: 80px 20px;
             position: relative;
-            z-index: 10;
+            z-index: 100;
         }
 
-        header { text-align: center; margin-bottom: 60px; }
+        header { text-align: center; margin-bottom: 50px; }
         
-        .logo-small {
-            font-size: 4.5rem;
+        .logo {
+            font-size: clamp(3rem, 10vw, 5rem);
             font-weight: 900;
-            letter-spacing: 15px;
+            letter-spacing: 12px;
             text-transform: uppercase;
-            background: linear-gradient(to bottom, #fff 40%, var(--primary));
+            background: linear-gradient(to bottom, #fff, var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 20px var(--primary-glow));
+            filter: drop-shadow(0 0 15px var(--primary-glow));
         }
 
-        /* --- СТИЛЬНЫЕ ССЫЛКИ --- */
-        .social-links {
+        /* --- СЕТКА КНОПОК --- */
+        .grid-links {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
-        .btn-link {
+        .card-link {
             background: var(--panel);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 30px;
+            padding: 25px;
             text-decoration: none;
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 20px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
+            gap: 18px;
+            transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            backdrop-filter: blur(8px);
         }
 
-        .btn-link::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            transition: 0.5s;
-        }
+        .card-link i { font-size: 2rem; color: var(--primary); transition: 0.3s; }
+        .card-link b { display: block; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .card-link span { font-size: 0.8rem; color: var(--text-dim); }
 
-        .btn-link:hover::before { left: 100%; }
-
-        .btn-link i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            transition: transform 0.4s;
-        }
-
-        .btn-link div b { display: block; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
-        .btn-link div span { font-size: 0.85rem; color: var(--text-dim); }
-
-        .btn-link:hover {
-            transform: translateY(-5px);
+        .card-link:hover {
             border-color: var(--primary);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 10px var(--primary-glow);
+            background: rgba(255, 204, 0, 0.03);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .btn-link:hover i { transform: scale(1.2) rotate(5deg); }
 
-        /* --- ПОЧЕМУ МЫ (КАРТОЧКИ) --- */
-        .why-us {
+        /* --- ПОЧЕМУ ВЫБИРАЮТ НАС --- */
+        .features {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
-        .why-card {
+        .feat-item {
             background: rgba(255,255,255,0.02);
             border: 1px solid var(--border);
-            padding: 25px;
-            border-radius: 20px;
+            padding: 20px;
+            border-radius: 18px;
             text-align: center;
-            transition: 0.3s;
         }
-        .why-card:hover { background: rgba(255,204,0,0.05); }
-        .why-card i { font-size: 2rem; color: var(--accent); margin-bottom: 15px; }
-        .why-card h4 { font-size: 1rem; margin-bottom: 8px; text-transform: uppercase; }
-        .why-card p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; }
+        .feat-item i { font-size: 1.8rem; color: var(--accent); margin-bottom: 12px; }
+        .feat-item h4 { font-size: 0.95rem; margin-bottom: 5px; text-transform: uppercase; }
+        .feat-item p { font-size: 0.75rem; color: var(--text-dim); line-height: 1.5; }
 
-        /* --- БЛОК ВЛАДЕЛЬЦА --- */
-        .owner-card {
-            background: linear-gradient(135deg, rgba(20,20,20,0.9), rgba(10,10,10,0.9));
+        /* --- БЛОК ОСНОВАТЕЛЯ --- */
+        .owner-info {
+            background: linear-gradient(180deg, rgba(20,20,20,0.5), rgba(5,5,5,0.8));
             border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 40px;
+            border-radius: 25px;
+            padding: 35px;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
-        .owner-card h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 10px; }
-        .owner-card .tag { color: var(--primary); font-family: 'JetBrains Mono'; letter-spacing: 5px; font-size: 0.9rem; margin-bottom: 20px; display: block; }
+        .owner-info h2 { font-size: 2.2rem; font-weight: 900; letter-spacing: 2px; }
+        .owner-info .sub { color: var(--primary); font-family: 'JetBrains Mono'; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 15px; }
         
-        .btn-yt-small {
-            display: inline-flex; align-items: center; gap: 10px;
+        .yt-btn {
             background: #ff0000; color: #fff; text-decoration: none;
-            padding: 12px 30px; border-radius: 12px; font-weight: 800; font-size: 0.9rem;
-            transition: 0.3s;
+            padding: 10px 25px; border-radius: 10px; font-weight: 900; font-size: 0.85rem;
+            display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
         }
-        .btn-yt-small:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(255,0,0,0.4); }
+        .yt-btn:hover { background: #cc0000; box-shadow: 0 0 15px rgba(255,0,0,0.3); }
 
-        /* --- ПРАВИЛА (ПОЛНЫЙ ТЕКСТ) --- */
-        .rules-container {
+        /* --- РЕГЛАМЕНТ (ПОЛНЫЙ) --- */
+        .rules-wrapper {
             background: var(--panel);
             border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 40px;
+            border-radius: 25px;
+            padding: 35px;
         }
 
-        .rules-container h3 {
-            font-size: 2rem; text-align: center; margin-bottom: 40px; letter-spacing: 10px; text-transform: uppercase;
+        .rules-wrapper h3 {
+            font-size: 1.8rem; text-align: center; margin-bottom: 30px; letter-spacing: 8px; text-transform: uppercase;
         }
 
-        .acc-item { margin-bottom: 15px; }
-        .acc-btn {
-            width: 100%; padding: 25px;
+        .rule-acc { margin-bottom: 12px; }
+        .rule-head {
+            width: 100%; padding: 22px;
             background: rgba(255,255,255,0.02);
             border: 1px solid var(--border);
-            border-left: 10px solid var(--primary);
-            border-radius: 15px;
-            color: #fff; font-size: 1.1rem; font-weight: 800;
-            text-align: left; display: flex; justify-content: space-between; align-items: center;
-            transition: 0.3s;
+            border-left: 8px solid var(--primary);
+            border-radius: 12px;
+            color: #fff; font-size: 1rem; font-weight: 800;
+            text-align: left; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: 0.2s;
         }
-        .acc-btn:hover { background: rgba(255,255,255,0.05); padding-left: 30px; }
+        .rule-head:hover { background: rgba(255,255,255,0.04); }
 
-        .acc-panel {
-            max-height: 0; overflow: hidden; transition: 0.5s cubic-bezier(0, 1, 0, 1);
-            background: rgba(0,0,0,0.2); margin-top: -5px; border-radius: 0 0 15px 15px;
+        .rule-panel {
+            max-height: 0; overflow: hidden; transition: 0.4s ease-out;
+            background: rgba(0,0,0,0.15); border-radius: 0 0 12px 12px;
         }
-        .acc-panel.active { max-height: 2000px; padding: 30px; border: 1px solid var(--border); border-top: none; transition: 0.5s ease-in-out; }
+        .rule-panel.open { max-height: 3000px; padding: 25px; border: 1px solid var(--border); border-top: none; }
 
-        .rules-text { font-size: 0.95rem; line-height: 1.8; color: #ccc; white-space: pre-line; }
-        .punish { color: #ff5555; font-weight: 900; background: rgba(255,0,0,0.1); padding: 2px 8px; border-radius: 5px; }
+        .raw-text { font-size: 0.9rem; line-height: 1.8; color: #bbb; white-space: pre-line; }
+        .warn { color: #ff4444; font-weight: 900; border-bottom: 1px dashed #ff4444; }
 
-        /* --- ФУТЕР --- */
-        footer { padding: 60px 0; text-align: center; opacity: 0.4; font-size: 0.8rem; }
-
-        /* --- ГРИД ФОН --- */
-        .grid-bg {
+        /* --- ФОНОВАЯ СЕТКА --- */
+        .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 50px 50px; z-index: -1;
-            mask-image: radial-gradient(circle, black, transparent 80%);
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px; z-index: -1;
+            mask-image: radial-gradient(circle, black, transparent 90%);
         }
 
-        @media (max-width: 800px) {
-            .social-links, .why-us { grid-template-columns: 1fr; }
-            .logo-small { font-size: 2.5rem; }
+        footer { padding: 50px 0; text-align: center; opacity: 0.3; font-size: 0.75rem; letter-spacing: 1px; }
+
+        @media (max-width: 768px) {
+            .grid-links, .features { grid-template-columns: 1fr; }
+            .logo { font-size: 2.5rem; }
+            #custom-cursor, #cursor-ring { display: none; }
+            * { cursor: auto !important; }
         }
     </style>
 </head>
 <body>
 
-    <div class="neon-top-line"></div>
+    <div id="custom-cursor"></div>
+    <div id="cursor-ring"></div>
+    <div class="neon-line"></div>
     <canvas id="cursor-canvas"></canvas>
-    <div class="grid-bg"></div>
+    <div class="bg-overlay"></div>
 
     <div class="wrapper">
         
         <header>
-            <h1 class="logo-small">HIVEGRIEF</h1>
-            <p style="color: var(--text-dim); margin-top: 10px; font-weight: 600; letter-spacing: 2px;">ЛУЧШИЙ ГРИФЕРСКИЙ ПРОЕКТ</p>
+            <h1 class="logo">HIVEGRIEF</h1>
+            <p style="color: var(--primary); font-family: 'JetBrains Mono'; font-weight: 800; font-size: 0.8rem; margin-top: 5px; letter-spacing: 4px;">PROJECT BY BL0Xa</p>
         </header>
 
-        <section class="social-links">
-            <div class="btn-link" onclick="copyIP()" style="cursor: pointer;">
-                <i class="fa-solid fa-server"></i>
+        <section class="grid-links">
+            <div class="card-link" onclick="copyIP()" style="cursor: pointer;">
+                <i class="fa-solid fa-link"></i>
                 <div>
                     <b>MC.HIVEGRIEF.SU</b>
                     <span>Нажми, чтобы скопировать айпи</span>
                 </div>
             </div>
-            <a href="https://shop.hivegrief.su" class="btn-link" target="_blank">
-                <i class="fa-solid fa-gem"></i>
+            <a href="https://shop.hivegrief.su" class="card-link" target="_blank">
+                <i class="fa-solid fa-shopping-basket"></i>
                 <div>
-                    <b>МАГАЗИН ДОНАТА</b>
-                    <span>Поддержи проект и получи бонусы</span>
+                    <b>МАГАЗИН</b>
+                    <span>Покупка доната и привилегий</span>
                 </div>
             </a>
-            <a href="https://t.me/HiveGriefOff" class="btn-link" target="_blank">
+            <a href="https://t.me/HiveGriefOff" class="card-link" target="_blank">
                 <i class="fa-brands fa-telegram"></i>
                 <div>
-                    <b>НАШ ТЕЛЕГРАМ</b>
-                    <span>Новости, конкурсы и промокоды</span>
+                    <b>ТЕЛЕГРАМ</b>
+                    <span>Новости и секретные промокоды</span>
                 </div>
             </a>
-            <a href="https://discord.gg/hivegrief" class="btn-link" target="_blank">
+            <a href="https://discord.gg/hivegrief" class="card-link" target="_blank">
                 <i class="fa-brands fa-discord"></i>
                 <div>
-                    <b>ДИСКОРД СЕРВЕР</b>
-                    <span>Общение и поддержка игроков</span>
+                    <b>ДИСКОРД</b>
+                    <span>Общение с игроками и техподдержка</span>
                 </div>
             </a>
         </section>
 
-        <section class="why-us">
-            <div class="why-card">
-                <i class="fa-solid fa-bolt"></i>
-                <h4>Мощный Хост</h4>
-                <p>Играй без лагов на топовом железе 24/7.</p>
+        <section class="features">
+            <div class="feat-item">
+                <i class="fa-solid fa-microchip"></i>
+                <h4>ОПТИМИЗАЦИЯ</h4>
+                <p>Стабильные 20 TPS даже при большом онлайне.</p>
             </div>
-            <div class="why-card">
-                <i class="fa-solid fa-shield-halved"></i>
-                <h4>Защита</h4>
-                <p>Умный античит и опытная модерация.</p>
+            <div class="feat-item">
+                <i class="fa-solid fa-user-shield"></i>
+                <h4>КОМАНДА</h4>
+                <p>Адекватная модерация, готовая помочь 24/7.</p>
             </div>
-            <div class="why-card">
-                <i class="fa-solid fa-star"></i>
-                <h4>Уникальность</h4>
-                <p>Самописные плагины и честная экономика.</p>
+            <div class="feat-item">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <h4>ПЛАГИНЫ</h4>
+                <p>Уникальные механики, созданные специально для нас.</p>
             </div>
         </section>
 
-        <section class="owner-card">
-            <span class="tag">ОСНОВАТЕЛЬ ПРОЕКТА</span>
+        <section class="owner-info">
+            <span class="sub">FOUNDER & DEVELOPER</span>
             <h2>BL0Xa</h2>
-            <p style="color: var(--text-dim); margin-bottom: 25px; font-style: italic;">"Мы строим идеальное место для тех, кто любит настоящий гриф."</p>
-            <a href="https://www.youtube.com/@BL0Xa_off" class="btn-yt-small" target="_blank">
-                <i class="fa-brands fa-youtube"></i> ПОДПИСАТЬСЯ
+            <p style="color: var(--text-dim); margin: 15px 0 25px; font-size: 0.95rem;">"Мы не просто делаем сервер, мы создаем историю."</p>
+            <a href="https://www.youtube.com/@BL0Xa_off" class="yt-btn" target="_blank">
+                <i class="fa-brands fa-youtube"></i> КАНАЛ ВЛАДЕЛЬЦА
             </a>
         </section>
 
-        <section class="rules-container">
+        <section class="rules-wrapper">
             <h3>РЕГЛАМЕНТ</h3>
             
-            <div class="acc-item">
-                <button class="acc-btn" onclick="toggleAcc(this)">1.0 - 3.0 ОБЩЕЕ & ДОНАТ <i class="fa-solid fa-plus"></i></button>
-                <div class="acc-panel">
-                    <div class="rules-text">
+            <div class="rule-acc">
+                <button class="rule-head" onclick="toggleRules(this)">1.0 - 3.0 ОБЩЕЕ & ДОНАТ <i class="fa-solid fa-plus"></i></button>
+                <div class="rule-panel">
+                    <div class="raw-text">
 1.0 Общее положение.
 1.1. Данный свод правил составлен представителем проекта <strong>HiveGrief</strong> и действителен ТОЛЬКО в рамках режимов "Гриферское выживание" проекта HiveGrief .
 1.2. Регистрируясь на нашем проекте, вы автоматически принимаете данные правила.
@@ -292,7 +303,7 @@
 1.6. Решения и действия главной администрации не обсуждаются и не поддаются разжалованию.
 1.7. Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).
 1.8. За любой вид чата будут наказываться сообщения: любой вид пиара, признание в читах, оскорбление родителей, попытка взлома, оскорбления администрации.
-1.8.1 Продажа/покупка ресурсов за реальную валюту запрещена. <span class="punish">Наказание - снятие всех привилегий, БАН НАВСЕГДА.</span>
+1.8.1 Продажа/покупка ресурсов за реальную валюту запрещена. <span class="warn">Наказание - снятие всех привилегий, БАН НАВСЕГДА.</span>
 
 3.0 Приобретение платных возможностей.
 3.1. Игра на проекте не подразумевает платы за использование ресурсов.
@@ -303,33 +314,33 @@
                 </div>
             </div>
 
-            <div class="acc-item">
-                <button class="acc-btn" onclick="toggleAcc(this)">4.0 ПРАВИЛА ЧАТА <i class="fa-solid fa-plus"></i></button>
-                <div class="acc-panel">
-                    <div class="rules-text">
+            <div class="rule-acc">
+                <button class="rule-head" onclick="toggleRules(this)">4.0 ПРАВИЛА ЧАТА <i class="fa-solid fa-plus"></i></button>
+                <div class="rule-panel">
+                    <div class="raw-text">
 4.1. На серверах присутствует локальный и глобальный чат.
-4.2. Запрещено флудить (2+ похожих сообщения). <span class="punish">[мут на 4 часа]</span>
-4.3. Запрещено флудить символами или капсом. <span class="punish">[мут на 4 часа]</span>
-4.5. Злоупотребление нецензурной лексикой. <span class="punish">[мут на 2 - 4 часа]</span>
-4.6. Оскорбления, унижения, угрозы к игрокам. <span class="punish">[мут на 4 часа]</span>
-4.9. Публичная критика проекта. <span class="punish">[мут на 1 - 5 дней]</span>
-4.10. Оскорбление своих родителей. <span class="punish">[мут 5-15 дней]</span>
-4.11. Затрагивание политики. <span class="punish">[бан 3-7 дней]</span>
-4.15. Оскорбление модерации и администрации. <span class="punish">[бан 5 - 15 дней]</span>
-4.22. Доксинг (разглашение личных данных). <span class="punish">[бан на 30 дней]</span>
+4.2. Запрещено флудить (2+ похожих сообщения). <span class="warn">[мут на 4 часа]</span>
+4.3. Запрещено флудить символами или капсом. <span class="warn">[мут на 4 часа]</span>
+4.5. Злоупотребление нецензурной лексикой. <span class="warn">[мут на 2 - 4 часа]</span>
+4.6. Оскорбления, унижения, угрозы к игрокам. <span class="warn">[мут на 4 часа]</span>
+4.9. Публичная критика проекта. <span class="warn">[мут на 1 - 5 дней]</span>
+4.10. Оскорбление своих родителей. <span class="warn">[мут 5-15 дней]</span>
+4.11. Затрагивание политики. <span class="warn">[бан 3-7 дней]</span>
+4.15. Оскорбление модерации и администрации. <span class="warn">[бан 5 - 15 дней]</span>
+4.22. Доксинг (разглашение личных данных). <span class="warn">[бан на 30 дней]</span>
                     </div>
                 </div>
             </div>
 
-            <div class="acc-item">
-                <button class="acc-btn" onclick="toggleAcc(this)">5.0 ИГРОВОЙ ПРОЦЕСС <i class="fa-solid fa-plus"></i></button>
-                <div class="acc-panel">
-                    <div class="rules-text">
-5.1. Намеренное причинение вреда проекту, лаг-машины, багоюз. <span class="punish">[бан 25 дней / перманент]</span>
-5.2. Использование читов. <span class="punish">[бан на 50 дней / бан айпи]</span>
-5.2.1. Совместная игра с читером. <span class="punish">[бан на 50 дней]</span>
-5.4. Использование макросов, кликеров. <span class="punish">[бан на 3 дня]</span>
-5.9. Реклама/продажа читов. <span class="punish">[перманентный бан]</span>
+            <div class="rule-acc">
+                <button class="rule-head" onclick="toggleRules(this)">5.0 ИГРОВОЙ ПРОЦЕСС <i class="fa-solid fa-plus"></i></button>
+                <div class="rule-panel">
+                    <div class="raw-text">
+5.1. Намеренное причинение вреда проекту, лаг-машины, багоюз. <span class="warn">[бан 25 дней / перманент]</span>
+5.2. Использование читов. <span class="warn">[бан на 50 дней / бан айпи]</span>
+5.2.1. Совместная игра с читером. <span class="warn">[бан на 50 дней]</span>
+5.4. Использование макросов, кликеров. <span class="warn">[бан на 3 дня]</span>
+5.9. Реклама/продажа читов. <span class="warn">[перманентный бан]</span>
 
 <strong>ЗАПРЕЩЕННЫЕ МОДЫ:</strong>
 X-Ray, AutoAttack, FreeCam, AutoTotem, ElytraSwap, ArmorHotSwap, AFK-Fish, InvMove, TopkaAutoBuy, GoProne, StepUp, Spawner Location.
@@ -340,56 +351,73 @@ X-Ray, AutoAttack, FreeCam, AutoTotem, ElytraSwap, ArmorHotSwap, AFK-Fish, InvMo
         </section>
 
         <footer>
-            <p>© 2026 HIVEGRIEF PROJECT. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
-            <p>DESIGNED FOR BL0Xa | SYSTEM VERSION: 6.0</p>
+            <p>© 2026 HIVEGRIEF OFFICIAL. ALL RIGHTS RESERVED.</p>
+            <p style="margin-top: 10px;">CORE STABILITY: TITAN-V7</p>
         </footer>
 
     </div>
 
     <script>
-        // --- 1. КУРСОРНЫЙ ХВОСТ (CANVAS) ---
+        // --- 1. ПЛАВНЫЙ КУРСОРНЫЙ ДВИЖОК 3.0 ---
+        const dot = document.getElementById('custom-cursor');
+        const ring = document.getElementById('cursor-ring');
         const canvas = document.getElementById('cursor-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
 
-        function initCanvas() {
+        function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-        window.addEventListener('resize', initCanvas);
-        initCanvas();
+        window.addEventListener('resize', resize);
+        resize();
 
-        class Particle {
+        let mouse = { x: -100, y: -100 };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            
+            // Основной курсор
+            dot.style.left = mouse.x + 'px';
+            dot.style.top = mouse.y + 'px';
+            
+            // Кольцо (с небольшой задержкой через CSS переход)
+            ring.style.left = (mouse.x - 15) + 'px';
+            ring.style.top = (mouse.y - 15) + 'px';
+
+            // Генерируем частицы реже (каждый второй сдвиг)
+            if (Math.random() > 0.6) {
+                particles.push(new SmoothParticle(mouse.x, mouse.y));
+            }
+        });
+
+        class SmoothParticle {
             constructor(x, y) {
                 this.x = x;
                 this.y = y;
-                this.size = Math.random() * 5 + 2;
-                this.speedX = (Math.random() - 0.5) * 2;
-                this.speedY = (Math.random() - 0.5) * 2;
-                this.color = `rgba(255, 204, 0, ${Math.random() * 0.5 + 0.5})`;
+                // Очень медленная скорость
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() - 0.5) * 0.8;
+                this.size = Math.random() * 3 + 1;
                 this.life = 1;
+                this.decay = 0.008 + Math.random() * 0.005; // Медленное исчезновение
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.life -= 0.02;
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life -= this.decay;
             }
             draw() {
-                ctx.fillStyle = this.color;
                 ctx.globalAlpha = this.life;
+                ctx.fillStyle = '#ffcc00';
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
 
-        window.addEventListener('mousemove', (e) => {
-            for (let i = 0; i < 3; i++) {
-                particles.push(new Particle(e.clientX, e.clientY));
-            }
-        });
-
-        function animate() {
+        function render() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
@@ -399,15 +427,15 @@ X-Ray, AutoAttack, FreeCam, AutoTotem, ElytraSwap, ArmorHotSwap, AFK-Fish, InvMo
                     i--;
                 }
             }
-            requestAnimationFrame(animate);
+            requestAnimationFrame(render);
         }
-        animate();
+        render();
 
-        // --- 2. АККОРДЕОНЫ ---
-        function toggleAcc(btn) {
+        // --- 2. ЛОГИКА ПРАВИЛ ---
+        function toggleRules(btn) {
             const panel = btn.nextElementSibling;
             const icon = btn.querySelector('i');
-            panel.classList.toggle('active');
+            panel.classList.toggle('open');
             icon.classList.toggle('fa-plus');
             icon.classList.toggle('fa-minus');
         }
@@ -415,10 +443,10 @@ X-Ray, AutoAttack, FreeCam, AutoTotem, ElytraSwap, ArmorHotSwap, AFK-Fish, InvMo
         // --- 3. КОПИРОВАНИЕ IP ---
         function copyIP() {
             navigator.clipboard.writeText("mc.hivegrief.su");
-            alert("Айпи сервера скопирован в буфер обмена!");
+            alert("Айпи скопирован! Удачной игры!");
         }
 
-        console.log("HIVEGRIEF SYSTEM LOADED. HELLO BL0Xa.");
+        console.log("HIVEGRIEF TITAN-V7: OPERATIONAL.");
     </script>
 </body>
 </html>
