@@ -3,31 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | TITAN V17 | FINAL ENGINE</title>
+    <title>HIVEGRIEF | NEXT GEN INTERFACE</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/bakisyyyofficial/hiveweb/main/83234d750c18251e.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
+        /* ПАЛИТРА: КИБЕР-ПАНК 2026 */
         :root {
-            --primary: #ffcc00;
-            --secondary: #ff8800;
-            --bg: #000000;
-            --panel: rgba(11, 11, 13, 0.98);
-            --border: rgba(255, 204, 0, 0.2);
-            --text: #ffffff;
-            --text-dim: #9494b8;
-            --accent: #ef4444;
-            --glow-color: rgba(255, 204, 0, 0.4);
+            --accent: #00f2ff;
+            --accent-glow: rgba(0, 242, 255, 0.4);
+            --bg-deep: #020617;
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --grad: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
+            --radius: 24px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; user-select: none; }
-        
+        /* RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none !important;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             height: 100vh;
             overflow: hidden;
             display: flex;
@@ -35,342 +44,405 @@
             justify-content: center;
         }
 
-        /* ГРАФИКА */
-        #fx-canvas {
+        /* ЭФФЕКТ "ЗВЕЗДНАЯ ПЫЛЬ" НА ФОНЕ */
+        #bg-canvas {
             position: fixed;
-            top: 0; left: 0;
+            top: 0;
+            left: 0;
             z-index: 1;
             pointer-events: none;
         }
 
-        /* КУРСОР (SMALL & FAST) */
-        #cursor-dot {
+        /* УЛЬТРА-ЛЕГКИЙ КУРСОР */
+        #pointer-dot {
             position: fixed;
-            width: 6px;
-            height: 6px;
+            width: 4px;
+            height: 4px;
             background: #fff;
             border-radius: 50%;
             z-index: 100000;
             pointer-events: none;
-            box-shadow: 0 0 10px #fff;
+            box-shadow: 0 0 15px #fff;
         }
-        #cursor-ring {
+        #pointer-ring {
             position: fixed;
-            width: 30px;
-            height: 30px;
-            border: 1.5px solid var(--primary);
+            width: 24px;
+            height: 24px;
+            border: 1px solid var(--accent);
             border-radius: 50%;
             z-index: 99999;
             pointer-events: none;
-            transition: transform 0.1s linear;
+            transition: transform 0.06s ease-out, opacity 0.3s;
         }
 
-        /* ГЛАВНЫЙ БЛОК */
-        .master-ui {
+        /* ОСНОВНОЙ ТЕРМИНАЛ (GLASSMORPHISM) */
+        .terminal {
             position: relative;
             z-index: 10;
-            width: 96%;
-            max-width: 1450px;
-            height: 92vh;
-            background: var(--panel);
-            backdrop-filter: blur(80px);
+            width: 94%;
+            max-width: 1550px;
+            height: 88vh;
+            background: var(--card-bg);
+            backdrop-filter: blur(40px);
             border: 1px solid var(--border);
-            border-radius: 45px;
+            border-radius: calc(var(--radius) * 1.5);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 100px rgba(0,0,0,0.8);
-            animation: slideIn 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05);
+            animation: terminalReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(50px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes terminalReveal {
+            from { opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
 
-        /* НАВИГАЦИЯ */
-        .nav-bar {
+        /* ВЕРХНЯЯ НАВИГАЦИЯ */
+        .top-bar {
             display: flex;
-            padding: 25px;
-            gap: 20px;
-            background: rgba(0,0,0,0.6);
+            align-items: center;
+            padding: 25px 50px;
+            background: rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid var(--border);
-            border-radius: 45px 45px 0 0;
+            border-radius: calc(var(--radius) * 1.5) calc(var(--radius) * 1.5) 0 0;
         }
 
-        .nav-item {
-            flex: 1;
-            padding: 22px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 25px;
-            text-align: center;
-            font-weight: 900;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+        }
+        .brand span { color: var(--accent); }
+
+        .nav-links {
+            margin-left: auto;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-nav {
+            padding: 12px 28px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--text-dim);
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid transparent;
         }
 
-        .nav-item.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .btn-nav.active {
+            background: var(--grad);
             color: #000;
-            box-shadow: 0 0 30px var(--glow-color);
-            transform: translateY(-3px);
+            box-shadow: 0 0 30px var(--accent-glow);
         }
 
-        .nav-item:hover:not(.active) {
-            background: rgba(255,255,255,0.06);
+        .btn-nav:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.07);
             color: #fff;
-            border-color: var(--primary);
+            border-color: rgba(0, 242, 255, 0.3);
+            transform: translateY(-2px);
         }
 
-        /* КОНТЕНТ */
-        .main-view {
+        /* КОНТЕНТНЫЙ БЛОК */
+        .content-engine {
             flex: 1;
-            padding: 60px 80px;
+            padding: 50px 70px;
             overflow-y: auto;
-            scrollbar-width: none;
+            scroll-behavior: smooth;
         }
-        .main-view::-webkit-scrollbar { display: none; }
+        .content-engine::-webkit-scrollbar { width: 4px; }
+        .content-engine::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: contentFade 0.6s ease; }
-        @keyframes contentFade { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        .view { display: none; }
+        .view.active { display: block; animation: viewSlide 0.6s ease-out; }
+        @keyframes viewSlide { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
 
-        /* ПРАВИЛА (ПОЛНЫЙ РЕГЛАМЕНТ) */
-        .rules-grid { display: flex; flex-direction: column; gap: 35px; }
-        .rule-card {
-            background: rgba(255,255,255,0.01);
+        /* GRID: СОЦСЕТИ */
+        .soc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .soc-card {
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
-            border-left: 10px solid var(--primary);
-            padding: 45px;
-            border-radius: 30px;
+            padding: 45px 30px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: #fff;
             transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
-        .rule-card:hover { transform: translateX(10px); background: rgba(255, 204, 0, 0.03); border-color: var(--primary); }
-        .rule-card h2 { color: var(--primary); font-size: 1.8rem; margin-bottom: 25px; font-weight: 900; text-transform: uppercase; }
-        .rule-card p { font-size: 1.1rem; line-height: 2; color: #d1d5db; white-space: pre-wrap; }
-        
-        .punish {
+
+        .soc-card i { font-size: 3.5rem; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 25px; }
+        .soc-card h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; letter-spacing: 1px; }
+        .soc-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+
+        .soc-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--grad);
+            opacity: 0;
+            transition: 0.4s;
+            z-index: -1;
+        }
+
+        .soc-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .soc-card:hover::before { opacity: 0.05; }
+
+        /* СПИСОК ПРАВИЛ */
+        .rules-list { display: flex; flex-direction: column; gap: 20px; }
+        .rule-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            padding: 35px;
+            border-radius: 20px;
+            border-left: 4px solid var(--accent);
+            transition: 0.3s;
+        }
+        .rule-box:hover { background: rgba(255, 255, 255, 0.04); border-left-width: 10px; }
+        .rule-box h2 { font-size: 1.3rem; margin-bottom: 15px; color: var(--accent); font-weight: 800; text-transform: uppercase; }
+        .rule-box p { font-size: 1rem; line-height: 1.8; color: #cbd5e1; white-space: pre-wrap; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .badge-punish {
             display: inline-block;
-            margin-top: 10px;
-            padding: 6px 15px;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 0.9rem;
+            margin-top: 15px;
+            padding: 6px 14px;
+            background: rgba(244, 63, 94, 0.1);
+            border: 1px solid #f43f5e;
+            color: #fb7185;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
         }
 
-        /* СОЦСЕТИ */
-        .social-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
-        .social-btn {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border);
-            padding: 60px;
-            border-radius: 40px;
-            text-decoration: none;
-            color: #fff;
-            text-align: center;
-            transition: 0.5s;
-        }
-        .social-btn:hover { transform: translateY(-10px); border-color: var(--primary); background: rgba(255, 204, 0, 0.05); }
-        .social-btn i { font-size: 5rem; color: var(--primary); margin-bottom: 25px; }
-
-        /* YOUTUBE КАРТОЧКИ */
-        .yt-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 40px; }
-        .yt-card {
-            background: linear-gradient(135deg, #200, #000);
-            border: 2px solid #f00;
-            border-radius: 35px;
-            padding: 50px;
+        /* YOUTUBE ГРИД */
+        .yt-shelf { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+        .yt-author {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: var(--radius);
+            padding: 40px;
             text-align: center;
             text-decoration: none;
-            color: #fff;
             transition: 0.4s;
         }
-        .yt-card:hover { transform: scale(1.03); box-shadow: 0 0 50px rgba(255,0,0,0.3); }
-        .yt-card h3 { font-size: 2.5rem; margin-bottom: 20px; font-weight: 900; }
-        .yt-card span { background: #f00; padding: 10px 30px; border-radius: 15px; font-weight: 900; }
+        .yt-author:hover { border-color: #ff0000; box-shadow: 0 0 40px rgba(255,0,0,0.15); transform: translateY(-5px); }
+        .yt-author i { font-size: 3rem; color: #ff0000; margin-bottom: 20px; }
+        .yt-author span { display: block; font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 20px; }
+        .btn-sub { padding: 12px 30px; background: #ff0000; color: #fff; border-radius: 12px; font-weight: 800; font-size: 0.9rem; }
+
+        /* FOOTER */
+        .footer-info {
+            padding: 20px 50px;
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid var(--border);
+            display: flex;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            border-radius: 0 0 calc(var(--radius) * 1.5) calc(var(--radius) * 1.5);
+        }
+        .footer-info .sys-info { margin-left: auto; color: var(--accent); font-family: 'JetBrains Mono'; }
 
     </style>
 </head>
 <body>
 
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
-    <canvas id="fx-canvas"></canvas>
+    <div id="pointer-dot"></div>
+    <div id="pointer-ring"></div>
+    <canvas id="bg-canvas"></canvas>
 
-    <div class="master-ui">
-        <nav class="nav-bar">
-            <div class="nav-item active" onclick="tab(this, 'view-soc')">СОЦСЕТИ</div>
-            <div class="nav-item" onclick="tab(this, 'view-reg')">ПРАВИЛА (ПОЛНЫЙ РЕГЛАМЕНТ)</div>
-            <div class="nav-item" onclick="tab(this, 'view-yt')">YOUTUBE КАНАЛЫ</div>
-        </nav>
+    <div class="terminal">
+        <header class="top-bar">
+            <div class="brand">
+                <i class="fa-solid fa-shield-halved"></i>
+                HIVE<span>GRIEF</span>
+            </div>
+            <nav class="nav-links">
+                <button class="btn-nav active" onclick="nav(this, 'v-links')">Сервисы</button>
+                <button class="btn-nav" onclick="nav(this, 'v-rules')">Регламент</button>
+                <button class="btn-nav" onclick="nav(this, 'v-media')">Медиа</button>
+            </nav>
+        </header>
 
-        <div class="main-view">
+        <main class="content-engine">
             
-            <section id="view-soc" class="tab-content active">
-                <div class="social-grid">
-                    <a href="https://t.me/HiveGriefOff" class="social-btn" target="_blank">
+            <section id="v-links" class="view active">
+                <div class="soc-grid">
+                    <a href="https://t.me/HiveGriefOff" class="soc-card" target="_blank">
                         <i class="fa-brands fa-telegram"></i>
-                        <h2>TELEGRAM</h2>
+                        <h3>TELEGRAM</h3>
+                        <p>Новости, промокоды и конкурсы в реальном времени.</p>
                     </a>
-                    <a href="https://discord.gg/hivegrief" class="social-btn" target="_blank">
+                    <a href="https://discord.gg/hivegrief" class="soc-card" target="_blank">
                         <i class="fa-brands fa-discord"></i>
-                        <h2>DISCORD</h2>
+                        <h3>DISCORD</h3>
+                        <p>Комьюнити, поддержка и голосовые каналы для тимов.</p>
                     </a>
-                    <a href="https://shop.hivegrief.su" class="social-btn" target="_blank">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                        <h2>МАГАЗИН</h2>
+                    <a href="https://shop.hivegrief.su" class="soc-card" target="_blank">
+                        <i class="fa-solid fa-cube"></i>
+                        <h3>STORE</h3>
+                        <p>Покупка донат-услуг, кейсов и игровой валюты.</p>
                     </a>
-                    <div class="social-btn" onclick="copyIp()" style="cursor: pointer;">
-                        <i class="fa-solid fa-server"></i>
-                        <h2>IP: MC.HIVEGRIEF.SU</h2>
+                    <div class="soc-card" onclick="copyIp()" style="cursor: pointer;">
+                        <i class="fa-solid fa-terminal"></i>
+                        <h3>IP: HIVEGRIEF.SU</h3>
+                        <p>Кликни, чтобы скопировать адрес сервера в буфер.</p>
                     </div>
                 </div>
             </section>
 
-            <section id="view-reg" class="tab-content">
-                <div class="rules-grid">
+            <section id="v-rules" class="view">
+                <div class="rules-list">
                     
-                    <div class="rule-card">
-                        <h2>1.0 ОБЩЕЕ ПОЛОЖЕНИЕ</h2>
+                    <div class="rule-box">
+                        <h2>1.0 Положения проекта</h2>
                         <p>1.1. Данный свод правил составлен представителем проекта HiveGrief и действителен ТОЛЬКО в рамках режимов "Гриферское выживание".
-                        1.2. Регистрируясь на нашем проекте, вы автоматически принимаете данные правила.
-                        1.4. Правила могут быть изменены без оповещения аудитории.
-                        1.6. Решения администрации (<strong>Bakisyyy (otaxao), Z1tlex</strong>) не обсуждаются.
-                        1.8.1 Продажа/покупка за реальную валюту запрещена. <span class="punish">Наказание - снятие всех привилегий, бан навсегда.</span></p>
+                        1.2. Регистрируясь, вы автоматически принимаете данные правила.
+                        1.3. Незнание правил не освобождает от ответственности.
+                        1.6. Решения высшей администрации (<strong>Bakisyyy (otaxao), Z1tlex</strong>) не обсуждаются.
+                        1.8.1 Продажа ресурсов за реал (FunPay и т.д.) строго запрещена. <span class="badge-punish">Снятие + Бан навсегда</span>
+                        6.9. Шутки про "нашел дюп" запрещены. Нашли реально? ЛС @otxao. Награда: 20к рилликов. <span class="badge-punish">За шутку - Мут 1 день</span></p>
                     </div>
 
-                    <div class="rule-card">
-                        <h2>4.0 ВНУТРИИГРОВОЕ ОБЩЕНИЕ</h2>
-                        <p>4.2. Запрещено флудить (3 сообщения подряд - бан). <span class="punish">Мут на 4 часа</span>
-                        4.2.1. Запрещено использовать твинки для обхода флуда. <span class="punish">Мут каждому участнику на 4 часа</span>
-                        4.3. Флуд символами (более 10 символов). <span class="punish">Мут на 4 часа</span>
-                        4.10. Оскорбление своих родителей. <span class="punish">Мут 5-15 дней</span>
-                        4.15. Оскорбление модерации и администрации. <span class="punish">Бан от 5 до 15 дней</span>
-                        4.22. Доксинг (разглашение данных). <span class="punish">Бан на 30 дней</span>
-                        6.9. Шутки про дюп запрещены. Если нашли реальный дюп — пишите <strong>@otxao</strong> (награда 20к рилликов). <span class="punish">За шутку - мут 1 день.</span></p>
+                    <div class="rule-box">
+                        <h2>4.0 Правила коммуникации</h2>
+                        <p>4.2. Флуд (от 3-х похожих сообщений за минуту). <span class="badge-punish">Мут 4 часа</span>
+                        4.3. Флуд символами/бессмыслицей (более 10 символов). <span class="badge-punish">Мут 4 часа</span>
+                        4.5. Злоупотребление матом. <span class="badge-punish">Мут 4 часа</span>
+                        4.10. Оскорбление своих родителей. <span class="badge-punish">Мут 5-15 дней</span>
+                        4.15. Оскорбление модерации/администрации. <span class="badge-punish">Бан 5-15 дней</span>
+                        4.22. Распространение личных данных (Доксинг). <span class="badge-punish">Бан 30 дней</span>
+                        4.29. Упоминание денежных операций (реальная валюта). <span class="badge-punish">Мут 2 дня</span></p>
                     </div>
 
-                    <div class="rule-card">
-                        <h2>5.0 ИГРОВОЙ ПРОЦЕСС</h2>
-                        <p>5.1. Лаг-машины, багоюз. <span class="punish">Перманентная блокировка + снятие</span>
-                        5.2. Использование читов/ПО. <span class="punish">Бан на 50 дней либо БАН ПО IP</span>
-                        5.2.1. Совместная игра с читером. <span class="punish">Бан на 50 дней</span>
-                        5.2.6. Неадекватное поведение на проверке. <span class="punish">Бан на 50 дней</span>
-                        5.2.6.1 Манипуляции с доступом к дискам / вирт. машины. <span class="punish">Бан на 50 дней</span>
+                    <div class="rule-box">
+                        <h2>5.0 Геймплей и ПО</h2>
+                        <p>5.1. Лаг-машины, багоюз, намеренный вред серверу. <span class="badge-punish">Бан 25 дней / Перманент</span>
+                        5.2. Использование читов/стороннего ПО. <span class="badge-punish">Бан 50 дней / По IP</span>
+                        5.2.1. Совместная игра (тим) с читером. <span class="badge-punish">Бан 50 дней</span>
+                        5.2.6. Неадекватное поведение на проверке. <span class="badge-punish">Бан 50 дней</span>
+                        5.4. Использование макросов и кликеров. <span class="badge-punish">Бан 3 дня</span>
 
                         <strong>ЗАПРЕЩЕННЫЕ МОДЫ:</strong>
-                        ElytraSwap (5д), InvMove (7д), TopkaAutoBuy (7д), StepUp (30д), Spawner Location (50д), DiamondSim (50д), FreeCam (50д), AutoTotem (50д).</p>
+                        FreeCam, AutoTotem, ElytraSwap, X-Ray, Spawner Location, DiamondSim, AutoAttack, TopkaAutoBuy.</p>
                     </div>
 
-                    <div class="rule-card">
-                        <h2>6.0 ПРАВИЛА ДЛЯ ДОНАТЕРОВ</h2>
-                        <p>6.1. Использование прав во вред проекту. <span class="punish">Снятие + Бан</span>
-                        6.3. Некорректная выдача наказания. <span class="punish">Бан на 14 дней</span>
-                        6.6. Тест наказаний только на себе с причиной "Тест". Иначе - <span class="punish">Бан на 14 дней.</span>
-                        6.8. Модератору запрещено обманывать на ресурсы. Гриферство — разрешено.</p>
+                    <div class="rule-box">
+                        <h2>6.0 Привилегии и донат</h2>
+                        <p>6.1. Права во вред проекту. <span class="badge-punish">Снятие + Бан</span>
+                        6.3. Некорректная выдача наказаний. <span class="badge-punish">Бан 14 дней</span>
+                        6.6. Тест команд только на себе с причиной "Тест". Иначе - <span class="badge-punish">Бан 14 дней</span>
+                        6.8. Обман игроков персоналом на ресурсы запрещен.</p>
                     </div>
 
                 </div>
             </section>
 
-            <section id="view-yt" class="tab-content">
-                <div class="yt-grid">
-                    <a href="https://www.youtube.com/@BL0Xa_off" target="_blank" class="yt-card">
-                        <h3>BL0Xa_off</h3>
-                        <span>ПОДПИСАТЬСЯ</span>
+            <section id="v-media" class="view">
+                <div class="yt-shelf">
+                    <a href="https://www.youtube.com/@BL0Xa_off" target="_blank" class="yt-author">
+                        <i class="fa-brands fa-youtube"></i>
+                        <span>BL0Xa_off</span>
+                        <div class="btn-sub">ПОДПИСАТЬСЯ</div>
                     </a>
-                    <a href="https://www.youtube.com/@Z1tleXx" target="_blank" class="yt-card">
-                        <h3>Z1tlex</h3>
-                        <span>ПОДПИСАТЬСЯ</span>
+                    <a href="https://www.youtube.com/@Z1tleXx" target="_blank" class="yt-author">
+                        <i class="fa-brands fa-youtube"></i>
+                        <span>Z1tlex</span>
+                        <div class="btn-sub" style="background: #222;">ПОДПИСАТЬСЯ</div>
                     </a>
                 </div>
             </section>
 
-        </div>
+        </main>
+
+        <footer class="footer-info">
+            <div class="copy">© 2026 HIVEGRIEF NETWORK. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</div>
+            <div class="sys-info">CORE_VERSION: 1.0.8 // STATUS: STABLE</div>
+        </footer>
     </div>
 
     <script>
-        // --- GRAPHICS ENGINE 17.0: FALLING RODS (TOP-RIGHT ONLY) ---
-        const c = document.getElementById('fx-canvas');
-        const ctx = c.getContext('2d');
+        // --- BACKGROUND ENGINE: CYBER DUST ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
         let w, h;
-        function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
+        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
         window.onresize = resize; resize();
 
-        let mx = 0, my = 0;
+        let mouse = { x: -100, y: -100 };
         window.onmousemove = e => {
-            mx = e.clientX; my = e.clientY;
-            document.getElementById('cursor-dot').style.transform = `translate(${mx-3}px, ${my-3}px)`;
-            document.getElementById('cursor-ring').style.transform = `translate(${mx-15}px, ${my-15}px)`;
+            mouse.x = e.clientX; mouse.y = e.clientY;
+            document.getElementById('pointer-dot').style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            document.getElementById('pointer-ring').style.transform = `translate(${e.clientX - 12}px, ${e.clientY - 12}px)`;
         };
 
-        // Палки: Массивные, сверху справа
-        const rods = Array.from({length: 5}, (_, i) => ({
-            x: w - 150 - (i * 60),
-            y: -200,
-            width: 35,
-            height: 500 + Math.random()*200,
-            color: i % 2 === 0 ? '#ffcc00' : '#ff8800',
-            glow: 0
+        const stars = Array.from({length: 100}, () => ({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            size: Math.random() * 2,
+            spX: (Math.random() - 0.5) * 0.5,
+            spY: (Math.random() - 0.5) * 0.5
         }));
 
-        const sparkArray = [];
-
-        function animate() {
-            ctx.clearRect(0, 0, w, h);
+        function draw() {
+            ctx.fillStyle = '#020617'; ctx.fillRect(0,0,w,h);
             
-            rods.forEach(r => {
-                // Плавная пульсация и реакция на мышь
-                let dist = Math.hypot(mx - r.x, my - (r.y + r.height/2));
-                r.glow = dist < 400 ? (400 - dist) / 10 : 0;
+            stars.forEach(s => {
+                s.x += s.spX; s.y += s.spY;
+                if(s.x < 0) s.x = w; if(s.x > w) s.x = 0;
+                if(s.y < 0) s.y = h; if(s.y > h) s.y = 0;
 
-                // Рисуем палку (освещает сайт)
-                ctx.save();
-                ctx.shadowBlur = 40 + r.glow;
-                ctx.shadowColor = r.color;
-                ctx.fillStyle = r.color;
-                ctx.fillRect(r.x, r.y, r.width, r.height);
-                
-                // Эффект падения частиц (тление)
-                if(Math.random() > 0.85) {
-                    sparkArray.push({
-                        x: r.x + Math.random()*r.width,
-                        y: r.y + r.height,
-                        s: Math.random()*3 + 1,
-                        v: Math.random()*3 + 1,
-                        a: 1,
-                        c: r.color
-                    });
+                // Притяжение к мыши (плавное)
+                let dx = mouse.x - s.x;
+                let dy = mouse.y - s.y;
+                let dist = Math.sqrt(dx*dx + dy*dy);
+                if(dist < 150) {
+                    s.x += dx * 0.01;
+                    s.y += dy * 0.01;
                 }
-                ctx.restore();
+
+                ctx.fillStyle = `rgba(0, 242, 255, ${0.1 + Math.random() * 0.4})`;
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill();
             });
-
-            // Отрисовка искр
-            for(let i = sparkArray.length-1; i>=0; i--) {
-                let s = sparkArray[i];
-                s.y += s.v; s.a -= 0.005;
-                ctx.fillStyle = s.c;
-                ctx.globalAlpha = s.a;
-                ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, Math.PI*2); ctx.fill();
-                if(s.a <= 0) sparkArray.splice(i, 1);
-            }
-            ctx.globalAlpha = 1;
-            requestAnimationFrame(animate);
+            requestAnimationFrame(draw);
         }
-        animate();
+        draw();
 
-        function tab(btn, id) {
-            document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active'); document.getElementById(id).classList.add('active');
+        // --- NAVIGATION ---
+        function nav(btn, viewId) {
+            document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(viewId).classList.add('active');
         }
 
-        function copyIp() { navigator.clipboard.writeText("mc.hivegrief.su"); alert("IP СКОПИРОВАН!"); }
+        function copyIp() {
+            navigator.clipboard.writeText('hivegrief.su');
+            alert('IP СКОПИРОВАН: HIVEGRIEF.SU');
+        }
+
+        // Блокировка стандартного контекстного меню для атмосферы
+        window.oncontextmenu = (e) => e.preventDefault();
     </script>
 </body>
 </html>
