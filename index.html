@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | Authors & Rules</title>
+    <title>HIVEGRIEF | HOLOGRAPHIC STORM</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/bakisyyyofficial/hiveweb/main/83234d750c18251e.png">
     
@@ -14,131 +14,152 @@
             --primary: #ffcc00;
             --secondary: #ff8800;
             --youtube: #ff0000;
-            --bg-deep: #050505;
-            --glass-border: rgba(255, 255, 255, 0.08);
             --leaf-color: #4CAF50;
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
             color: #f5f5f5;
-            background: radial-gradient(circle at center, #151515 0%, #000 100%);
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
             display: flex;
             justify-content: center;
-            padding: 100px 10px 80px;
+            padding: 120px 10px 100px;
             overflow-x: hidden;
             position: relative;
+            min-height: 100vh;
         }
 
         /* ГОЛОГРАФИЧЕСКИЙ ГРАД */
         #hologram-bg {
-            position: fixed; top: -100px; right: -100px; width: 600px; height: 600px;
-            pointer-events: none; z-index: 0; opacity: 0.5; transform: rotate(-15deg);
+            position: fixed; top: -50px; right: -50px; width: 500px; height: 1000px;
+            pointer-events: none; z-index: 0; opacity: 0.4; transform: rotate(-20deg);
         }
         .hologram-bar {
-            position: absolute; width: 12px; height: 100%;
-            background: linear-gradient(180deg, var(--secondary), var(--primary), var(--secondary));
-            border-radius: 10px; filter: blur(1px) drop-shadow(0 0 10px var(--primary));
-            animation: holo-fall 8s infinite linear;
+            position: absolute; width: 8px; height: 200px;
+            background: linear-gradient(to bottom, transparent, var(--secondary), var(--primary), transparent);
+            border-radius: 20px; filter: blur(1px) drop-shadow(0 0 15px var(--primary));
+            animation: holo-slide 6s infinite linear;
         }
-        @keyframes holo-fall {
+        @keyframes holo-slide {
             0% { transform: translateY(-100%); opacity: 0; }
-            50% { opacity: 0.7; }
-            100% { transform: translateY(100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(500%); opacity: 0; }
         }
 
-        /* КУРСОРНЫЙ ТРЕЙЛ */
-        #cursor-trail { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3000; }
-        .trail-dot { position: absolute; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary); pointer-events: none; }
+        /* КУРСОРНЫЙ ОБЪЕКТ И ТРЕЙЛ */
+        #cursor-trail { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+        .trail-dot { 
+            position: absolute; width: 12px; height: 12px; 
+            background: var(--primary); border-radius: 50%; 
+            box-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary);
+            pointer-events: none; mix-blend-mode: screen;
+        }
 
-        /* ЛИСТОПАД */
-        #leaf-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
-        .leaf { position: absolute; color: var(--leaf-color); filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); animation-iteration-count: infinite; animation-timing-function: linear, linear, ease-in-out; }
-        @keyframes fall { 0% { transform: translateY(-10vh); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(110vh) translateX(100px); opacity: 0; } }
-        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(720deg); } }
-        @keyframes swing { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(50px); } }
+        /* ЛИСТОПАД 2.0 (SVG ЧАСТИЦЫ) */
+        #leaf-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 500; }
+        .leaf-svg {
+            position: absolute; width: 25px; height: 25px;
+            fill: var(--leaf-color); filter: drop-shadow(0 0 8px rgba(76, 175, 80, 0.4));
+            animation-iteration-count: infinite; animation-timing-function: linear;
+        }
+        @keyframes leaf-fall {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(110vh) translateX(150px) rotate(720deg); opacity: 0; }
+        }
+        @keyframes leaf-swing {
+            0%, 100% { margin-left: 0; }
+            50% { margin-left: 100px; }
+        }
 
-        .lang-switcher { position: fixed; top: 20px; right: 20px; z-index: 2000; display: flex; gap: 10px; }
-        .lang-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: #fff; padding: 10px 20px; border-radius: 12px; cursor: pointer; backdrop-filter: blur(10px); transition: 0.3s; }
-        .lang-btn.active { background: var(--primary); color: #000; box-shadow: 0 0 20px rgba(255,204,0,0.5); }
+        /* Переключатель языка */
+        .lang-switcher { position: fixed; top: 30px; left: 30px; z-index: 2000; display: flex; gap: 15px; }
+        .lang-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: #fff; padding: 12px 24px; border-radius: 15px; cursor: pointer; backdrop-filter: blur(15px); font-weight: 800; transition: 0.4s; }
+        .lang-btn.active { background: var(--primary); color: #000; box-shadow: 0 0 25px rgba(255,204,0,0.6); transform: scale(1.1); }
 
-        .container { max-width: 1150px; width: 100%; z-index: 1; position: relative; }
+        .container { max-width: 1100px; width: 100%; z-index: 10; position: relative; }
 
         .glass-card {
-            background: rgba(15, 15, 15, 0.75); backdrop-filter: blur(35px);
-            border: 1px solid var(--glass-border); border-radius: 40px;
-            padding: 60px; margin-bottom: 40px; box-shadow: 0 35px 80px rgba(0,0,0,0.8);
+            background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border); border-radius: 45px;
+            padding: 70px; margin-bottom: 50px; box-shadow: 0 40px 100px rgba(0,0,0,0.9);
+            position: relative; overflow: hidden;
         }
 
-        .server-header { text-align: center; margin-bottom: 50px; }
-        h1 { font-size: 6.5rem; margin: 0; letter-spacing: 20px; color: #fff; text-shadow: 0 0 60px rgba(255,204,0,0.6); text-transform: uppercase; }
+        .server-header { text-align: center; margin-bottom: 60px; }
+        h1 { font-size: 7rem; margin: 0; letter-spacing: 25px; color: #fff; text-shadow: 0 0 80px rgba(255,204,0,0.7); text-transform: uppercase; font-weight: 900; }
 
-        /* БЛОК АВТОРОВ */
-        .authors-section { display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 20px; }
+        /* БЛОК ВЛАДЕЛЬЦА */
+        .authors-section { display: flex; justify-content: center; margin-top: 30px; }
         .author-card {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
-            padding: 30px 60px; border-radius: 30px; text-align: center;
-            transition: 0.4s; position: relative; overflow: hidden;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border: 1px solid var(--glass-border); padding: 40px 80px; border-radius: 35px;
+            text-align: center; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .author-card:hover { transform: scale(1.05); border-color: var(--primary); box-shadow: 0 0 30px rgba(255,204,0,0.2); }
-        .author-role { color: var(--primary); text-transform: uppercase; letter-spacing: 3px; font-weight: 900; font-size: 1.2rem; margin-bottom: 10px; }
-        .author-name { font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 15px; }
+        .author-card:hover { transform: translateY(-15px) scale(1.05); border-color: var(--primary); box-shadow: 0 20px 50px rgba(255,204,0,0.2); }
+        .author-role { color: var(--primary); text-transform: uppercase; letter-spacing: 5px; font-weight: 900; font-size: 1.3rem; margin-bottom: 15px; }
+        .author-name { font-size: 3rem; font-weight: 900; color: #fff; margin-bottom: 25px; letter-spacing: 2px; }
         
         .yt-link {
-            display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none;
-            font-weight: 700; font-size: 1.1rem; background: rgba(255, 0, 0, 0.1);
-            padding: 12px 25px; border-radius: 15px; border: 1px solid rgba(255,0,0,0.3);
-            transition: 0.3s;
+            display: inline-flex; align-items: center; gap: 15px; color: #fff; text-decoration: none;
+            font-weight: 800; font-size: 1.2rem; background: rgba(255, 0, 0, 0.15);
+            padding: 15px 35px; border-radius: 20px; border: 1px solid rgba(255,0,0,0.4);
+            transition: 0.4s;
         }
-        .yt-link i { color: var(--youtube); font-size: 1.5rem; }
-        .yt-link:hover { background: var(--youtube); color: #fff; box-shadow: 0 0 25px rgba(255,0,0,0.5); transform: translateY(-3px); }
+        .yt-link i { color: var(--youtube); font-size: 1.8rem; }
+        .yt-link:hover { background: var(--youtube); box-shadow: 0 0 40px rgba(255,0,0,0.6); transform: translateY(-5px); }
 
         /* Навигация */
-        .nav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        .nav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 60px; }
         .nav-link {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border);
-            padding: 30px; border-radius: 28px; text-decoration: none; color: #fff;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
+            padding: 35px; border-radius: 30px; text-decoration: none; color: #fff;
             text-align: center; display: flex; align-items: center; justify-content: center; gap: 20px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-weight: 800;
+            transition: 0.4s; font-weight: 900; font-size: 1.3rem; text-transform: uppercase;
         }
-        .nav-link:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-10px); border-color: var(--primary); }
+        .nav-link:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-12px); border-color: var(--primary); box-shadow: 0 25px 50px rgba(0,0,0,0.6); }
 
         /* Преимущества */
-        .promo-title { text-align: center; font-size: 3.2rem; margin-bottom: 60px; color: var(--primary); text-transform: uppercase; letter-spacing: 5px; }
-        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 35px; }
+        .promo-title { text-align: center; font-size: 3.5rem; margin-bottom: 70px; color: var(--primary); text-transform: uppercase; letter-spacing: 8px; font-weight: 900; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
         .feature-item {
-            position: relative; text-align: center; padding: 60px 35px; background: rgba(255,255,255,0.01);
-            border-radius: 32px; border: 1px solid var(--glass-border); overflow: hidden; transition: 0.5s; z-index: 1;
+            position: relative; text-align: center; padding: 70px 40px; background: rgba(255,255,255,0.01);
+            border-radius: 40px; border: 1px solid var(--glass-border); overflow: hidden; transition: 0.6s; z-index: 1;
         }
-        .feature-item::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: rgba(0,0,0,0.8); border-radius: 50%; transform: translate(-50%, -50%); transition: 0.7s; z-index: -1; }
-        .feature-item:hover { transform: scale(1.1); border-color: var(--primary); }
-        .feature-item:hover::before { width: 700px; height: 700px; }
-        .feature-item i { font-size: 4rem; color: var(--primary); margin-bottom: 30px; }
+        .feature-item::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: #000; border-radius: 50%; transform: translate(-50%, -50%); transition: 0.8s; z-index: -1; }
+        .feature-item:hover { transform: translateY(-15px); border-color: var(--primary); }
+        .feature-item:hover::before { width: 800px; height: 800px; }
+        .feature-item i { font-size: 4.5rem; color: var(--primary); margin-bottom: 35px; filter: drop-shadow(0 0 15px var(--primary)); }
 
-        /* Аккордеон */
+        /* Аккордеон (ПРАВИЛА - ПОЛНЫЙ ТЕКСТ) */
         .accordion {
-            background: rgba(255,255,255,0.02); color: var(--primary); cursor: pointer; padding: 32px; width: 100%;
-            border: 1px solid var(--glass-border); text-align: left; font-size: 1.6rem; font-weight: 900; border-radius: 20px;
-            margin-top: 25px; border-left: 10px solid var(--primary); display: flex; justify-content: space-between; transition: 0.4s;
+            background: rgba(255,255,255,0.02); color: var(--primary); cursor: pointer; padding: 35px; width: 100%;
+            border: 1px solid var(--glass-border); text-align: left; font-size: 1.8rem; font-weight: 900; border-radius: 25px;
+            margin-top: 30px; border-left: 12px solid var(--primary); display: flex; justify-content: space-between; transition: 0.4s;
+            text-transform: uppercase; letter-spacing: 2px;
         }
-        .accordion:hover { background: rgba(255,255,255,0.09); transform: translateX(10px); }
-        .panel { padding: 0 40px; max-height: 0; overflow: hidden; transition: max-height 0.7s ease-out; background: rgba(0,0,0,0.5); border-radius: 0 0 20px 20px; border: 1px solid var(--glass-border); border-top: none; }
-        .panel-content { padding: 45px 25px; line-height: 2; white-space: pre-line; color: #f0f0f0; font-size: 1.15rem; }
+        .accordion:hover { background: rgba(255,255,255,0.08); transform: scale(1.02); }
+        .panel { padding: 0 50px; max-height: 0; overflow: hidden; transition: max-height 0.8s ease-in-out; background: rgba(0,0,0,0.6); border-radius: 0 0 25px 25px; border: 1px solid var(--glass-border); border-top: none; }
+        .panel-content { padding: 50px 30px; line-height: 2.2; white-space: pre-line; color: #fff; font-size: 1.2rem; }
         
-        .punish { color: #ff5555; font-weight: 900; background: rgba(255,85,85,0.15); padding: 4px 10px; border-radius: 6px; }
-        .mod-list { background: rgba(255,255,255,0.04); padding: 25px; border-radius: 15px; margin: 20px 0; border: 2px dashed var(--primary); }
+        .punish { color: #ff4444; font-weight: 900; background: rgba(255,68,68,0.2); padding: 5px 12px; border-radius: 8px; border: 1px solid rgba(255,68,68,0.4); }
+        .mod-list { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; margin: 25px 0; border: 3px dashed var(--primary); }
 
-        footer { text-align: center; opacity: 0.5; padding: 80px 0; border-top: 2px solid var(--glass-border); margin-top: 80px; font-weight: 800; text-transform: uppercase; color: #fff; }
+        footer { text-align: center; opacity: 0.6; padding: 100px 0; border-top: 2px solid var(--glass-border); margin-top: 100px; font-weight: 900; text-transform: uppercase; letter-spacing: 5px; color: #fff; }
     </style>
 </head>
 <body>
 
 <div id="hologram-bg"></div>
+
 <div class="lang-switcher">
     <button class="lang-btn active" id="btn-ru" onclick="setLang('ru')">RU</button>
     <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
 </div>
+
 <div id="leaf-container"></div>
 <div id="cursor-trail"></div>
 
@@ -150,21 +171,21 @@
         
         <div class="authors-section">
             <div class="author-card">
-                <div class="author-role" data-lang="owner_role">Владелец проекта</div>
+                <div class="author-role" data-lang="owner_role">Основатель проекта</div>
                 <div class="author-name">BL0Xa</div>
                 <a href="https://www.youtube.com/@BL0Xa_off" target="_blank" class="yt-link">
                     <i class="fa-brands fa-youtube"></i>
-                    <span data-lang="yt_text">YouTube Владельца</span>
+                    <span data-lang="yt_text">YouTube КАНАЛ</span>
                 </a>
             </div>
         </div>
 
-        <div class="nav-grid" style="margin-top: 50px;">
+        <div class="nav-grid">
             <div class="nav-link" onclick="copyIP()" style="cursor: pointer;">
-                <i class="fa-solid fa-server"></i><span>mc.hivegrief.su</span>
+                <i class="fa-solid fa-terminal"></i><span>mc.hivegrief.su</span>
             </div>
             <a href="https://shop.hivegrief.su" class="nav-link" target="_blank">
-                <i class="fa-solid fa-cart-shopping"></i><span data-lang="nav_shop">Магазин доната</span>
+                <i class="fa-solid fa-gem"></i><span data-lang="nav_shop">Магазин доната</span>
             </a>
             <a href="https://t.me/HiveGriefOff" class="nav-link" target="_blank">
                 <i class="fa-brands fa-telegram"></i><span data-lang="nav_tg">Наш Telegram</span>
@@ -176,110 +197,96 @@
     </div>
 
     <div class="glass-card">
-        <h2 class="promo-title" data-lang="adv_title">Наши преимущества</h2>
+        <h2 class="promo-title" data-lang="adv_title">Преимущества</h2>
         <div class="features-grid">
             <div class="feature-item">
-                <i class="fa-solid fa-grin-hearts"></i>
-                <h3 data-lang="feat_1_h">Доброе комьюнити</h3>
-                <p data-lang="feat_1_p">Мы ценим каждого игрока. У нас вы найдете новых друзей и адекватное общение без лишней токсичности.</p>
+                <i class="fa-solid fa-users-rays"></i>
+                <h3 data-lang="feat_1_h">Адекватное комьюнити</h3>
+                <p data-lang="feat_1_p">Мы создаем уютную атмосферу для каждого игрока. Никакого мусора и токсиков в чате!</p>
             </div>
             <div class="feature-item">
-                <i class="fa-solid fa-skull-crossbones"></i>
-                <h3 data-lang="feat_2_h">Тот самый гриф</h3>
-                <p data-lang="feat_2_p">Классический опыт выживания с рейдами и ПвП. Покажи силу своего клана и грабь базы врагов!</p>
+                <i class="fa-solid fa-fire-glow"></i>
+                <h3 data-lang="feat_2_h">Тот самый грифер</h3>
+                <p data-lang="feat_2_p">Настоящий гриферский дух: взрывай, рейди и побеждай. Всё по канонам!</p>
             </div>
             <div class="feature-item">
-                <i class="fa-solid fa-bolt"></i>
-                <h3 data-lang="feat_3_h">Мощное железо</h3>
-                <p data-lang="feat_3_p">Играй без лагов 24/7. Стабильный ТПС и защита от вылетов гарантированы нашими серверами.</p>
+                <i class="fa-solid fa-microchip"></i>
+                <h3 data-lang="feat_3_h">Hi-End Хостинг</h3>
+                <p data-lang="feat_3_p">Минимальный пинг и стабильные 20 ТПС. Забудь про вылеты навсегда.</p>
             </div>
         </div>
     </div>
 
     <div class="glass-card">
-        <h2 style="text-align: center; margin-bottom: 30px; font-size: 3rem;" data-lang="rules_title">ПРАВИЛА ПРОЕКТА</h2>
+        <h2 style="text-align: center; margin-bottom: 40px; font-size: 3.5rem; letter-spacing: 5px;" data-lang="rules_title">РЕГЛАМЕНТ СЕРВЕРА</h2>
 
-        <button class="accordion" data-lang="r_sec_1">1.0 Общее положение</button>
+        <button class="accordion" data-lang="r_sec_1">1.0 ОБЩЕЕ ПОЛОЖЕНИЕ</button>
         <div class="panel">
             <div class="panel-content">
-1.0 Общее положение.
-1.1. Данный свод правил составлен представителем проекта <strong>HiveGrief</strong> и действителен ТОЛЬКО в рамках режимов "Гриферское выживание" проекта HiveGrief.
-1.2. Регистрируясь на нашем проекте, вы автоматически принимаете данные правила, а также правила других режимов.
-1.3. Незнание правил не освобождает нарушителя от ответственности, а также может усугубить наказание.
-1.4. Правила могут быть изменены без явного оповещения основной аудитории проекта.
-1.5.1. При значительных изменениях правил, на форуме проекта отображается сопутствуещее объявление.
-1.5. Главная администрация вправе выдавать наказания вне рамок данных правил.
+1.1. Данный свод правил составлен представителем проекта <strong>HiveGrief</strong> и действителен ТОЛЬКО в рамках режимов "Гриферское выживание".
+1.2. Регистрируясь на нашем проекте, вы автоматически принимаете данные правила.
+1.3. Незнание правил не освобождает нарушителя от ответственности.
 1.6. Решения и действия главной администрации (<strong>otxao</strong>, MangoAlex) не обсуждаются и не поддаются разжалованию.
-1.7. Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).
-1.8. За любой вид чата будут наказываться сообщения, которые имеют такие категории: любой вид пиара, признание в читах, оскорбление родителей, попытка передачи аккаунта или взлома, оскорбления администрации, ютуберов.
-1.8.1 Продажа, покупка ресурсов, аккаунтов за реальную валюту запрещена, так же это касается различных сайтов, таких как FunPay и.т.д. <span class="punish">Наказание - снятие всех привилегий, бан навсегда.</span> Старшие Модераторы и выше по должности имеют право проверить ваш FunPay.
+1.8.1 Продажа, покупка ресурсов, аккаунтов за реальную валюту запрещена. <span class="punish">Наказание - БАН НАВСЕГДА.</span>
             </div>
         </div>
 
-        <button class="accordion" data-lang="r_sec_3">3.0 Донат услуги</button>
+        <button class="accordion" data-lang="r_sec_3">3.0 ПЛАТНЫЕ УСЛУГИ</button>
         <div class="panel">
             <div class="panel-content">
-3.0 Приобретение платных возможностей.
-3.1. Игра на проекте не подразумевает платы за использование ресурсов HiveGrief.
-3.2. Игрок вправе добровольно оплатить определённую сумму за внутриигровую услугу.
-3.3. При ошибке платежа можно обращаться в техподдержку.
+3.2. Игрок вправе добровольно оплатить определённую сумму за внутриигровую услугу в одностороннем порядке.
 3.4. Денежные средства за платные услуги не возвращаются.
-3.5. Покупка платных групп не даёт привилегии на нарушение данных правил.
+3.5. Покупка платных групп не даёт привилегии на игнорирование правил.
             </div>
         </div>
 
-        <button class="accordion" data-lang="r_sec_4">4.0 Общение</button>
+        <button class="accordion" data-lang="r_sec_4">4.0 ПРАВИЛА ЧАТА</button>
         <div class="panel">
             <div class="panel-content">
-4.1. На серверах присутствует локальный и глобальный чат.
-4.2. Запрещено флудить. <span class="punish">[мут на 4 часа]</span>
-4.3. Флуд символами и капс. <span class="punish">[мут на 4 часа]</span>
-4.5. Злоупотребление нецензурной лексикой. <span class="punish">[мут на 2 - 4 часа]</span>
-4.6. Оскорбления, унижения, угрозы к игрокам. <span class="punish">[мут на 4 часа]</span>
-4.10. Оскорбление своих родителей. <span class="punish">[мут 5-15 дней]</span>
-4.15. Оскорбление модерации и администрации. <span class="punish">[бан от 5 до 15 дней]</span>
-4.22. Доксинг (разглашение личных данных). <span class="punish">[бан на 30 дней]</span>
+4.2. Флуд. <span class="punish">[мут 4 часа]</span>
+4.5. Маты и завуал. <span class="punish">[мут 2 - 4 часа]</span>
+4.10. Оскорбление родных. <span class="punish">[мут 5-15 дней]</span>
+4.15. Оскорбление администрации. <span class="punish">[бан 5 - 15 дней]</span>
+4.22. Доксинг. <span class="punish">[бан 30 дней]</span>
             </div>
         </div>
 
-        <button class="accordion" data-lang="r_sec_5">5.0 Игровой процесс</button>
+        <button class="accordion" data-lang="r_sec_5">5.0 ГЕЙМПЛЕЙ</button>
         <div class="panel">
             <div class="panel-content">
-5.1. Вред проекту, лаг-машины, багоюз. <span class="punish">[бан 25 дней / перманент]</span>
-5.2. Использование читов и стороннего ПО. <span class="punish">[бан на 50 дней]</span>
-5.2.1. Совместная игра с читером. <span class="punish">[бан на 50 дней]</span>
+5.1. Лаг-машины и багоюз. <span class="punish">[бан 25 дней / перманент]</span>
+5.2. Использование читов. <span class="punish">[бан 50 дней]</span>
 <div class="mod-list">
-<strong>Запрещенные модификации:</strong>
-ElytraSwap, ArmorHotSwap, AFK-Fish, InvMove, TopkaAutoBuy, StepUp, X-ray, AutoAttack, FreeCam, AutoTotem, Middle Click Pearl.
+<strong>ЗАПРЕЩЕННЫЕ МОДЫ:</strong>
+ElytraSwap, ArmorHotSwap, AFK-Fish, TopkaAutoBuy, FreeCam, X-Ray, AutoTotem, AutoAttack, InventoryProfiles.
 </div>
-5.4. Использование макросов, кликеров. <span class="punish">[бан на 3 дня]</span>
-5.9. Реклама/продажа читов. <span class="punish">[перманентный бан]</span>
+5.4. Макросы и кликеры. <span class="punish">[бан 3 дня]</span>
             </div>
         </div>
     </div>
 
-    <footer>&copy; 2026 HIVEGRIEF.SU | Powered by HiveGrief Team</footer>
+    <footer>&copy; 2026 HIVEGRIEF.SU | DEVOLOPED FOR BL0Xa</footer>
 </div>
 
 <script>
     const translations = {
         ru: {
             nav_shop: "Магазин доната", nav_tg: "Наш Telegram", nav_ds: "Наш Discord",
-            adv_title: "Наши преимущества", rules_title: "ПРАВИЛА ПРОЕКТА",
-            owner_role: "Владелец проекта", yt_text: "YouTube Владельца",
-            feat_1_h: "Доброе комьюнити", feat_1_p: "Мы ценим каждого игрока. У нас вы найдете новых друзей без токсика.",
-            feat_2_h: "Тот самый гриф", feat_2_p: "Классическое выживание с рейдами. Покажи силу своего клана!",
-            feat_3_h: "Мощное железо", feat_3_p: "Играй без лагов 24/7. Стабильный ТПС гарантирован.",
-            r_sec_1: "1.0 Общее положение", r_sec_3: "3.0 Донат услуги", r_sec_4: "4.0 Общение", r_sec_5: "5.0 Геймплей"
+            adv_title: "Преимущества", rules_title: "РЕГЛАМЕНТ СЕРВЕРА",
+            owner_role: "Основатель проекта", yt_text: "YouTube КАНАЛ",
+            feat_1_h: "Адекватное комьюнити", feat_1_p: "Уютная атмосфера для каждого. Никакого мусора и токсиков!",
+            feat_2_h: "Тот самый грифер", feat_2_p: "Настоящий гриферский дух: рейды и победы по канонам!",
+            feat_3_h: "Hi-End Хостинг", feat_3_p: "Стабильные 20 ТПС и минимальный пинг. Забудь про лаги.",
+            r_sec_1: "1.0 ОБЩЕЕ ПОЛОЖЕНИЕ", r_sec_3: "3.0 ПЛАТНЫЕ УСЛУГИ", r_sec_4: "4.0 ПРАВИЛА ЧАТА", r_sec_5: "5.0 ГЕЙМПЛЕЙ"
         },
         en: {
             nav_shop: "Donate Shop", nav_tg: "Our Telegram", nav_ds: "Our Discord",
-            adv_title: "Our Advantages", rules_title: "SERVER RULES",
-            owner_role: "Project Owner", yt_text: "Owner's YouTube",
-            feat_1_h: "Friendly Community", feat_1_p: "We value every player. Find new friends here without toxicity.",
-            feat_2_h: "Real Griefing", feat_2_p: "Classic survival with raids. Show your clan power!",
-            feat_3_h: "Strong Hardware", feat_3_p: "Play 24/7 without lags. High TPS is guaranteed.",
-            r_sec_1: "1.0 General", r_sec_3: "3.0 Donation", r_sec_4: "4.0 Chat", r_sec_5: "5.0 Gameplay"
+            adv_title: "Advantages", rules_title: "SERVER REGULATION",
+            owner_role: "Project Founder", yt_text: "YouTube CHANNEL",
+            feat_1_h: "Friendly Community", feat_1_p: "Cozy atmosphere for everyone. No trash and toxic in chat!",
+            feat_2_h: "Pure Griefing", feat_2_p: "Real griefing spirit: raids and victories as they should be!",
+            feat_3_h: "Hi-End Hosting", feat_3_p: "Stable 20 TPS and minimum ping. Forget about lags.",
+            r_sec_1: "1.0 GENERAL", r_sec_3: "3.0 DONATIONS", r_sec_4: "4.0 CHAT RULES", r_sec_5: "5.0 GAMEPLAY"
         }
     };
 
@@ -294,7 +301,7 @@ ElytraSwap, ArmorHotSwap, AFK-Fish, InvMove, TopkaAutoBuy, StepUp, X-ray, AutoAt
 
     function copyIP() {
         navigator.clipboard.writeText("mc.hivegrief.su");
-        alert("IP mc.hivegrief.su копирован!");
+        alert("IP mc.hivegrief.su скопирован!");
     }
 
     // Аккордеон
@@ -307,36 +314,49 @@ ElytraSwap, ArmorHotSwap, AFK-Fish, InvMove, TopkaAutoBuy, StepUp, X-ray, AutoAt
         });
     }
 
-    // Голо-град
+    // Голографический град
     const holoContainer = document.getElementById('hologram-bg');
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 15; i++) {
         const bar = document.createElement('div');
         bar.className = 'hologram-bar';
         bar.style.left = Math.random() * 100 + '%';
-        bar.style.animationDelay = Math.random() * -10 + 's';
-        bar.style.width = Math.random() * 8 + 4 + 'px';
+        bar.style.animationDelay = Math.random() * -6 + 's';
+        bar.style.opacity = Math.random();
         holoContainer.appendChild(bar);
     }
 
-    // Листопад
+    // ЛИСТОПАД 2.0 (SVG)
     const leafContainer = document.getElementById('leaf-container');
-    const leafEmojis = ['🍃', '🌿', '🌱', '🍀', '🍂'];
-    function createLeaf() {
-        const leaf = document.createElement('div');
-        leaf.className = 'leaf';
-        leaf.innerHTML = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
-        leaf.style.left = Math.random() * 100 + 'vw';
-        leaf.style.fontSize = Math.random() * 15 + 15 + 'px';
-        const dur = Math.random() * 4 + 4 + 's';
-        leaf.style.animation = `fall ${dur} linear forwards, rotate ${Math.random()*2+1}s linear infinite, swing ${Math.random()*3+2}s ease-in-out infinite`;
-        leafContainer.appendChild(leaf);
-        setTimeout(() => leaf.remove(), parseFloat(dur) * 1000);
-    }
-    setInterval(createLeaf, 300);
+    const leafPath = "M12,2C12,2 4,6 4,12C4,18 12,22 12,22C12,22 20,18 20,12C20,6 12,2 12,2M12,4C14.5,5.5 18,8.5 18,12C18,15.5 14.5,18.5 12,20C9.5,18.5 6,15.5 6,12C6,8.5 9.5,5.5 12,4M12,7L10,10L12,13L14,10L12,7Z";
 
-    // Трейл курсора
+    function createLeaf() {
+        const leaf = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        leaf.setAttribute("viewBox", "0 0 24 24");
+        leaf.setAttribute("class", "leaf-svg");
+        
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", leafPath);
+        leaf.appendChild(path);
+
+        leaf.style.left = Math.random() * 100 + 'vw';
+        const size = Math.random() * 20 + 15;
+        leaf.style.width = size + 'px';
+        leaf.style.height = size + 'px';
+        
+        const fallDur = Math.random() * 5 + 5 + 's';
+        const swingDur = Math.random() * 3 + 2 + 's';
+        
+        leaf.style.animation = `leaf-fall ${fallDur} linear forwards, leaf-swing ${swingDur} ease-in-out infinite`;
+        
+        leafContainer.appendChild(leaf);
+        setTimeout(() => leaf.remove(), parseFloat(fallDur) * 1000);
+    }
+    setInterval(createLeaf, 200);
+
+    // КУРСОРНЫЙ ТРЕЙЛ (ТОП ЭФФЕКТ)
     const dots = [];
-    for (let i = 0; i < 15; i++) {
+    const trailLength = 20;
+    for (let i = 0; i < trailLength; i++) {
         const dot = document.createElement('div');
         dot.className = 'trail-dot';
         document.getElementById('cursor-trail').appendChild(dot);
@@ -344,13 +364,24 @@ ElytraSwap, ArmorHotSwap, AFK-Fish, InvMove, TopkaAutoBuy, StepUp, X-ray, AutoAt
     }
     let mx = 0, my = 0;
     document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function tick() {
-        dots[0].style.left = mx - 4 + 'px'; dots[0].style.top = my - 4 + 'px';
-        for (let i = 14; i > 0; i--) { dots[i].style.left = dots[i-1].style.left; dots[i].style.top = dots[i-1].style.top; }
-        dots.forEach((d, i) => { d.style.opacity = 1 - (i/15); d.style.transform = `scale(${1-(i/15)})`; });
-        requestAnimationFrame(tick);
+    
+    function updateCursor() {
+        dots[0].style.left = mx - 6 + 'px';
+        dots[0].style.top = my - 6 + 'px';
+        
+        for (let i = trailLength - 1; i > 0; i--) {
+            dots[i].style.left = dots[i-1].style.left;
+            dots[i].style.top = dots[i-1].style.top;
+        }
+        
+        dots.forEach((d, i) => {
+            const ratio = i / trailLength;
+            d.style.opacity = 1 - ratio;
+            d.style.transform = `scale(${1 - ratio})`;
+        });
+        requestAnimationFrame(updateCursor);
     }
-    tick();
+    updateCursor();
 </script>
 </body>
 </html>
