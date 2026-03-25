@@ -3,405 +3,348 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIVEGRIEF | OFFICIAL TERMINAL</title>
+    <title>HIVEGRIEF | THE ULTIMATE GLASS EDITION</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Manrope:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg: #050505;
-            --panel: rgba(13, 13, 13, 0.9);
-            --orange: #ff6a00;
-            --orange-glow: rgba(255, 106, 0, 0.5);
+            --orange: #ff8c00;
+            --orange-rgb: 255, 140, 0;
             --white: #ffffff;
-            --text-dim: #94a3b8;
-            --border: rgba(255, 255, 255, 0.05);
-            --danger: #ff3e3e;
-            --curve: cubic-bezier(0.2, 0.8, 0.2, 1);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --blur: blur(25px);
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* ОСНОВНОЙ СТИЛЬ */
+        /* [ ОСНОВА ] */
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
         body { 
-            background: var(--bg); 
+            background: #0d0d0d;
             color: var(--white); 
-            font-family: 'Manrope', sans-serif; 
+            font-family: 'Montserrat', sans-serif; 
             height: 100vh; width: 100vw; 
             overflow: hidden; 
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* ДВИЖОК ФОНА (ЧАСТИЦЫ) */
-        #canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; }
-        .overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.8) 100%);
-            z-index: 2; pointer-events: none;
+        /* [ ФОНОВЫЙ ДВИЖОК ] */
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: 1; }
+        .bg-glow {
+            position: fixed; width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(var(--orange-rgb), 0.15) 0%, transparent 70%);
+            z-index: 2; pointer-events: none; border-radius: 50%;
         }
 
-        /* КАСТОМНЫЙ КУРСОР */
-        #cursor-dot { position: fixed; width: 4px; height: 4px; background: #fff; border-radius: 50%; z-index: 10001; pointer-events: none; }
-        #cursor-ring { 
-            position: fixed; width: 30px; height: 30px; border: 1px solid var(--orange); 
-            border-radius: 50%; z-index: 10000; pointer-events: none; transition: 0.1s; 
-            box-shadow: 0 0 15px var(--orange-glow); 
-        }
+        /* [ КУРСОР ] */
+        #cursor { position: fixed; width: 8px; height: 8px; background: #fff; border-radius: 50%; z-index: 10000; pointer-events: none; mix-blend-mode: difference; }
+        #aura { position: fixed; width: 40px; height: 40px; border: 2px solid var(--orange); border-radius: 50%; z-index: 9999; pointer-events: none; transition: 0.1s ease-out; }
 
-        /* 3D ОБЪЕКТ (КУБ) */
-        .cube-scene { position: fixed; top: 40px; left: 40px; z-index: 100; perspective: 600px; }
-        .cube { 
-            width: 50px; height: 50px; position: relative; transform-style: preserve-3d; 
-            transform: rotateX(-20deg) rotateY(45deg); animation: rotate 10s linear infinite; 
-        }
-        @keyframes rotate { from { transform: rotateX(0) rotateY(0); } to { transform: rotateX(360deg) rotateY(360deg); } }
-        .cube div { 
-            position: absolute; width: 50px; height: 50px; background: rgba(0,0,0,0.9); 
-            border: 1px solid var(--orange); box-shadow: inset 0 0 10px var(--orange-glow); 
-        }
-        .front  { transform: translateZ(25px); } .back { transform: rotateY(180deg) translateZ(25px); }
-        .right  { transform: rotateY(90deg) translateZ(25px); } .left { transform: rotateY(-90deg) translateZ(25px); }
-        .top    { transform: rotateX(90deg) translateZ(25px); } .bottom { transform: rotateX(-90deg) translateZ(25px); }
-
-        /* ИНТЕРФЕЙС (ГЛАВНЫЙ БЛОК) */
-        .main-frame {
+        /* [ ГЛАВНЫЙ КОНТЕЙНЕР ] */
+        .glass-shell {
             position: relative; z-index: 10;
-            width: 95%; max-width: 1600px; height: 90vh;
-            background: var(--panel);
-            backdrop-filter: blur(40px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
+            width: 96%; height: 92vh;
+            background: var(--glass-bg);
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
             display: flex; flex-direction: column;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
-            animation: slideIn 1s var(--curve);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: emerge 1.2s ease-out;
+            overflow: hidden;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: scale(0.9) translateY(40px); }
+        @keyframes emerge {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         header {
-            padding: 30px 50px; border-bottom: 1px solid var(--border);
+            padding: 30px 60px;
             display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid var(--glass-border);
         }
-        .brand { font-family: 'Syncopate', sans-serif; font-size: 1.5rem; letter-spacing: 6px; }
-        .brand span { color: var(--orange); text-shadow: 0 0 20px var(--orange); }
+        .logo { font-size: 2rem; font-weight: 900; letter-spacing: 5px; color: #fff; }
+        .logo span { color: var(--orange); text-shadow: 0 0 20px rgba(var(--orange-rgb), 0.6); }
 
-        .nav-bar { display: flex; gap: 15px; }
-        .nav-btn {
-            background: rgba(255,255,255,0.02); border: 1px solid transparent; color: var(--text-dim);
-            padding: 12px 25px; border-radius: 10px; font-weight: 800; font-size: 0.75rem;
-            text-transform: uppercase; transition: 0.3s;
+        .nav { display: flex; gap: 20px; }
+        .nav-link {
+            padding: 12px 30px; border-radius: 15px; border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.03); color: #fff; font-weight: 700;
+            text-transform: uppercase; font-size: 0.8rem; transition: var(--transition);
         }
-        .nav-btn.active { color: #000; background: var(--orange); box-shadow: 0 0 30px var(--orange-glow); }
-        .nav-btn:hover:not(.active) { color: #fff; background: rgba(255,106,0,0.1); border-color: var(--orange); }
+        .nav-link.active { background: var(--orange); border-color: var(--orange); color: #000; box-shadow: 0 10px 20px rgba(var(--orange-rgb), 0.3); }
+        .nav-link:hover:not(.active) { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
 
-        /* КОНТЕНТ */
-        .content-area { flex: 1; position: relative; overflow: hidden; }
-        .page {
-            position: absolute; inset: 0; padding: 50px 80px; 
-            overflow-y: auto; opacity: 0; visibility: hidden; transform: translateY(20px);
-            transition: 0.5s var(--curve); scrollbar-width: thin; scrollbar-color: var(--orange) transparent;
-        }
-        .page.active { opacity: 1; visibility: visible; transform: translateY(0); }
-        
-        .page::-webkit-scrollbar { width: 6px; }
-        .page::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 10px; }
+        /* [ КОНТЕНТ ] */
+        .main-content { flex: 1; overflow-y: auto; padding: 60px; scrollbar-width: none; }
+        .main-content::-webkit-scrollbar { display: none; }
 
-        /* ПРАВИЛА (ЖИРНЫЙ КОД) */
-        .rules-wrapper { max-width: 1200px; margin: 0 auto; }
-        .section-header {
-            font-size: 2.2rem; font-weight: 900; margin: 40px 0 30px; 
-            border-left: 6px solid var(--orange); padding-left: 25px;
-            color: #fff; text-transform: uppercase;
-        }
-        
-        .rule-card {
-            background: rgba(255,255,255,0.02); border: 1px solid var(--border);
-            border-radius: 15px; padding: 35px; margin-bottom: 25px;
-            transition: 0.4s; position: relative; overflow: hidden;
-        }
-        .rule-card:hover { 
-            background: rgba(255,106,0,0.03); border-color: var(--orange); 
-            transform: translateX(10px); box-shadow: -10px 0 30px rgba(255,106,0,0.1);
-        }
-        .rule-card h4 { 
-            color: var(--orange); font-family: 'JetBrains Mono'; margin-bottom: 15px; 
-            font-size: 1.2rem; display: flex; align-items: center; gap: 10px;
-        }
-        .rule-card p { line-height: 1.8; color: #cbd5e1; font-size: 0.95rem; }
-        .rule-card strong { color: #fff; background: rgba(255,255,255,0.1); padding: 0 5px; }
+        .page { display: none; animation: fadeIn 0.8s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .punish-tag {
-            display: inline-block; margin-top: 15px; padding: 6px 15px;
-            background: rgba(255, 62, 62, 0.1); border: 1px solid var(--danger);
-            color: var(--danger); font-weight: 900; font-size: 0.7rem; border-radius: 6px;
+        /* [ ПРАВИЛА - ПОЛНЫЙ ЖИР ] */
+        .rule-block {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            transition: var(--transition);
+        }
+        .rule-block:hover { background: rgba(255, 255, 255, 0.06); border-color: var(--orange); }
+
+        .section-title {
+            font-size: 2.5rem; font-weight: 900; color: var(--orange);
+            margin-bottom: 30px; display: flex; align-items: center; gap: 20px;
+        }
+        .section-title::after { content: ''; height: 2px; flex: 1; background: linear-gradient(90deg, var(--orange), transparent); }
+
+        .rule-item {
+            margin-bottom: 25px; padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .rule-item:last-child { border: none; }
+        .rule-id { font-family: 'JetBrains Mono'; color: var(--orange); font-weight: 800; font-size: 1.2rem; margin-right: 10px; }
+        .rule-text { line-height: 1.8; color: #eee; font-size: 1.05rem; }
+        .rule-text strong { color: #fff; text-decoration: underline; text-decoration-color: var(--orange); }
+
+        .punishment {
+            display: inline-block; margin-top: 15px; padding: 8px 20px;
+            background: rgba(255, 50, 50, 0.15); border: 1px solid #ff3232;
+            color: #ff3232; border-radius: 10px; font-weight: 800; font-size: 0.8rem;
             text-transform: uppercase;
         }
-        
-        .reward-tag {
-            display: inline-block; margin-top: 15px; padding: 6px 15px;
-            background: rgba(0, 255, 136, 0.1); border: 1px solid #00ff88;
-            color: #00ff88; font-weight: 900; font-size: 0.7rem; border-radius: 6px;
-        }
 
-        /* МОДЫ */
-        .mod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
-        .mod-item { 
-            background: #000; padding: 15px; border-radius: 8px; border: 1px solid var(--border);
-            display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 0.8rem;
+        .mod-list-full {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px; margin-top: 20px;
         }
-        .mod-item span { color: var(--orange); font-weight: 800; }
+        .mod-card {
+            background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            padding: 15px 20px; border-radius: 12px; display: flex; justify-content: space-between;
+            font-family: 'JetBrains Mono'; font-size: 0.9rem;
+        }
+        .mod-card span { color: var(--orange); font-weight: 800; }
 
-        /* КАРТОЧКИ ХАБА */
-        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .hub-card {
-            background: #0a0a0a; border: 1px solid var(--border); padding: 50px;
-            border-radius: 20px; text-align: center; text-decoration: none; color: #fff;
-            transition: 0.5s var(--curve);
+        /* [ ГРИД ХАБА ] */
+        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .hub-item {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            padding: 60px 40px; border-radius: 25px; text-align: center;
+            text-decoration: none; color: #fff; transition: var(--transition);
         }
-        .hub-card:hover { border-color: var(--orange); transform: translateY(-15px); background: #0f0f0f; }
-        .hub-card i { font-size: 4rem; color: var(--orange); margin-bottom: 25px; }
-        .hub-card h3 { font-family: 'Syncopate'; font-size: 1.3rem; margin-bottom: 10px; }
+        .hub-item:hover { background: rgba(255,255,255,0.1); transform: scale(1.03); border-color: var(--orange); }
+        .hub-item i { font-size: 4rem; color: var(--orange); margin-bottom: 30px; text-shadow: 0 0 30px rgba(var(--orange-rgb), 0.5); }
+        .hub-item h3 { font-size: 1.8rem; margin-bottom: 15px; }
 
         footer {
-            padding: 25px 50px; border-top: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center;
-            font-family: 'JetBrains Mono'; font-size: 0.7rem; color: #444;
+            padding: 25px 60px; border-top: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; font-family: 'JetBrains Mono';
+            font-size: 0.8rem; color: rgba(255,255,255,0.3);
         }
-        .system-status { display: flex; align-items: center; gap: 8px; color: #00ff88; }
-        .status-dot { width: 6px; height: 6px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 10px #00ff88; }
     </style>
 </head>
 <body>
 
-    <canvas id="canvas"></canvas>
-    <div class="overlay"></div>
-    <div id="cursor-dot"></div><div id="cursor-ring"></div>
+    <canvas id="bg-canvas"></canvas>
+    <div class="bg-glow" id="glow"></div>
+    <div id="cursor"></div><div id="aura"></div>
 
-    <div class="cube-scene">
-        <div class="cube">
-            <div class="front"></div><div class="back"></div><div class="left"></div>
-            <div class="right"></div><div class="top"></div><div class="bottom"></div>
-        </div>
-    </div>
-
-    <div class="main-frame">
+    <div class="glass-shell">
         <header>
-            <div class="brand">HIVE<span>GRIEF</span></div>
-            <nav class="nav-bar">
-                <button class="nav-btn active" onclick="showPage('hub', this)">Главная</button>
-                <button class="nav-btn" onclick="showPage('rules', this)">Кодекс</button>
-                <button class="nav-btn" onclick="showPage('media', this)">Медиа</button>
+            <div class="logo">HIVE<span>GRIEF</span></div>
+            <nav class="nav">
+                <button class="nav-link active" onclick="tab('h', this)">Главная</button>
+                <button class="nav-link" onclick="tab('r', this)">Все Правила</button>
+                <button class="nav-link" onclick="tab('m', this)">Медиа</button>
             </nav>
         </header>
 
-        <main class="content-area">
+        <main class="main-content">
             
-            <div id="hub" class="page active">
+            <div id="h" class="page active">
                 <div class="hub-grid">
-                    <a href="https://shop.hivegrief.su" class="hub-card">
-                        <i class="fa-solid fa-gem"></i>
-                        <h3>МАГАЗИН</h3>
-                        <p style="color:var(--text-dim)">Донат, ресурсы и ключи</p>
-                    </a>
-                    <a href="https://t.me/HiveGriefOff" class="hub-card">
-                        <i class="fa-brands fa-telegram"></i>
-                        <h3>НОВОСТИ</h3>
-                        <p style="color:var(--text-dim)">Следи за обновлениями в TG</p>
-                    </a>
-                    <a href="https://discord.gg/hivegrief" class="hub-card">
-                        <i class="fa-brands fa-discord"></i>
-                        <h3>DISCORD</h3>
-                        <p style="color:var(--text-dim)">Общение и поддержка 24/7</p>
-                    </a>
-                    <div class="hub-card" onclick="copyIP()" style="cursor:pointer">
-                        <i class="fa-solid fa-server"></i>
-                        <h3>HIVEGRIEF.SU</h3>
-                        <p style="color:var(--text-dim)">Нажми, чтобы скопировать IP</p>
-                    </div>
+                    <a href="https://shop.hivegrief.su" class="hub-item"><i class="fa-solid fa-cart-shopping"></i><h3>МАГАЗИН</h3><p>Приобрести донат и ресурсы</p></a>
+                    <a href="https://t.me/HiveGriefOff" class="hub-item"><i class="fa-brands fa-telegram"></i><h3>TELEGRAM</h3><p>Официальный канал проекта</p></a>
+                    <a href="https://discord.gg/hivegrief" class="hub-item"><i class="fa-brands fa-discord"></i><h3>DISCORD</h3><p>Голосовые каналы и чаты</p></a>
+                    <div class="hub-item" onclick="copyIP()" style="cursor:pointer"><i class="fa-solid fa-plug"></i><h3>HIVEGRIEF.SU</h3><p>Нажми для копирования IP</p></div>
                 </div>
             </div>
 
-            <div id="rules" class="page">
-                <div class="rules-wrapper">
-                    
-                    <h2 class="section-header">1.0 Общие положения</h2>
-                    <div class="rule-card">
-                        <h4>1.1 — 1.5.1 <i class="fa-solid fa-shield-halved"></i></h4>
-                        <p>Правила действительны ТОЛЬКО для режима "Гриферское выживание" HiveGrief. Регистрация = автоматическое согласие. Незнание не освобождает от ответственности. Изменения правил публикуются на форуме.</p>
+            <div id="r" class="page">
+                <div class="rule-block">
+                    <h2 class="section-title">1.0 Общее положение</h2>
+                    <div class="rule-item">
+                        <span class="rule-id">1.1 - 1.2</span>
+                        <p class="rule-text">Данный свод правил составлен представителем проекта HiveGrief и действителен ТОЛЬКО в рамках режимов "Гриферское выживание". Регистрируясь, вы <strong>автоматически принимаете данные правила</strong>.</p>
                     </div>
-                    <div class="rule-card">
-                        <h4>1.6 — 1.8.1 <i class="fa-solid fa-user-tie"></i></h4>
-                        <p>Решения главной администрации <strong>(Bakisyyy (otaxao), Z1tlex)</strong> окончательны. Компенсации за баги/читы не выдаются. Запрещена продажа ресурсов за реальную валюту (FunPay и др.).</p>
-                        <span class="punish-tag">Наказание: Снятие всех привилегий + Бан навсегда</span>
+                    <div class="rule-item">
+                        <span class="rule-id">1.3 - 1.5.1</span>
+                        <p class="rule-text">Незнание правил не освобождает от ответственности. Правила могут быть изменены без оповещения. Главная администрация вправе выдавать наказания вне рамок правил.</p>
                     </div>
+                    <div class="rule-item">
+                        <span class="rule-id">1.6 - 1.7</span>
+                        <p class="rule-text">Решения администрации <strong>(Bakisyyy (otaxao), Z1tlex)</strong> не обсуждаются. Ресурсы за лаги/баги/читы не возвращаются.</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-id">1.8.1</span>
+                        <p class="rule-text">Продажа, покупка ресурсов, аккаунтов за реальную валюту запрещена (включая FunPay). <br><span class="punish">Снятие всех привилегий + бан навсегда</span></p>
+                    </div>
+                </div>
 
-                    <h2 class="section-header">3.0 Платные услуги</h2>
-                    <div class="rule-card">
-                        <h4>3.1 — 3.5 <i class="fa-solid fa-credit-card"></i></h4>
-                        <p>Игра бесплатна. Донат — добровольное пожертвование. Средства не возвращаются. Покупка привилегий не дает права нарушать общие правила сервера.</p>
+                <div class="rule-block">
+                    <h2 class="section-title">3.0 Оплата и услуги</h2>
+                    <div class="rule-item">
+                        <p class="rule-text">3.1. Игра не подразумевает платы. 3.2. Игрок платит добровольно. 3.4. Денежные средства не возвращаются. 3.5. Донат не дает права нарушать правила.</p>
                     </div>
+                </div>
 
-                    <h2 class="section-header">4.0 Чат и Общение</h2>
-                    <div class="rule-card">
-                        <h4>4.2 — 4.4 <i class="fa-solid fa-comment-slash"></i></h4>
-                        <p>Запрещен флуд (более 2-х сообщений подряд за 1 мин), обход флуда через твинки или /bc. Запрещен флуд символами (более 10 знаков) и злоупотребление капсом.</p>
-                        <span class="punish-tag">Наказание: Мут на 4 часа</span>
+                <div class="rule-block">
+                    <h2 class="section-title">4.0 Общение в чате</h2>
+                    <div class="rule-item">
+                        <span class="rule-id">4.2 - 4.4</span>
+                        <p class="rule-text">Запрещен флуд (более 2-х сообщений подряд), обход через твинки или /bc. Флуд символами (более 10) и злоупотребление капсом (более 50% предложения). <br><span class="punish">Мут на 4 часа</span></p>
                     </div>
-                    <div class="rule-card">
-                        <h4>4.10 — 4.11 <i class="fa-solid fa-handcuffs"></i></h4>
-                        <p>Оскорбление своих родителей. Затрагивание политики и любая политическая агитация на сервере.</p>
-                        <span class="punish-tag">Мут 15 дней / Бан до 7 дней</span>
+                    <div class="rule-item">
+                        <span class="rule-id">4.9 - 4.11</span>
+                        <p class="rule-text">Публичная критика проекта. Оскорбление родителей. Затрагивание политики. <br><span class="punish">Мут 15 дней / Бан до 7 дней</span></p>
                     </div>
-                    <div class="rule-card">
-                        <h4>4.22 <i class="fa-solid fa-user-secret"></i></h4>
-                        <p>Распространение личных данных игроков (доксинг) или угрозы деаноном.</p>
-                        <span class="punish-tag">Наказание: Бан на 30 дней</span>
+                    <div class="rule-item">
+                        <span class="rule-id">4.15 - 4.22</span>
+                        <p class="rule-text">Оскорбление администрации/ютуберов. Пропаганда нацизма/терроризма. Доксинг личных данных. <br><span class="punish">Бан от 5 до 60 дней</span></p>
                     </div>
+                    <div class="rule-item">
+                        <span class="rule-id">4.29 - 4.30</span>
+                        <p class="rule-text">Упоминание денежных операций (реала). Помеха работе персонала. <br><span class="punish">Мут 2 дня / Бан 6 часов</span></p>
+                    </div>
+                </div>
 
-                    <h2 class="section-header">5.0 Игровой процесс</h2>
-                    <div class="rule-card">
-                        <h4>5.2 — 5.2.7 <i class="fa-solid fa-bug"></i></h4>
-                        <p>Использование читов, вредоносного ПО, совместная игра с читером или неадекватное поведение на проверке. Удаление читов менее 14 дней назад приравнивается к их наличию.</p>
-                        <span class="punish-tag">Наказание: Бан 50 дней / IP BAN</span>
+                <div class="rule-block">
+                    <h2 class="section-title">5.0 Игровой процесс</h2>
+                    <div class="rule-item">
+                        <span class="rule-id">5.1 - 5.1.2</span>
+                        <p class="rule-text">Лаг-машины, багоюз, заливы, ловушки без выхода. <br><span class="punish">Бан 25 дней / Перманент</span></p>
                     </div>
-
-                    <div class="rule-card">
-                        <h4>Запрещенные модификации <i class="fa-solid fa-list-check"></i></h4>
-                        <div class="mod-grid">
-                            <div class="mod-item">ElytraSwap <span>5д</span></div>
-                            <div class="mod-item">AFK-Fish <span>5д</span></div>
-                            <div class="mod-item">InvMove <span>7д</span></div>
-                            <div class="mod-item">TopkaAutoBuy <span>7д</span></div>
-                            <div class="mod-item">StepUp Mod <span>30д</span></div>
-                            <div class="mod-item">X-ray Mod <span>50д</span></div>
-                            <div class="mod-item">AutoTotem <span>50д</span></div>
-                            <div class="mod-item">FreeCam <span>50д</span></div>
+                    <div class="rule-item">
+                        <span class="rule-id">5.2</span>
+                        <p class="rule-text">Использование читов, вредоносного ПО. Совместная игра с читером. <br><span class="punish">Бан 50 дней / IP BAN</span></p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-id">5.2.6 - 5.2.7</span>
+                        <p class="rule-text">Неадекватность на проверке, виртуальные машины, удаленные менее 14 дней назад читы. <br><span class="punish">Бан 50 дней</span></p>
+                    </div>
+                    <div class="rule-item">
+                        <h4 style="margin-bottom:15px; color:var(--orange)">Запрещенные модификации:</h4>
+                        <div class="mod-list-full">
+                            <div class="mod-card">ElytraSwap <span>5д</span></div>
+                            <div class="mod-card">AFK-Fish <span>5д</span></div>
+                            <div class="mod-card">InvMove <span>7д</span></div>
+                            <div class="mod-card">TopkaAutoBuy <span>7д</span></div>
+                            <div class="mod-card">StepUp Mod <span>30д</span></div>
+                            <div class="mod-card">X-ray / DiamondSim <span>50д</span></div>
+                            <div class="mod-card">AutoTotem <span>50д</span></div>
+                            <div class="mod-card">FreeCam <span>50д</span></div>
+                            <div class="mod-card">AutoAttack <span>50д</span></div>
+                            <div class="mod-card">Middle Pearl <span>50д</span></div>
                         </div>
                     </div>
+                </div>
 
-                    <h2 class="section-header">6.0 Донатеры и Дюп</h2>
-                    <div class="rule-card">
-                        <h4>6.9 Дюп <i class="fa-solid fa-triangle-exclamation"></i></h4>
-                        <p>Запрещается шутить про найденный дюп. Если реально нашли — пишите в ЛС <strong>@otxao</strong>.</p>
-                        <span class="reward-tag">Награда: 20,000 Рилликов</span>
-                        <span class="punish-tag" style="margin-left:10px;">Нарушение: Мут 1 день</span>
+                <div class="rule-block">
+                    <h2 class="section-title">6.0 Донатеры и Дюп</h2>
+                    <div class="rule-item">
+                        <span class="rule-id">6.9</span>
+                        <p class="rule-text"><strong>Запрещается шутить про то что нашёл дюп.</strong> Если вы реально нашли дюп, пишите в лс @otxao. Награда: 20 тыщ рилликов. <br><span class="punish">Нарушение: мут 1 день</span></p>
                     </div>
-
-                    <h2 class="section-header">7.0 Персонал</h2>
-                    <div class="rule-card">
-                        <h4>7.3 — 7.4 <i class="fa-solid fa-users-gear"></i></h4>
-                        <p>Запрещено упоминать или оскорблять родных в любом виде.</p>
-                        <span class="punish-tag">Наказание: Мут до 2 дней</span>
+                    <div class="rule-item">
+                        <span class="rule-id">6.1 - 6.3</span>
+                        <p class="rule-text">Использование прав во вред, выдача наказаний без причины/доказательств. <br><span class="punish">Снятие / Бан 14 дней</span></p>
                     </div>
+                </div>
 
+                <div class="rule-block">
+                    <h2 class="section-title">7.0 Персонал</h2>
+                    <div class="rule-item">
+                        <span class="rule-id">7.0 - 7.4</span>
+                        <p class="rule-text">Запрещено оскорблять игроков (езз, поплачь), упоминать или оскорблять родню. <br><span class="punish">Варн / Мут до 2 дней</span></p>
+                    </div>
                 </div>
             </div>
 
-            <div id="media" class="page">
+            <div id="m" class="page">
                 <div class="hub-grid">
-                    <a href="https://www.youtube.com/@BL0Xa_off" class="hub-card" style="border-color:#ff0000">
-                        <i class="fa-brands fa-youtube" style="color:#ff0000"></i>
-                        <h3>BL0Xa_off</h3>
-                        <p>Смотри новые ролики</p>
-                    </a>
-                    <a href="https://www.youtube.com/@Z1tleXx" class="hub-card" style="border-color:#ff0000">
-                        <i class="fa-brands fa-youtube" style="color:#ff0000"></i>
-                        <h3>Z1tlex</h3>
-                        <p>Архив стримов и гайды</p>
-                    </a>
+                    <a href="https://www.youtube.com/@BL0Xa_off" class="hub-item" target="_blank"><i class="fa-brands fa-youtube" style="color:#ff0000"></i><h3>BL0Xa_off</h3></a>
+                    <a href="https://www.youtube.com/@Z1tleXx" class="hub-item" target="_blank"><i class="fa-brands fa-youtube" style="color:#ff0000"></i><h3>Z1tlex</h3></a>
                 </div>
             </div>
-
         </main>
 
         <footer>
-            <div class="system-status">
-                <div class="status-dot"></div>
-                SYSTEM ONLINE: HIVEGRIEF CORE V7.0
-            </div>
-            <div style="letter-spacing: 2px;">© 2026 // РАЗРАБОТАНО HIVE</div>
+            <div>STATUS: ENCRYPTED // HIVEGRIEF</div>
+            <div id="clock">00:00:00</div>
+            <div>BY HIVEGRIEF 💫</div>
         </footer>
     </div>
 
     <script>
-        /* CANVAS PLEXUS ENGINE */
-        const canvas = document.getElementById('canvas');
+        /* [ ЧАСТИЦЫ ] */
+        const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-        let particles = [];
-        
-        window.addEventListener('resize', resize);
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        resize();
+        let pts = [];
+        window.onresize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+        window.onresize();
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-            }
-            update() {
+        class P {
+            constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.vx = (Math.random()-0.5)*0.3; this.vy = (Math.random()-0.5)*0.3; }
+            u() {
                 this.x += this.vx; this.y += this.vy;
-                if(this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if(this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                if(this.x<0||this.x>canvas.width) this.vx*=-1;
+                if(this.y<0||this.y>canvas.height) this.vy*=-1;
+                ctx.fillStyle = 'rgba(255,140,0,0.2)';
+                ctx.beginPath(); ctx.arc(this.x,this.y,1.5,0,Math.PI*2); ctx.fill();
             }
         }
-
-        for(let i=0; i<100; i++) particles.push(new Particle());
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                ctx.fillStyle = 'rgba(255, 106, 0, 0.2)';
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
-                ctx.fill();
-            });
-            
-            for(let i=0; i<particles.length; i++) {
-                for(let j=i; j<particles.length; j++) {
-                    let dx = particles[i].x - particles[j].x;
-                    let dy = particles[i].y - particles[j].y;
-                    let dist = Math.sqrt(dx*dx + dy*dy);
-                    if(dist < 120) {
-                        ctx.strokeStyle = `rgba(255, 106, 0, ${1 - dist/120})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
+        for(let i=0;i<120;i++) pts.push(new P());
+        function anim() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            pts.forEach(p => p.u());
+            for(let i=0;i<pts.length;i++){
+                for(let j=i;j<pts.length;j++){
+                    let d = Math.hypot(pts[i].x-pts[j].x, pts[i].y-pts[j].y);
+                    if(d<150){
+                        ctx.strokeStyle = `rgba(255,140,0,${1-d/150})`;
+                        ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.stroke();
                     }
                 }
             }
-            requestAnimationFrame(animate);
+            requestAnimationFrame(anim);
         }
-        animate();
+        anim();
 
-        /* CURSOR LOGIC */
-        const dot = document.getElementById('cursor-dot');
-        const ring = document.getElementById('cursor-ring');
-        document.addEventListener('mousemove', (e) => {
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
-            ring.animate({ left: e.clientX-15+'px', top: e.clientY-15+'px' }, { duration: 150, fill: 'forwards' });
-        });
+        /* [ ЛОГИКА ] */
+        const c = document.getElementById('cursor'), a = document.getElementById('aura'), g = document.getElementById('glow');
+        document.onmousemove = e => {
+            c.style.left = e.clientX+'px'; c.style.top = e.clientY+'px';
+            a.style.left = e.clientX-20+'px'; a.style.top = e.clientY-20+'px';
+            g.style.left = e.clientX-300+'px'; g.style.top = e.clientY-300+'px';
+        };
 
-        /* PAGE SYSTEM */
-        function showPage(id, btn) {
+        function tab(id, b) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            btn.classList.add('active');
+            b.classList.add('active');
         }
 
-        function copyIP() {
-            navigator.clipboard.writeText('hivegrief.su');
-            alert('IP HiveGrief.su скопирован!');
-        }
+        function copyIP() { navigator.clipboard.writeText('hivegrief.su'); alert('IP Скопирован!'); }
+
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString();
+        }, 1000);
     </script>
 </body>
 </html>
